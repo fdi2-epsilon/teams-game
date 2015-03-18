@@ -1,2 +1,2 @@
 # teams-game
-Our project while experimenting team software development 
+Check out [the docs](https://github.com/fdi2-epsilon/teams-game/wiki)!
