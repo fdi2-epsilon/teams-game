@@ -1,0 +1,12 @@
+
+// TODO: This file is only temporary!
+
+project.description = 'Android application'
+
+apply plugin: 'java'
+
+repositories.jcenter()
+
+dependencies {
+    compile project(':common')
+}

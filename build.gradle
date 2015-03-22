@@ -1,0 +1,7 @@
+
+allprojects {
+    apply plugin: 'eclipse'
+    apply plugin: 'idea'
+
+    buildDir = "$rootProject.projectDir/build"
+}

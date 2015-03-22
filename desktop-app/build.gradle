@@ -1,0 +1,11 @@
+
+project.description = 'Desktop application'
+
+apply plugin: 'java'
+
+repositories.jcenter()
+
+dependencies {
+    compile project(':common')
+    testCompile 'junit:junit:4.11'
+}
