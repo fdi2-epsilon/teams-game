@@ -1,6 +1,6 @@
 package eu.unipv.epsilon.enigma.collection;
 
-import eu.unipv.epsilon.enigma.puzzle.Puzzle;
+import eu.unipv.epsilon.enigma.quest.Quest;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -8,7 +8,7 @@ import java.util.List;
 public class PuzzleSet {
 
     String name;
-    List<Puzzle> puzzles = new LinkedList<>();
+    List<Quest> quests = new LinkedList<>();
 
     public String getName() {
         return name;
