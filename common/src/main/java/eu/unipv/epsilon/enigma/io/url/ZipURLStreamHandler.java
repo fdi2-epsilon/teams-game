@@ -1,4 +1,4 @@
-package eu.unipv.epsilon.enigma.io;
+package eu.unipv.epsilon.enigma.io.url;
 
 import java.io.File;
 import java.io.IOException;
