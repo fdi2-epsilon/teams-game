@@ -1,7 +1,7 @@
 package eu.unipv.epsilon.enigma.quest;
 
-import eu.unipv.epsilon.enigma.io.DefaultQCBuilder;
-import eu.unipv.epsilon.enigma.io.QCBuilder;
+import eu.unipv.epsilon.enigma.io.DefaultQuestCollectionBuilder;
+import eu.unipv.epsilon.enigma.io.QuestCollectionBuilder;
 
 import java.io.File;
 import java.io.IOException;
@@ -44,9 +44,9 @@ public class QuestCollection {
 
     /* STATIC BUILDER UTILITIES */
 
-    private static QCBuilder builder = new DefaultQCBuilder();
+    private static QuestCollectionBuilder builder = new DefaultQuestCollectionBuilder();
 
-    public static void setBuilder(QCBuilder builder) {
+    public static void setBuilder(QuestCollectionBuilder builder) {
         QuestCollection.builder = builder;
     }
 

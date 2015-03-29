@@ -5,8 +5,9 @@ import eu.unipv.epsilon.enigma.quest.QuestCollection;
 import java.io.File;
 import java.io.IOException;
 
-public interface QCBuilder {
+public interface QuestCollectionBuilder {
 
+    /** Populates a new Quest Collection from the metadata inside the given file. */
     QuestCollection createFromFile(File file) throws IOException;
 
 }
