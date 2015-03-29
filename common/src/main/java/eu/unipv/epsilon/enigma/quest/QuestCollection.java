@@ -55,7 +55,7 @@ public class QuestCollection {
     }
 
     public static QuestCollection fromFile(File file) throws IOException {
-        return builder.createFromFile(file);
+        return builder.createCollectionFromFile(file);
     }
 
 }

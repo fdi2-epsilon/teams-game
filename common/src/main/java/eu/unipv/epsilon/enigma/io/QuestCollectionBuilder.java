@@ -8,6 +8,6 @@ import java.io.IOException;
 public interface QuestCollectionBuilder {
 
     /** Populates a new Quest Collection from the metadata inside the given file. */
-    QuestCollection createFromFile(File file) throws IOException;
+    QuestCollection createCollectionFromFile(File file) throws IOException;
 
 }

@@ -31,7 +31,7 @@ public class DefaultQuestCollectionBuilder implements QuestCollectionBuilder {
     }
 
     @Override
-    public QuestCollection createFromFile(File file) throws IOException {
+    public QuestCollection createCollectionFromFile(File file) throws IOException {
         try (ZipFile zip = new ZipFile(file)) {
             InputStream stream = zip.getInputStream(new ZipEntry("metadata.yaml"));
             // Zip file needs to be closed, however its derived streams not.
