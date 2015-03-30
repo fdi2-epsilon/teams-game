@@ -1,9 +1,14 @@
+## Common
+.DS_Store
+
 ## Gradle
 /.gradle
 /build
-##/gradle
-##/gradlew
-##/gradlew.bat
+#/gradle
+#/gradlew
+#/gradlew.bat
+/local.properties
+/*/local.properties
 
 ## Eclipse
 /eclipse

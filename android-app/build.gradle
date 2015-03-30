@@ -1,12 +1,37 @@
-
-// TODO: This file is only temporary!
-
 project.description = 'Android application'
 
-apply plugin: 'java'
+buildscript {
+    repositories.jcenter();
+    dependencies {
+        classpath 'com.android.tools.build:gradle:1.1.1'
+    }
+}
+
+apply plugin: 'com.android.application'
 
 repositories.jcenter()
 
+android {
+    compileSdkVersion 22
+    buildToolsVersion '22.0.0'
+
+    defaultConfig {
+        applicationId 'eu.unipv.epsilon.enigma'
+        minSdkVersion 19
+        targetSdkVersion 22
+
+        versionCode 1
+        versionName '1.0'
+    }
+
+    buildTypes {
+        debug { debuggable true }
+        release { minifyEnabled false }
+    }
+}
+
 dependencies {
     compile project(':common')
+    // compile fileTree(dir: 'libs', include: ['*.jar'])
+    // compile 'com.android.support:appcompat-v7:22.0.0'
 }
