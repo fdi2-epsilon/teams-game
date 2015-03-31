@@ -2,15 +2,15 @@ package eu.unipv.epsilon.enigma.io.builderdefaults;
 
 /**
  * Used by a {@link eu.unipv.epsilon.enigma.io.QuestCollectionBuilder} to get an implementation of
- * {@link QCDefaultFieldProvider} and {@link QuestDefaultFieldProvider} in order to assign default
+ * {@link DefaultFieldProvider} in order to assign default
  * {@link eu.unipv.epsilon.enigma.quest.QuestCollection} values to fields not specified in the source document.
  */
-public interface BuilderDefaultsFactory {
+public interface BuilderDefaultsFactory<T> {
 
     /** Creates a provider for default quest collection metadata values. */
-    QCDefaultFieldProvider getCollectionDefaults();
+    DefaultFieldProvider<T> getCollectionDefaults();
 
     /** Creates a provider for default quest metadata values using the passed in index inside the collection. */
-    QuestDefaultFieldProvider getQuestDefaults(int index);
+    DefaultFieldProvider<T> getQuestDefaults(int index);
 
 }

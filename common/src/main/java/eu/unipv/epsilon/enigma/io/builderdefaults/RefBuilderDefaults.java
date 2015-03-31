@@ -1,13 +1,13 @@
 package eu.unipv.epsilon.enigma.io.builderdefaults;
 
-public class RefBuilderDefaults implements BuilderDefaultsFactory {
+public class RefBuilderDefaults implements BuilderDefaultsFactory<String> {
 
-    public QCDefaultFieldProvider getCollectionDefaults() {
-        return new RefQCDefaults();
+    public DefaultFieldProvider getCollectionDefaults() {
+        return new QuestCollectionDefaults();
     }
 
-    public QuestDefaultFieldProvider getQuestDefaults(int index) {
-        return new RefQuestDefaults(index);
+    public DefaultFieldProvider getQuestDefaults(int index) {
+        return new QuestDefaults(index);
     }
 
 }
