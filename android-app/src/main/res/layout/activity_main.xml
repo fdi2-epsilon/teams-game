@@ -1,0 +1,9 @@
+<RelativeLayout xmlns:a="http://schemas.android.com/apk/res/android"
+                xmlns:tools="http://schemas.android.com/tools"
+                a:layout_width="match_parent"
+                a:layout_height="match_parent"
+                a:padding="16dp"
+                a:animateLayoutChanges="true"
+                tools:context="eu.unipv.epsilon.enigma.MainActivity">
+            
+</RelativeLayout>
