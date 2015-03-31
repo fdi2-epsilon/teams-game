@@ -1,7 +1,7 @@
 project.description = 'Android application'
 
 buildscript {
-    repositories.jcenter();
+    repositories.jcenter()
     dependencies {
         classpath 'com.android.tools.build:gradle:1.1.1'
     }
@@ -31,7 +31,7 @@ android {
 }
 
 dependencies {
-    // compile project(':common')
+    compile project(':common')
     // compile fileTree(dir: 'libs', include: ['*.jar'])
     // compile 'com.android.support:appcompat-v7:22.0.0'
 }
