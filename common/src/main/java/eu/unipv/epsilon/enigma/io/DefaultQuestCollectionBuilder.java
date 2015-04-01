@@ -17,6 +17,8 @@ import java.util.zip.ZipFile;
 
 public class DefaultQuestCollectionBuilder implements QuestCollectionBuilder {
 
+    public static final String FILENAME_PACK_CONFIGURATION = "metadata.yaml";
+
     BuilderDefaultsFactory<String> builderDefaults;
 
     public DefaultQuestCollectionBuilder() {
@@ -30,7 +32,7 @@ public class DefaultQuestCollectionBuilder implements QuestCollectionBuilder {
     @Override
     public QuestCollection createCollectionFromFile(File file) throws IOException {
         try (ZipFile zip = new ZipFile(file)) {
-            InputStream stream = zip.getInputStream(new ZipEntry("metadata.yaml"));
+            InputStream stream = zip.getInputStream(new ZipEntry(FILENAME_PACK_CONFIGURATION));
             // Zip file needs to be closed, however its derived streams not.
             return generateCollection((Map) new Yaml().load(stream));
         }
@@ -40,10 +42,10 @@ public class DefaultQuestCollectionBuilder implements QuestCollectionBuilder {
         QuestCollection qc = new QuestCollection();
         DefaultFieldProvider<String> defaults = builderDefaults.getCollectionDefaults();
 
-        qc.setName(valueOrDefault(meta, "name", defaults));
-        qc.setIconPath(valueOrDefault(meta, "icon", defaults));
+        qc.setName(valueOrDefault(meta, KEY_QUESTCOLLECTION_NAME, defaults));
+        qc.setIconPath(valueOrDefault(meta, KEY_QUESTCOLLECTION_PATH_ICON, defaults));
 
-        List quests = (List) meta.get("quests");
+        List quests = (List) meta.get(KEY_QUESTCOLLECTION_ELEMENTS);
         if (quests != null)
             for (int i = 0; i < quests.size(); i++) qc.addQuest(generateQuest(i, (Map) quests.get(i)));
 
@@ -54,14 +56,14 @@ public class DefaultQuestCollectionBuilder implements QuestCollectionBuilder {
         Quest q = new Quest();
         DefaultFieldProvider<String> defaults = builderDefaults.getQuestDefaults(index);
 
-        q.setName(valueOrDefault(meta, "name", defaults));
-        q.setDescription(valueOrDefault(meta, "description", defaults));
+        q.setName(valueOrDefault(meta, KEY_QUEST_NAME, defaults));
+        q.setDescription(valueOrDefault(meta, KEY_QUEST_DESCRIPTION, defaults));
 
-        Map paths = (Map) meta.get("paths");
+        Map paths = (Map) meta.get(KEY_QUEST_PATH_NODE);
         // Check if 'paths' node collection exists moved inside 'valueOrDefault'
-        q.setMainDocumentPath(valueOrDefault(paths, "main-document", defaults));
-        q.setInfoDocumentPath(valueOrDefault(paths, "info-document", defaults));
-        q.setIconPath(valueOrDefault(paths, "icon", defaults));
+        q.setMainDocumentPath(valueOrDefault(paths, KEY_QUEST_PATH_MAINDOCUMENT, defaults));
+        q.setInfoDocumentPath(valueOrDefault(paths, KEY_QUEST_PATH_INFODOCUMENT, defaults));
+        q.setIconPath(valueOrDefault(paths, KEY_QUEST_PATH_ICON, defaults));
 
         return q;
     }
