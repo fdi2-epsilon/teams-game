@@ -10,5 +10,6 @@ targetCompatibility = '1.7'
 
 dependencies {
     compile 'org.slf4j:slf4j-api:1.7.7'
+    compile 'org.yaml:snakeyaml:1.15'
     testCompile 'junit:junit:4.11'
 }

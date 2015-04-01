@@ -1,5 +1,10 @@
 package eu.unipv.epsilon.enigma.quest;
 
+import eu.unipv.epsilon.enigma.io.DefaultQuestCollectionBuilder;
+import eu.unipv.epsilon.enigma.io.QuestCollectionBuilder;
+
+import java.io.File;
+import java.io.IOException;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -35,6 +40,22 @@ public class QuestCollection {
 
     public int size() {
         return quests.size();
+    }
+
+    /* STATIC BUILDER UTILITIES */
+
+    private static QuestCollectionBuilder builder = new DefaultQuestCollectionBuilder();
+
+    public static void setBuilder(QuestCollectionBuilder builder) {
+        QuestCollection.builder = builder;
+    }
+
+    public static QuestCollection fromFile(String path) throws IOException {
+        return QuestCollection.fromFile(new File(path));
+    }
+
+    public static QuestCollection fromFile(File file) throws IOException {
+        return builder.createCollectionFromFile(file);
     }
 
 }
