@@ -2,7 +2,7 @@
 
 #### A simple quiz game... starring our buddies.
 *Our co-workers are the stars here: a quest series for each team and their problems!*
-<br><br><br><br>
+<br><br><br>
 
 ## What is this?
 Codename `Enigma` is a framework for quiz collections produced at the teams software development course at [UNIPV](https://www.unipv.eu).
