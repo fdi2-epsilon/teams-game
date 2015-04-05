@@ -1,5 +1,38 @@
 <resources>
-    <style name="AppTheme" parent="android:Theme.Holo.Light">
-        <!-- Theme customization goes in here. -->
+
+    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+        <!-- We are using a Toolbar, so we don't need an ActionBar -->
+        <item name="android:windowNoTitle">true</item>
+        <item name="windowActionBar">false</item>
+
+        <!-- Default transparency switches in Android 4.4 -->
+        <!--<item name="android:windowTranslucentStatus">true</item>-->
+        <!--<item name="android:windowTranslucentNavigation">true</item>-->
+
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+
+        <item name="android:navigationBarColor">@color/alphaColorPrimary</item>
+        <item name="android:statusBarColor">@color/alphaColorPrimaryDark</item>
     </style>
+
+    <!-- Colors from Material Design guidelines: -->
+    <!-- http://www.google.com/design/spec/style/color.html#color-color-palette -->
+
+    <!-- Used as default ActionBar background -->
+    <color name="colorPrimary">#2196f3</color>
+    <color name="alphaColorPrimary">#dd2196f3</color>
+
+    <!-- Used as default color for the StatusBar -->
+    <color name="colorPrimaryDark">#1976d2</color>
+    <color name="alphaColorPrimaryDark">#dd1976d2</color>
+
+    <!-- Default value for 'colorControlActivated', used to tint widgets -->
+    <color name="colorAccent">#ffd740</color>
+
+    <!-- Can be set: -->
+    <!-- 'colorControlNormal', 'colorControlActivated', 'colorControlHighlight', 'colorSwitchThumbNormal' -->
+
+
 </resources>

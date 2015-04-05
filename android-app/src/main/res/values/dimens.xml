@@ -2,4 +2,20 @@
     <!-- Default screen margins, per the Android Design guidelines. -->
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
+
+    <!-- Material Design -->
+    <dimen name="toolbar_default_elevation">8dp</dimen>
+
+    <!-- Material Design guidelines, Cards related -->
+    <dimen name="card_corner_radius">2dp</dimen>
+    <dimen name="card_content_padding">16dp</dimen>
+    <dimen name="card_screen_edge_padding">8dp</dimen>
+    <dimen name="card_gutters_padding">8dp</dimen>
+    <dimen name="card_default_elevation">2dp</dimen>
+
+    <!-- Typography                                         -->
+    <!--   Body type: 14sp or 16sp                          -->
+    <!--   Headlines: 24sp or larger                        -->
+    <!--   Flat buttons: Roboto Medium, 14sp, 10sp tracking -->
+
 </resources>
