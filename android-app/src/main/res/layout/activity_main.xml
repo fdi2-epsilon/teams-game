@@ -25,6 +25,6 @@
             a:layout_height="match_parent"
             a:paddingLeft="@dimen/card_screen_edge_padding"
             a:paddingRight="@dimen/card_screen_edge_padding"
-            a:clipToPadding="false" />
+            a:layout_below="@id/toolbar" />
 
 </RelativeLayout>

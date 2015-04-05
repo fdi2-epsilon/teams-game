@@ -38,6 +38,8 @@ public class MainActivity extends ActionBarActivity {
                 "No, I am only joking", "OMG WATCH OUT!", "Nothing", "Goodbye", "...", "Are you still here?",
                 "No?", "Ok", "Bye"
         }));
+
+        GuiHelper.extendMainActivityToSysytemArea(this, toolbar, recyclerView);
     }
 
     @Override
