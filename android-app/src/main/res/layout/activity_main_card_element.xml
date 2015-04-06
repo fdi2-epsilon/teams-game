@@ -9,10 +9,11 @@
         app:cardCornerRadius="@dimen/card_corner_radius"
         app:cardElevation="@dimen/card_default_elevation" >
 
-        <TextView
+        <eu.unipv.epsilon.enigma.ui.widget.TextViewExt
                 a:layout_width="match_parent"
                 a:layout_height="match_parent"
                 a:textSize="24sp"
-                a:text="__placeholder__" />
+                app:font_family="RobotoSlab"
+                app:font_family_ext="Regular"/>
 
 </android.support.v7.widget.CardView>

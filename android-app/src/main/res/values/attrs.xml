@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- Additional attributes for application-defined widgets -->
+
+    <!-- eu.unipv.epsilon.enigma.ui.widget.TextViewExt -->
+    <declare-styleable name="TextViewExt">
+        <attr name="font_family" format="string"/>
+        <attr name="font_family_ext" format="string"/>
+        <attr name="font_style">
+            <enum name="normal" value="0"/>         <!-- Typeface.NORMAL -->
+            <enum name="bold" value="1"/>           <!-- Typeface.BOLD -->
+            <enum name="italic" value="2"/>         <!-- Typeface.ITALIC -->
+            <enum name="bold_italic" value="3"/>    <!-- Typeface.BOLD_ITALIC -->
+        </attr>
+    </declare-styleable>
+
+</resources>

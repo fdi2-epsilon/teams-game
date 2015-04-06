@@ -18,25 +18,4 @@
         <item name="android:statusBarColor">@color/alphaColorPrimaryDark</item>
     </style>
 
-    <!-- Colors from Material Design guidelines: -->
-    <!-- http://www.google.com/design/spec/style/color.html#color-color-palette -->
-
-    <!-- Used as default ActionBar background -->
-    <color name="colorPrimary">#2196f3</color>
-    <color name="alphaColorPrimary">#dd2196f3</color>
-
-    <!-- Used as default color for the StatusBar -->
-    <color name="colorPrimaryDark">#1976d2</color>
-    <color name="alphaColorPrimaryDark">#dd1976d2</color>
-
-    <!-- Default value for 'colorControlActivated', used to tint widgets -->
-    <color name="colorAccent">#ffd740</color>
-
-    <!-- Window background -->
-    <color name="windowBackground">#e8e8e8</color>
-
-    <!-- Can be set: -->
-    <!-- 'colorControlNormal', 'colorControlActivated', 'colorControlHighlight', 'colorSwitchThumbNormal' -->
-
-
 </resources>

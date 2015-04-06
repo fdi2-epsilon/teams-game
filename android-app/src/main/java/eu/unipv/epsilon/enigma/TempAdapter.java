@@ -1,6 +1,5 @@
 package eu.unipv.epsilon.enigma;
 
-import android.graphics.Typeface;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
@@ -36,13 +35,10 @@ public class TempAdapter extends RecyclerView.Adapter<TempAdapter.ViewHolder> {
     public TempAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         // Create a new view
         CardView v = (CardView) LayoutInflater.from(
-                parent.getContext()).inflate(R.layout.temp_element_view, parent, false);
+                parent.getContext()).inflate(R.layout.activity_main_card_element, parent, false);
 
         // Set the view's size, margins, paddings and layout parameters
         /* ... */
-
-        TextView innerText = (TextView) v.getChildAt(0);
-        innerText.setTypeface(Typeface.createFromAsset(parent.getContext().getAssets(), "fonts/RobotoSlab-Regular.ttf"));
 
         return new ViewHolder(v);
     }
