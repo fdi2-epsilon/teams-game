@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:a="http://schemas.android.com/apk/res/android">
+
+    <item a:id="@android:id/background">
+        <shape>
+            <!-- <corners a:radius="5dip"/>
+            <gradient a:startColor="#ff9d9e9d" a:centerColor="#ff5a5d5a" a:endColor="#ff747674"
+                      a:centerY="0.75" a:angle="270"/> -->
+            <solid a:color="@android:color/transparent"/>
+        </shape>
+    </item>
+
+    <item a:id="@android:id/progress">
+        <clip>
+            <shape>
+                <!-- <corners a:radius="5dip"/>
+                <gradient a:startColor="#33ff33" a:endColor="#008000" a:angle="270"/> -->
+                <solid a:color="@color/mainCardProgressBarPrimary"/>
+            </shape>
+        </clip>
+    </item>
+
+    <item a:id="@android:id/secondaryProgress">
+        <clip>
+            <shape>
+                <!-- <corners a:radius="5dip"/>
+                <gradient a:startColor="#80ffd300" a:centerColor="#80ffb600" a:endColor="#a0ffcb00"
+                          a:centerY="0.75" a:angle="270"/> -->
+                <solid a:color="@color/mainCardProgressBarSecondary"/>
+            </shape>
+        </clip>
+    </item>
+
+</layer-list>

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- Main activity modifiable Card elements -->
+    <item type="id" name="card_image"/>
+    <item type="id" name="card_title"/>
+    <item type="id" name="card_progressbar"/>
+    <item type="id" name="card_description"/>
+
+</resources>

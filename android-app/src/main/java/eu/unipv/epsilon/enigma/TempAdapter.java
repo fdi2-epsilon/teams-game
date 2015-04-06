@@ -3,6 +3,7 @@ package eu.unipv.epsilon.enigma;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 import android.widget.TextView;
@@ -33,9 +34,10 @@ public class TempAdapter extends RecyclerView.Adapter<TempAdapter.ViewHolder> {
     // Create new views (invoked by the Layout Manager)
     @Override
     public TempAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        Log.i("RECYCLER", "Created element");
         // Create a new view
         CardView v = (CardView) LayoutInflater.from(
-                parent.getContext()).inflate(R.layout.activity_main_card_element, parent, false);
+                parent.getContext()).inflate(R.layout.main_card_small, parent, false);
 
         // Set the view's size, margins, paddings and layout parameters
         /* ... */
@@ -46,13 +48,18 @@ public class TempAdapter extends RecyclerView.Adapter<TempAdapter.ViewHolder> {
     // Replace the contents of a view (invoked by the layout manager)
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
+        Log.i("RECYCLER", "Recycled element");
+
         // - Get element from your dataset at this position
         // - Replace the contents of the view with that element
-        ((TextView) holder.card.getChildAt(0)).setText(dataset[position]);
 
-        if (position == 0) {
-            ((StaggeredGridLayoutManager.LayoutParams) holder.card.getLayoutParams()).setFullSpan(true);
-        }
+        ((TextView) holder.card.findViewById(R.id.card_description)).setText(dataset[position]);
+
+        StaggeredGridLayoutManager.LayoutParams cardLayoutParams =
+                (StaggeredGridLayoutManager.LayoutParams) holder.card.getLayoutParams();
+
+        if (position == 0) cardLayoutParams.setFullSpan(true);
+        else cardLayoutParams.setFullSpan(false);
     }
 
     // Return the size of your dataset (invoked by the layout manager)

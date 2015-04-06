@@ -12,12 +12,16 @@
     <color name="alphaColorPrimaryDark">#dd1976d2</color>
 
     <!-- Default value for 'colorControlActivated', used to tint widgets -->
-    <color name="colorAccent">#ffd740</color>
+    <color name="colorAccent">#ffab40</color>
+
+
+    <!-- Progress bar style in main activity cards -->
+    <color name="mainCardProgressBarPrimary">#00BCD4</color>
+    <color name="mainCardProgressBarSecondary">#3000</color>
 
     <!-- Window background -->
     <color name="windowBackground">#e8e8e8</color>
 
     <!-- Can be set: -->
     <!-- 'colorControlNormal', 'colorControlActivated', 'colorControlHighlight', 'colorSwitchThumbNormal' -->
-
 </resources>
