@@ -27,7 +27,7 @@ public class GuiHelper {
         int statusBarHeight = getDefaultStatusBarHeight(activity.getResources());
         int navigationBarHeight = getDefaultNavigationBarHeight(activity.getResources());
 
-        int cardPadding = (int) activity.getResources().getDimension(R.dimen.card_screen_edge_padding);
+        int cardPadding = (int) activity.getResources().getDimension(R.dimen.card_screen_edge_padding_half);
 
         RelativeLayout.LayoutParams toolbarLayoutParams = (RelativeLayout.LayoutParams) toolbar.getLayoutParams();
         RelativeLayout.LayoutParams listLayoutParams = (RelativeLayout.LayoutParams) list.getLayoutParams();

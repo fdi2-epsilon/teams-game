@@ -23,8 +23,8 @@
             a:scrollbars="vertical"
             a:layout_width="match_parent"
             a:layout_height="match_parent"
-            a:paddingLeft="@dimen/card_screen_edge_padding"
-            a:paddingRight="@dimen/card_screen_edge_padding"
+            a:paddingLeft="@dimen/card_screen_edge_padding_half"
+            a:paddingRight="@dimen/card_screen_edge_padding_half"
             a:layout_below="@id/toolbar" />
 
 </RelativeLayout>

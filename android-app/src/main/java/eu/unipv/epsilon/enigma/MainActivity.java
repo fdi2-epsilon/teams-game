@@ -2,8 +2,8 @@ package eu.unipv.epsilon.enigma;
 
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
@@ -29,8 +29,8 @@ public class MainActivity extends ActionBarActivity {
         // in the content do not change the layout size of the RecyclerView.
         recyclerView.setHasFixedSize(true);
 
-        // Use a linear layout manager
-        recyclerView.setLayoutManager(new LinearLayoutManager(this)); // ?? 'getApplicationContext()' or 'this'?
+        // Use a staggered layout manager
+        recyclerView.setLayoutManager(new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL));
 
         // Specify an adapter
         recyclerView.setAdapter(new TempAdapter(new String[]{

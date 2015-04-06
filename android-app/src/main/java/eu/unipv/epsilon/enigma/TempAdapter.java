@@ -1,8 +1,10 @@
 package eu.unipv.epsilon.enigma;
 
+import android.graphics.Typeface;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.view.LayoutInflater;
-import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
@@ -16,11 +18,11 @@ public class TempAdapter extends RecyclerView.Adapter<TempAdapter.ViewHolder> {
     public class ViewHolder extends RecyclerView.ViewHolder {
 
         // Each data item is just a string in this case.
-        public TextView textView;
+        public CardView card;
 
-        public ViewHolder(TextView v) {
+        public ViewHolder(CardView v) {
             super(v);
-            textView = v;
+            card = v;
         }
     }
 
@@ -33,12 +35,16 @@ public class TempAdapter extends RecyclerView.Adapter<TempAdapter.ViewHolder> {
     @Override
     public TempAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         // Create a new view
-        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.temp_text_view, parent, false);
+        CardView v = (CardView) LayoutInflater.from(
+                parent.getContext()).inflate(R.layout.temp_element_view, parent, false);
 
         // Set the view's size, margins, paddings and layout parameters
         /* ... */
 
-        return new ViewHolder((TextView) v);
+        TextView innerText = (TextView) v.getChildAt(0);
+        innerText.setTypeface(Typeface.createFromAsset(parent.getContext().getAssets(), "fonts/RobotoSlab-Regular.ttf"));
+
+        return new ViewHolder(v);
     }
 
     // Replace the contents of a view (invoked by the layout manager)
@@ -46,7 +52,11 @@ public class TempAdapter extends RecyclerView.Adapter<TempAdapter.ViewHolder> {
     public void onBindViewHolder(ViewHolder holder, int position) {
         // - Get element from your dataset at this position
         // - Replace the contents of the view with that element
-        holder.textView.setText(dataset[position]);
+        ((TextView) holder.card.getChildAt(0)).setText(dataset[position]);
+
+        if (position == 0) {
+            ((StaggeredGridLayoutManager.LayoutParams) holder.card.getLayoutParams()).setFullSpan(true);
+        }
     }
 
     // Return the size of your dataset (invoked by the layout manager)

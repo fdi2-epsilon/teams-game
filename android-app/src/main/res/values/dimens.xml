@@ -7,11 +7,13 @@
     <dimen name="toolbar_default_elevation">8dp</dimen>
 
     <!-- Material Design guidelines, Cards related -->
-    <dimen name="card_corner_radius">2dp</dimen>
+    <dimen name="card_corner_radius">@dimen/cardview_default_radius</dimen>
+    <dimen name="card_default_elevation">@dimen/cardview_default_elevation</dimen>
     <dimen name="card_content_padding">16dp</dimen>
     <dimen name="card_screen_edge_padding">8dp</dimen>
+    <dimen name="card_screen_edge_padding_half">4dp</dimen>
     <dimen name="card_gutters_padding">8dp</dimen>
-    <dimen name="card_default_elevation">2dp</dimen>
+    <dimen name="card_gutters_padding_half">4dp</dimen>
 
     <!-- Typography                                         -->
     <!--   Body type: 14sp or 16sp                          -->

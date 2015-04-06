@@ -12,6 +12,7 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:windowBackground">@color/windowBackground</item>
 
         <item name="android:navigationBarColor">@color/alphaColorPrimary</item>
         <item name="android:statusBarColor">@color/alphaColorPrimaryDark</item>
@@ -30,6 +31,9 @@
 
     <!-- Default value for 'colorControlActivated', used to tint widgets -->
     <color name="colorAccent">#ffd740</color>
+
+    <!-- Window background -->
+    <color name="windowBackground">#e8e8e8</color>
 
     <!-- Can be set: -->
     <!-- 'colorControlNormal', 'colorControlActivated', 'colorControlHighlight', 'colorSwitchThumbNormal' -->
