@@ -15,9 +15,10 @@
     <dimen name="card_gutters_padding">8dp</dimen>
     <dimen name="card_gutters_padding_half">4dp</dimen>
 
-    <!-- Typography                                         -->
-    <!--   Body type: 14sp or 16sp                          -->
-    <!--   Headlines: 24sp or larger                        -->
+    <!-- Material Design guidelines, Typography -->
+    <dimen name="body_font_size_small">14sp</dimen>
+    <dimen name="body_font_size_large">16sp</dimen>
+    <dimen name="headline_font_size">24sp</dimen> <!-- or larger -->
     <!--   Flat buttons: Roboto Medium, 14sp, 10sp tracking -->
 
 </resources>

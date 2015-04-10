@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView
+        xmlns:a="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        a:layout_width="match_parent"
+        a:layout_height="wrap_content"
+        a:layout_margin="@dimen/card_gutters_padding_half"
+        app:cardCornerRadius="@dimen/card_corner_radius"
+        app:cardElevation="@dimen/card_default_elevation"
+        tools:layout_width="175dp">
+
+    <FrameLayout
+            a:layout_width="match_parent"
+            a:layout_height="42dp">
+
+        <ImageView
+                a:id="@id/card_image"
+                a:layout_width="fill_parent"
+                a:layout_height="fill_parent"
+                a:scaleType="centerCrop"
+                a:adjustViewBounds="true"
+                a:src="@drawable/temp_img"
+                tools:ignore="contentDescription"/>
+
+        <!-- Drawable loading through XML only temporary, it is source of lag -->
+
+        <GridLayout
+                a:layout_width="match_parent"
+                a:layout_height="match_parent"
+                a:paddingTop="4dp"
+                a:paddingBottom="4dp">
+
+            <eu.unipv.epsilon.enigma.ui.widget.TextViewExt
+                    a:id="@id/card_title"
+                    a:layout_width="wrap_content"
+                    a:layout_height="wrap_content"
+                    a:textSize="@dimen/headline_font_size"
+                    a:layout_marginStart="@dimen/card_content_padding"
+                    a:textColor="#eee"
+                    a:shadowColor="#8000"
+                    a:shadowRadius="8"
+                    app:font_family="RobotoSlab"
+                    app:font_family_ext="Regular"
+                    tools:text="Series μ"/>
+
+            <ImageButton
+                    a:layout_width="wrap_content"
+                    a:layout_height="wrap_content"
+                    a:src="@drawable/ic_more_vert_white_24dp"
+                    a:alpha="0.9"
+                    a:background="?android:attr/selectableItemBackground"
+                    a:layout_marginEnd="6dp"
+                    a:layout_gravity="end|center_vertical"
+                    a:contentDescription="@string/main_card_tiny_actionOverflow_contentDescription"/>
+
+        </GridLayout>
+
+    </FrameLayout>
+
+</android.support.v7.widget.CardView>
+

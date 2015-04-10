@@ -10,92 +10,90 @@
         app:cardElevation="@dimen/card_default_elevation"
         tools:layout_width="175dp">
 
-        <RelativeLayout
+    <FrameLayout
+            a:layout_width="match_parent"
+            a:layout_height="wrap_content"
+            a:orientation="vertical">
+
+        <ImageView
+                a:id="@id/card_image"
+                a:layout_width="fill_parent"
+                a:layout_height="fill_parent"
+                a:scaleType="centerCrop"
+                a:adjustViewBounds="true"
+                a:src="@drawable/temp_img"
+                tools:ignore="contentDescription"/>
+
+        <!-- Drawable loading through XML only temporary, it is source of lag -->
+
+        <LinearLayout
                 a:layout_width="match_parent"
-                a:layout_height="match_parent"
+                a:layout_height="wrap_content"
                 a:orientation="vertical">
 
-                <ImageView
-                        a:id="@id/card_image"
-                        a:layout_width="fill_parent"
-                        a:layout_height="100dp"
-                        a:scaleType="centerCrop"
-                        a:adjustViewBounds="true"
-                        a:src="@drawable/temp_img"
-                        a:contentDescription="banner_alt" />
-
-                <!-- Drawable loading thru XML only temporary, it is source of lag -->
+            <LinearLayout
+                    a:layout_width="match_parent"
+                    a:layout_height="wrap_content"
+                    a:orientation="vertical"
+                    a:layout_marginTop="@dimen/card_content_padding"
+                    a:layout_marginStart="@dimen/card_content_padding"
+                    a:layout_marginEnd="@dimen/card_content_padding">
 
                 <eu.unipv.epsilon.enigma.ui.widget.TextViewExt
                         a:id="@id/card_title"
                         a:layout_width="match_parent"
                         a:layout_height="wrap_content"
-                        a:textSize="24sp"
-                        a:layout_alignBottom="@id/card_image"
-                        a:layout_margin="@dimen/card_content_padding"
+                        a:textSize="@dimen/headline_font_size"
                         a:textColor="#eee"
                         a:shadowColor="#8000"
                         a:shadowRadius="8"
+                        a:layout_marginBottom="4dp"
                         app:font_family="RobotoSlab"
                         app:font_family_ext="Regular"
-                        tools:text="Series n.1"
-                        a:text="Placeholder"/>
-
-                <ProgressBar
-                        a:id="@id/card_progressbar"
-                        style="?android:attr/progressBarStyleHorizontal"
-                        a:layout_below="@id/card_image"
-                        a:layout_width="match_parent"
-                        a:layout_height="4dp"
-                        a:progressDrawable="@drawable/main_card_progressdrawable"
-                        a:max="100"
-                        a:progress="50"
-                        a:secondaryProgress="70"/>
+                        tools:text="Series S"/>
 
                 <TextView
-                        a:id="@id/card_description"
+                        a:id="@id/card_subtitle"
                         a:layout_width="wrap_content"
                         a:layout_height="wrap_content"
-                        a:layout_below="@id/card_progressbar"
-                        a:layout_margin="@dimen/card_content_padding"
-                        tools:text="...and the computer catched up in fire in front of the paralyzed eyes of the team."/>
+                        a:textColor="#eee"
+                        a:shadowColor="#8000"
+                        a:shadowRadius="8"
+                        a:textSize="@dimen/body_font_size_large"
+                        a:textStyle="bold"
+                        a:layout_marginBottom="4dp"
+                        tools:text="Content subtitle"/>
 
-                <View
-                        a:id="@+id/_separator01"
-                        a:layout_width="match_parent"
-                        a:layout_height="1dp"
-                        a:background="#dcdcdc"
-                        a:layout_below="@id/card_description"/>
+            </LinearLayout>
 
-                <LinearLayout
-                        a:layout_width="match_parent"
+            <LinearLayout
+                    a:layout_width="match_parent"
+                    a:layout_height="wrap_content"
+                    a:orientation="horizontal"
+                    a:gravity="end">
+
+                <ImageButton
+                        a:layout_width="wrap_content"
                         a:layout_height="wrap_content"
-                        a:orientation="horizontal"
-                        a:layout_below="@id/_separator01"
-                        a:padding="4dp">
+                        a:src="@drawable/ic_share_white_24dp"
+                        a:alpha="0.9"
+                        a:background="?android:attr/selectableItemBackground"
+                        a:layout_margin="4dp"
+                        a:contentDescription="@string/main_card_comm_share_contentDescription"/>
 
-                        <Button
-                                a:layout_width="wrap_content"
-                                a:layout_height="wrap_content"
-                                tools:text="OVERVIEW"
-                                a:background="?android:attr/selectableItemBackground"
-                                a:padding="0dp"
-                                a:minHeight="40dp"/>
+                <ImageButton
+                        a:layout_width="wrap_content"
+                        a:layout_height="wrap_content"
+                        a:src="@drawable/ic_star_outline_white_24dp"
+                        a:alpha="0.9"
+                        a:background="?android:attr/selectableItemBackground"
+                        a:layout_margin="4dp"
+                        a:contentDescription="@string/main_card_comm_star_contentDescription"/>
 
-                        <Button
-                                a:layout_width="wrap_content"
-                                a:layout_height="wrap_content"
-                                tools:text="SHARE"
-                                a:textColor="?attr/colorAccent"
-                                a:background="?android:attr/selectableItemBackground"
-                                a:padding="0dp"
-                                a:minHeight="40dp"/>
+            </LinearLayout>
 
-                </LinearLayout>
+        </LinearLayout>
 
-
-                
-        </RelativeLayout>
+    </FrameLayout>
 
 </android.support.v7.widget.CardView>
-

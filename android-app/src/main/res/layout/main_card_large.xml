@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView
+        xmlns:a="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        a:layout_width="match_parent"
+        a:layout_height="wrap_content"
+        a:layout_margin="@dimen/card_gutters_padding_half"
+        app:cardCornerRadius="@dimen/card_corner_radius"
+        app:cardElevation="@dimen/card_default_elevation">
+
+    <LinearLayout
+            a:layout_width="match_parent"
+            a:layout_height="wrap_content"
+            a:orientation="vertical">
+
+        <RelativeLayout
+                a:layout_width="match_parent"
+                a:layout_height="wrap_content">
+
+            <ImageView
+                    a:id="@id/card_image"
+                    a:layout_width="fill_parent"
+                    a:layout_height="130dp"
+                    a:scaleType="centerCrop"
+                    a:adjustViewBounds="true"
+                    a:src="@drawable/temp_img"
+                    tools:ignore="contentDescription"/>
+
+            <!-- Drawable loading though XML only temporary, it is source of lag -->
+
+            <eu.unipv.epsilon.enigma.ui.widget.TextViewExt
+                    a:id="@id/card_title"
+                    a:layout_width="match_parent"
+                    a:layout_height="wrap_content"
+                    a:textSize="@dimen/headline_font_size"
+                    a:layout_alignBottom="@id/card_image"
+                    a:layout_margin="@dimen/card_content_padding"
+                    a:textColor="#eee"
+                    a:shadowColor="#8000"
+                    a:shadowRadius="8"
+                    app:font_family="RobotoSlab"
+                    app:font_family_ext="Regular"
+                    tools:text="Series L"/>
+
+        </RelativeLayout>
+
+        <ProgressBar
+                a:id="@id/card_progressbar"
+                style="?android:attr/progressBarStyleHorizontal"
+                a:layout_width="match_parent"
+                a:layout_height="4dp"
+                a:progressDrawable="@drawable/main_card_progress_drawable"
+                a:max="100"
+                a:progress="50"
+                a:secondaryProgress="70"/>
+
+        <!-- Only temporary progress spec. -->
+
+        <LinearLayout
+                a:layout_width="match_parent"
+                a:layout_height="wrap_content"
+                a:orientation="vertical"
+                a:layout_margin="@dimen/card_content_padding">
+
+            <TextView
+                    a:id="@id/card_subtitle"
+                    a:layout_width="wrap_content"
+                    a:layout_height="wrap_content"
+                    a:textSize="@dimen/body_font_size_large"
+                    a:textStyle="bold"
+                    a:layout_marginBottom="4dp"
+                    tools:text="Content subtitle"/>
+
+            <TextView
+                    a:id="@id/card_description"
+                    a:layout_width="wrap_content"
+                    a:layout_height="wrap_content"
+                    a:textSize="@dimen/body_font_size_small"
+                    tools:text="...and the computer caught up in fire in front of the paralyzed eyes of the team. 'I am fat and I have a llama' said Vik, while the other guys tried to extinguish the fire."/>
+
+        </LinearLayout>
+
+        <View
+                a:layout_width="match_parent"
+                a:layout_height="1dp"
+                a:background="@android:drawable/divider_horizontal_bright"/>
+
+        <LinearLayout
+                a:layout_width="match_parent"
+                a:layout_height="wrap_content"
+                a:orientation="horizontal"
+                a:padding="4dp">
+
+            <Button
+                    a:layout_width="wrap_content"
+                    a:layout_height="wrap_content"
+                    a:text="@string/main_card_large_continue_text"
+                    a:textAllCaps="true"
+                    a:background="?android:attr/selectableItemBackground"
+                    a:padding="0dp"
+                    a:minHeight="40dp"/>
+
+            <Button
+                    a:layout_width="wrap_content"
+                    a:layout_height="wrap_content"
+                    a:text="@string/main_card_large_share_text"
+                    a:textColor="?attr/colorAccent"
+                    a:background="?android:attr/selectableItemBackground"
+                    a:padding="0dp"
+                    a:minHeight="40dp"/>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</android.support.v7.widget.CardView>
+
