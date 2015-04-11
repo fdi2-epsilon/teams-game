@@ -19,7 +19,7 @@
     <!-- Pre 5.0 elevation: FrameLayout with foreground="?android:windowContentOverlay" -->
 
     <android.support.v7.widget.RecyclerView
-            a:id="@+id/main_recycler_view"
+            a:id="@+id/main_collections_view"
             a:scrollbars="vertical"
             a:layout_width="match_parent"
             a:layout_height="match_parent"

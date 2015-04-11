@@ -20,7 +20,7 @@
                 a:layout_height="fill_parent"
                 a:scaleType="centerCrop"
                 a:adjustViewBounds="true"
-                a:src="@drawable/temp_img"
+                a:src="@drawable/temp_img04"
                 tools:ignore="contentDescription"/>
 
         <!-- Drawable loading through XML only temporary, it is source of lag -->
@@ -38,8 +38,6 @@
                     a:textSize="@dimen/headline_font_size"
                     a:layout_marginStart="@dimen/card_content_padding"
                     a:textColor="#eee"
-                    a:shadowColor="#8000"
-                    a:shadowRadius="8"
                     app:font_family="RobotoSlab"
                     app:font_family_ext="Regular"
                     tools:text="Series μ"/>

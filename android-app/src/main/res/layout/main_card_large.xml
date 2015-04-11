@@ -21,10 +21,10 @@
             <ImageView
                     a:id="@id/card_image"
                     a:layout_width="fill_parent"
-                    a:layout_height="130dp"
+                    a:layout_height="115dp"
                     a:scaleType="centerCrop"
                     a:adjustViewBounds="true"
-                    a:src="@drawable/temp_img"
+                    a:src="@drawable/temp_img01"
                     tools:ignore="contentDescription"/>
 
             <!-- Drawable loading though XML only temporary, it is source of lag -->
@@ -37,8 +37,6 @@
                     a:layout_alignBottom="@id/card_image"
                     a:layout_margin="@dimen/card_content_padding"
                     a:textColor="#eee"
-                    a:shadowColor="#8000"
-                    a:shadowRadius="8"
                     app:font_family="RobotoSlab"
                     app:font_family_ext="Regular"
                     tools:text="Series L"/>
@@ -70,7 +68,7 @@
                     a:textSize="@dimen/body_font_size_large"
                     a:textStyle="bold"
                     a:layout_marginBottom="4dp"
-                    tools:text="Content subtitle"/>
+                    tools:text="What the hell?"/>
 
             <TextView
                     a:id="@id/card_description"
