@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView
+        xmlns:a="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        a:layout_width="match_parent"
+        a:layout_height="wrap_content"
+        a:layout_margin="@dimen/card_gutters_padding_half"
+        app:cardBackgroundColor="#283593"
+        app:cardCornerRadius="@dimen/card_corner_radius"
+        app:cardElevation="@dimen/card_default_elevation">
+
+    <LinearLayout
+            a:layout_width="match_parent"
+            a:layout_height="wrap_content"
+            a:orientation="vertical">
+
+
+        <eu.unipv.epsilon.enigma.ui.widget.TextViewExt
+                a:id="@id/card_title"
+                a:layout_width="match_parent"
+                a:layout_height="wrap_content"
+                a:textSize="@dimen/headline_font_size"
+                a:layout_marginTop="@dimen/card_content_padding"
+                a:layout_marginLeft="@dimen/card_content_padding"
+                a:layout_marginRight="@dimen/card_content_padding"
+                a:textColor="#eee"
+                app:font_family="RobotoSlab"
+                app:font_family_ext="Regular"
+                a:text="@string/main_card_first_start_title"/>
+
+        <View
+                a:layout_width="match_parent"
+                a:layout_height="1dp"
+                a:layout_marginTop="6dp"
+                a:layout_marginBottom="8dp"
+                a:background="#4fff"/>
+
+        <TextView
+                a:id="@id/card_description"
+                a:layout_width="wrap_content"
+                a:layout_height="wrap_content"
+                a:layout_marginLeft="@dimen/card_content_padding"
+                a:layout_marginRight="@dimen/card_content_padding"
+                a:textColor="#eee"
+                a:textSize="@dimen/body_font_size_small"
+                a:text="@string/main_card_first_start_content"/>
+
+        <Button
+                a:layout_width="wrap_content"
+                a:layout_height="wrap_content"
+                a:text="@android:string/ok"
+                a:textColor="#eee"
+                a:background="?android:attr/selectableItemBackground"
+                a:layout_gravity="end"
+                a:minHeight="40dp"/>
+
+    </LinearLayout>
+
+</android.support.v7.widget.CardView>
