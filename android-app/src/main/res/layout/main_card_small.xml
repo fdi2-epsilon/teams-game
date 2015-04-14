@@ -55,8 +55,6 @@
                         a:layout_width="wrap_content"
                         a:layout_height="wrap_content"
                         a:textColor="#eee"
-                        a:shadowColor="#8000"
-                        a:shadowRadius="8"
                         a:textSize="@dimen/body_font_size_large"
                         a:textStyle="bold"
                         a:layout_marginBottom="4dp"
