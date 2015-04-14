@@ -23,15 +23,22 @@ Check out [the docs](https://github.com/fdi2-epsilon/teams-game/wiki) if you wan
   5. Find and fire up the Android SDK manager and take note of the path to where it is installed like here:  
      ![C:\dev\android-sdk-windows](/../gh-pages/images/guide_sdkpath.png?raw=true "SDK Path")
 
-  6. Find the Git installation path, usually in `C:\Program Files\Git\bin` and take note;
-  7. Run the following commands in a prompt
+  6. Find the Git installation path, usually in `C:\Program Files\Git\bin` and take note;ù
+
+  7. Run the following commands in a prompt to let the system know the tools location:
      ```shell
      setx JAVA_HOME "C:\Program Files\Java\jdk1.7.0_75\bin"
      setx ANDROID_HOME "{{the path you have found in step 5}}"
      setx PATH "%PATH%;{{path found in step 6}}"
      ```
-
-  8. Install some Android SDK packages, here's what I have installed:  
+  
+  8. Link Git with your GitHub account, like this:
+     ```shell
+     git config —global user.name "{{Your full name}}"
+     git config —global user.email "{{Your GitHub account email}}"
+     ```
+     
+  9. Install some Android SDK packages, here's what I have installed:  
      ![Many packages](/../gh-pages/images/guide_packages.png?raw=true "SDK Packages")
 
 Now you shuld be ready to work as usual on the project. I feel that this guide isn't complete yet...
