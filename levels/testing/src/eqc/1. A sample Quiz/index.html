@@ -1,0 +1,135 @@
+<html>
+<head>
+    <!-- Page title, we don't need it since our pages
+         are rendered inside a WebView but whatever... -->
+    <title>Enigma Quest</title>
+
+    <!-- Pages always need a charset -->
+    <meta charset="UTF-8">
+
+    <!-- Pragmatic Media Lab! Add some metadata if you want... -->
+    <meta name="author" content="Luca Defilippi, Luca Zanussi">
+    <meta name="keywords" content="quiz, cinema, South Park">
+    <meta name="description" content="First epic quiz in project Enigma">
+
+    <!-- CSS Style: Fancy things go in here, a lot, but don't be scared,
+         I suggest you to skip reading this and go directly to the <body>. -->
+    <style>
+        body {
+            text-align: center;
+            font-family: 'Open Sans', sans-serif;
+            background: linear-gradient(#eee, #ccc);
+        }
+
+        #button-bar {
+            position: absolute;
+            top: 0; left: 0; width: 100%;
+            padding: 8pt;
+            box-sizing: border-box;
+        }
+
+        .button {
+            background-color: rgba(0, 0, 0, .2);
+            width: 70px;
+            padding: 3pt;
+            font-size: .8em;
+        }
+
+        .button.left { float: left; }
+        .button.right { float: right; }
+
+        h1 {
+            font-size: 1.5em;
+            font-weight: 300;
+            margin: 50pt 20pt 20pt 20pt;
+            color: royalblue;
+        }
+
+        ul {
+            list-style-type: none;
+            padding: 0;
+            text-align: center;
+        }
+
+        li {
+            width: 50%;
+            margin: 10pt auto;
+            padding: 4pt 0;
+            font-size: 9pt;
+            letter-spacing: 1.5pt;
+            text-transform: uppercase;
+            transition: background-color .3s;
+            background-color: rgba(0, 0, 0, .05);
+            cursor: pointer;
+        }
+
+        li:hover { background-color: rgba(0, 0, 0, .12); }
+
+    </style>
+
+    <!-- JavaScript here, don't worry: it's only text, random text -->
+    <script>
+        'use strict';
+
+        // The function called on page load, will be registered later at the end of the script.
+        function loadProc() {
+            // You can find DOM elements in many ways:
+            //   'getElementById' is faster and widely supported,
+            //   'querySelector' is new in the spec, concise and more powerful.
+            var el1 = document.getElementById('first-elem');
+            var el2 = document.querySelector('#second-elem');
+            var el3 = document.getElementById('third-elem');
+
+            // Same here,
+            //   x.on[event] = f
+            //       Is the old way, can bind only one listener to an event
+            //       removing any previously registered listeners.
+            //   x.addEventListener('[event]'), f)
+            //       The new and widely supported event system, can register multiple listeners,
+            //       stop propagation, and more. Listeners are removed with 'removeEventListener'.
+            el1.addEventListener('click', cbSuccess);
+            el2.onclick = cbFailure;
+            el3.addEventListener('click', cbFailure);
+            //  Internet Explorer has a third way that behaves like 'addEventListener' but nobody cares...
+        }
+
+        // Function called on exact answer
+        function cbSuccess() {
+            alert("You just pwned yourself, congrats!")
+        }
+
+        // Epic fail handling (opposite as previous function)
+        function cbFailure() {
+            alert("Wrong, shame on you!\n\nP.S. You are a terrible person.");
+        }
+
+        // Exec 'loadProc' only when the document is fully loaded,
+        // so it can find its elements (e.g. #1st-elem, etc.).
+        window.addEventListener('load', loadProc)
+
+    </script>
+</head>
+<body>
+
+    <!-- This page is very clean now, keep in mind that the JavaScript and CSS above can
+         be moved to an external file so that this HTML file can be less than 40 lines. -->
+
+    <div id="button-bar">
+        <div class="button left">Wat</div>
+        <div class="button right">In Here</div>
+    </div>
+
+    <h1>
+        How many <i>turds</i> does Jim Carrey have in his apartment
+        in the film <i>Mr. Popper's penguins</i>?
+    </h1>
+
+    <ul>
+        <li id="first-elem">five</li>
+        <li id="second-elem">seventeen</li>
+        <li id="third-elem">ninety-two</li>
+    </ul>
+
+</body>
+</html>
+
