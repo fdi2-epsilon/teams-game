@@ -16,7 +16,6 @@
 
 
         <eu.unipv.epsilon.enigma.ui.widget.TextViewExt
-                a:id="@id/card_title"
                 a:layout_width="match_parent"
                 a:layout_height="wrap_content"
                 a:textSize="@dimen/headline_font_size"
@@ -36,7 +35,6 @@
                 a:background="#4fff"/>
 
         <TextView
-                a:id="@id/card_description"
                 a:layout_width="wrap_content"
                 a:layout_height="wrap_content"
                 a:layout_marginLeft="@dimen/card_content_padding"
