@@ -1,0 +1,20 @@
+description = 'Game quest test levels'
+
+buildscript {
+    repositories {
+        ivy { url 'https://fdi2-epsilon.github.io/ivy' }
+        jcenter()
+    }
+
+    dependencies {
+        classpath 'eu.unipv.epsilon:equests-gradle:0.3'
+    }
+}
+
+apply plugin: 'java'
+apply plugin: 'enigma-levels'
+
+questCollection {
+    name = 'Test Collection'
+    description = '... a <b>test</b>!'
+}

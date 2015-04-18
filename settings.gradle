@@ -1,5 +1,4 @@
-include 'common'
-include 'android-app'
-include 'desktop-app'
+include 'common', 'android-app', 'desktop-app'
+apply from: 'levels/pack-list.gradle'
 
 rootProject.name = 'teams-game'
