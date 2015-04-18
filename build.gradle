@@ -3,5 +3,5 @@ allprojects {
     apply plugin: 'eclipse'
     apply plugin: 'idea'
 
-    buildDir = "$rootProject.projectDir/build"
+    //buildDir = "$rootProject.projectDir/build"
 }

@@ -1,9 +1,13 @@
 ## Common
 .DS_Store
 
+## Project structure
+/build
+/*/build
+/levels/*/build
+
 ## Gradle
 /.gradle
-/build
 #/gradle
 #/gradlew
 #/gradlew.bat
