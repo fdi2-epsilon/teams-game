@@ -5,3 +5,22 @@ allprojects {
 
     //buildDir = "$rootProject.projectDir/build"
 }
+
+task printGitHash << {
+    println(getCheckedOutCommitHash())
+}
+
+def getCheckedOutCommitHash() {
+    // https://gist.github.com/JonasGroeger/7620911
+    def gitFolder = '.git'
+    def shortHashSz = 7 //12
+
+    def head = file("$gitFolder/HEAD").text.split(':')
+
+    if (head.length == 1) // Detached head, hash is in HEAD file
+        head[0].trim().take(shortHashSz)
+    else { // length == 2, 'ref: refs/heads/...'
+        def refHead = file("$gitFolder/${head[1].trim()}")
+        refHead.text.trim().take shortHashSz
+    }
+}
