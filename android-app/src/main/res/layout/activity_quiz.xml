@@ -1,0 +1,24 @@
+<LinearLayout xmlns:a="http://schemas.android.com/apk/res/android"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
+              xmlns:tools="http://schemas.android.com/tools"
+                a:orientation="vertical"
+                a:layout_width="match_parent"
+                a:layout_height="match_parent"
+                tools:context=".QuizActivity">
+
+    <android.support.v7.widget.Toolbar
+            a:id="@+id/toolbar"
+            a:layout_width="match_parent"
+            a:layout_height="wrap_content"
+            a:minHeight="?android:attr/actionBarSize"
+            a:background="@color/alphaColorPrimary"
+            a:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+            app:popupTheme="@style/Base.ThemeOverlay.AppCompat.Light"
+            a:elevation="6dp" />
+
+    <TextView
+            a:text="questa è la pagina del quiz!"
+            a:layout_width="wrap_content"
+            a:layout_height="wrap_content" />
+
+</LinearLayout>

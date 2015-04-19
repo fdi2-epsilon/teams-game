@@ -3,6 +3,7 @@
     <!-- Core strings -->
     <string name="app_name">Enigma</string>
     <string name="title_activity_main">Team Stories</string>
+    <string name="title_activity_quiz">Quiz</string>
 
     <!-- Main activity cards related -->
     <string name="main_card_first_start_title">Aloha, stranger!</string>

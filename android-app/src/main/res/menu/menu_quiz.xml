@@ -1,11 +1,11 @@
-<?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
       xmlns:app="http://schemas.android.com/apk/res-auto"
       xmlns:tools="http://schemas.android.com/tools"
-      tools:context=".MainActivity">
-    <item android:id="@+id/temp_button"
-          android:title="Placeholder"
-          android:orderInCategory="100"
-          app:showAsAction="never"/>
-</menu>
+      tools:context="eu.unipv.epsilon.enigma.QuizActivity">
 
+    <item android:id="@+id/temp_button2"
+          android:title="wooo"
+          android:orderInCategory="100"
+          app:showAsAction="never" />
+
+</menu>

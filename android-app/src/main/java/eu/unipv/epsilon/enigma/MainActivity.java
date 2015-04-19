@@ -1,5 +1,6 @@
 package eu.unipv.epsilon.enigma;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.RecyclerView;
@@ -24,8 +25,7 @@ public class MainActivity extends ActionBarActivity {
 
         // Initialize toolbar
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-        toolbar.setTitle(R.string.app_name);
+        setSupportActionBar(toolbar);   // Title assigned by manifest
 
         // Initialize view
         initializeElementsView();
@@ -48,7 +48,9 @@ public class MainActivity extends ActionBarActivity {
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
+        if (id == R.id.temp_button) {
+            Intent intent = new Intent(this, QuizActivity.class);
+            startActivity(intent);
             return true;
         }
 
