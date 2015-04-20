@@ -62,7 +62,7 @@
             background-color: rgba(0, 0, 0, .05);
             cursor: pointer;
         }
-
+	 li.success { background-color: greenyellow; }
         li:hover { background-color: rgba(0, 0, 0, .12); }
 
     </style>
@@ -95,8 +95,8 @@
 
         // Function called on exact answer
         function cbSuccess() {
-            alert("You just pwned yourself, congrats!")
-        }
+		 this.classList.add('success');
+			       }
 
         // Epic fail handling (opposite as previous function)
         function cbFailure() {
