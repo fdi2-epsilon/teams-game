@@ -10,6 +10,17 @@ Codename `Enigma` is a framework for quiz collections produced at the teams soft
 We have plans for an Android and a Desktop application, including also multiplayer support in the next releases.  
 Check out [the docs](https://github.com/fdi2-epsilon/teams-game/wiki) if you want learn more and contribute.
 
+## Inside the box...
+- `android-app` is the Android application;
+- `desktop-app` is the Java Desktop application;
+- `common`is common code shared between Android and Desktop apps, in here we have things like custom file formats decoders and such;
+- `levels` contains subprojects to create *Quest Collections* (i.e. quiz campaigns for the game);
+- `build.gradle` and `settings.gradle` are part of the buildscript and define projects and tasks;
+- The `gradle` folder, `gradlew` and `gradlew.bat` allow you to run build tasks and fetch dependencies without having Gradle installed;
+- `gradle.properties` enables some incubating Gradle features to speed up builds;
+- Finally`README.md`, `CONTRIBUTING` and `LICENSE` are simply good things to have in a repo.
+
+
 ## Installation instructions, *for dummies*
 > I will assume that you are using Windows x64 here, since 4/5 of the team actually uses it *(ME INCLUDED, VEERY BAD)*
 
