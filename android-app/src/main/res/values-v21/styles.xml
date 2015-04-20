@@ -1,0 +1,8 @@
+<resources>
+
+    <style name="AppTheme" parent="AppThemeBase">
+        <item name="android:navigationBarColor">@color/alphaColorPrimary</item>
+        <item name="android:statusBarColor">@color/alphaColorPrimaryDark</item>
+    </style>
+
+</resources>

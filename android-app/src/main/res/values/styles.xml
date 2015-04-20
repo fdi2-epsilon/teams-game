@@ -1,6 +1,6 @@
 <resources>
 
-    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+    <style name="AppThemeBase" parent="Theme.AppCompat.Light.DarkActionBar">
         <!-- We are using a Toolbar, so we don't need an ActionBar -->
         <item name="android:windowNoTitle">true</item>
         <item name="windowActionBar">false</item>
@@ -13,9 +13,8 @@
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
         <item name="android:windowBackground">@color/windowBackground</item>
-
-        <item name="android:navigationBarColor">@color/alphaColorPrimary</item>
-        <item name="android:statusBarColor">@color/alphaColorPrimaryDark</item>
     </style>
+
+    <style name="AppTheme" parent="AppThemeBase" />
 
 </resources>
