@@ -21,10 +21,8 @@
                 a:layout_height="fill_parent"
                 a:scaleType="centerCrop"
                 a:adjustViewBounds="true"
-                a:src="@drawable/temp_img03"
+                tools:src="@drawable/temp_img03"
                 tools:ignore="contentDescription"/>
-
-        <!-- Drawable loading through XML only temporary, it is source of lag -->
 
         <LinearLayout
                 a:layout_width="match_parent"

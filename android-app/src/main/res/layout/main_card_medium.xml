@@ -25,10 +25,8 @@
                     a:layout_height="100dp"
                     a:scaleType="centerCrop"
                     a:adjustViewBounds="true"
-                    a:src="@drawable/temp_img02"
+                    tools:src="@drawable/temp_img02"
                     tools:ignore="contentDescription"/>
-
-            <!-- Drawable loading through XML only temporary, it is source of lag -->
 
             <eu.unipv.epsilon.enigma.ui.widget.TextViewExt
                     a:id="@id/card_title"

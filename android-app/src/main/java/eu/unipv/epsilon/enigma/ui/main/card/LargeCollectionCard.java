@@ -28,9 +28,7 @@ public class LargeCollectionCard extends CollectionCardHolder {
         descriptionRef = (TextView) itemView.findViewById(R.id.card_description);
         progressRef = (ProgressBar) itemView.findViewById(R.id.card_progressbar);
 
-
-
-        //
+        // TEMP CODE
         final ViewGroup kParent = parent;
         imageRef.getViewTreeObserver().addOnPreDrawListener(new ViewTreeObserver.OnPreDrawListener() {
             @Override
@@ -38,7 +36,6 @@ public class LargeCollectionCard extends CollectionCardHolder {
                 imageRef.getViewTreeObserver().removeOnPreDrawListener(this);
                 ImageLoader loader = new ResourceImageLoader(kParent.getResources(), R.drawable.temp_img01);
                 imageRef.setImageBitmap(loader.decodeSampledBitmapFromResource(imageRef.getMeasuredWidth(), imageRef.getMeasuredHeight()));
-
                 return true;
             }
         });

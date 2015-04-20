@@ -20,10 +20,8 @@
                 a:layout_height="fill_parent"
                 a:scaleType="centerCrop"
                 a:adjustViewBounds="true"
-                a:src="@drawable/temp_img04"
+                tools:src="@drawable/temp_img04"
                 tools:ignore="contentDescription"/>
-
-        <!-- Drawable loading through XML only temporary, it is source of lag -->
 
         <GridLayout
                 a:layout_width="match_parent"
