@@ -2,6 +2,7 @@ package eu.unipv.epsilon.enigma.ui.bitmap;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.util.Log;
 
 public abstract class ImageLoader {
 
@@ -12,11 +13,21 @@ public abstract class ImageLoader {
         // First decode with inJustDecodeBounds=true to check dimensions
         final BitmapFactory.Options options = getImageOptions();
 
+        int srcWidth = options.outWidth;
+        int srcHeight = options.outHeight;
+
         // Calculate inSampleSize
         options.inSampleSize = calculateInSampleSize(options, reqWidth, reqHeight);
 
+        int sampleSize = options.inSampleSize;
+
         // Decode bitmap with inSampleSize set
-        return decodeBitmapWithOptions(options);
+        Bitmap bitmap = decodeBitmapWithOptions(options);
+
+        Log.i(getClass().getName(), String.format("Loaded %dx%d image as %dx%d (requested %dx%d) with sample size = %d",
+                srcWidth, srcHeight, options.outWidth, options.outHeight, reqWidth, reqHeight, sampleSize));
+
+        return bitmap;
     }
 
     private BitmapFactory.Options getImageOptions() {
