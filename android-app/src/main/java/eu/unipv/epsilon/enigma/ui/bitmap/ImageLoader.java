@@ -1,25 +1,36 @@
 package eu.unipv.epsilon.enigma.ui.bitmap;
 
-import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.support.annotation.DrawableRes;
-import eu.unipv.epsilon.enigma.R;
 
-public class ImageLoader {
+public abstract class ImageLoader {
 
-    private static BitmapFactory.Options getImageOptions(Resources res, @DrawableRes int resID) {
+    protected abstract Bitmap decodeBitmapWithOptions(BitmapFactory.Options options);
+
+    public Bitmap decodeSampledBitmapFromResource(int reqWidth, int reqHeight) {
+
+        // First decode with inJustDecodeBounds=true to check dimensions
+        final BitmapFactory.Options options = getImageOptions();
+
+        // Calculate inSampleSize
+        options.inSampleSize = calculateInSampleSize(options, reqWidth, reqHeight);
+
+        // Decode bitmap with inSampleSize set
+        return decodeBitmapWithOptions(options);
+    }
+
+    private BitmapFactory.Options getImageOptions() {
         BitmapFactory.Options options = new BitmapFactory.Options();
 
         //Load image info but not the image itself
         options.inJustDecodeBounds = true;
-        BitmapFactory.decodeResource(res, resID, options);
+        decodeBitmapWithOptions(options);
 
         options.inJustDecodeBounds = false;
         return options;
     }
 
-    public static int calculateInSampleSize(
+    private static int calculateInSampleSize(
             BitmapFactory.Options options, int reqWidth, int reqHeight) {
         // Raw height and width of image
         final int height = options.outHeight;
@@ -38,23 +49,6 @@ public class ImageLoader {
                 inSampleSize *= 2;
             }
         }
-
         return inSampleSize;
     }
-
-
-    public static Bitmap decodeSampledBitmapFromResource(Resources res, int resId, int reqWidth, int reqHeight) {
-
-        // First decode with inJustDecodeBounds=true to check dimensions
-        final BitmapFactory.Options options = new BitmapFactory.Options();
-        options.inJustDecodeBounds = true;
-        BitmapFactory.decodeResource(res, resId, options);
-
-        // Calculate inSampleSize
-        options.inSampleSize = calculateInSampleSize(options, reqWidth, reqHeight);
-
-        // Decode bitmap with inSampleSize set
-        return BitmapFactory.decodeResource(res, resId, options);
-    }
-
 }
