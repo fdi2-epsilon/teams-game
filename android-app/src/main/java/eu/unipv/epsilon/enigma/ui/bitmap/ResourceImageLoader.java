@@ -8,15 +8,16 @@ import android.support.annotation.DrawableRes;
 public class ResourceImageLoader extends ImageLoader {
 
     private Resources resources;
-    private @DrawableRes int resID;
+    private @DrawableRes int resourceId;
 
-    public ResourceImageLoader(Resources resources, @DrawableRes int resID) {
+    public ResourceImageLoader(Resources resources, @DrawableRes int resourceId) {
         this.resources = resources;
-        this.resID = resID;
+        this.resourceId = resourceId;
     }
 
     @Override
     protected Bitmap decodeBitmapWithOptions(BitmapFactory.Options options) {
-        return BitmapFactory.decodeResource(resources, resID, options);
+        return BitmapFactory.decodeResource(resources, resourceId, options);
     }
+
 }

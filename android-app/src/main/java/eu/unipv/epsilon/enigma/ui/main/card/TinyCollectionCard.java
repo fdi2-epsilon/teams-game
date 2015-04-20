@@ -22,7 +22,7 @@ public class TinyCollectionCard extends CollectionCardHolder {
             public boolean onPreDraw() {
                 imageRef.getViewTreeObserver().removeOnPreDrawListener(this);
                 ImageLoader loader = new ResourceImageLoader(kParent.getResources(), R.drawable.temp_img04);
-                imageRef.setImageBitmap(loader.decodeSampledBitmapFromResource(imageRef.getMeasuredWidth(), imageRef.getMeasuredHeight()));
+                imageRef.setImageBitmap(loader.decodeSampledBitmap(imageRef.getMeasuredWidth(), imageRef.getMeasuredHeight()));
                 return true;
             }
         });

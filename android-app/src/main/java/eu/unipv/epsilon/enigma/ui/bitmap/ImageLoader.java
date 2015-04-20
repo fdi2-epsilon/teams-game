@@ -3,15 +3,14 @@ package eu.unipv.epsilon.enigma.ui.bitmap;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.util.Log;
+import static android.graphics.BitmapFactory.Options;
 
 public abstract class ImageLoader {
 
-    protected abstract Bitmap decodeBitmapWithOptions(BitmapFactory.Options options);
-
-    public Bitmap decodeSampledBitmapFromResource(int reqWidth, int reqHeight) {
+    public Bitmap decodeSampledBitmap(int reqWidth, int reqHeight) {
 
         // First decode with inJustDecodeBounds=true to check dimensions
-        final BitmapFactory.Options options = getImageOptions();
+        final Options options = getImageOptions();
 
         int srcWidth = options.outWidth;
         int srcHeight = options.outHeight;
@@ -30,8 +29,10 @@ public abstract class ImageLoader {
         return bitmap;
     }
 
-    private BitmapFactory.Options getImageOptions() {
-        BitmapFactory.Options options = new BitmapFactory.Options();
+    protected abstract Bitmap decodeBitmapWithOptions(Options options);
+
+    private Options getImageOptions() {
+        Options options = new BitmapFactory.Options();
 
         //Load image info but not the image itself
         options.inJustDecodeBounds = true;
@@ -41,8 +42,7 @@ public abstract class ImageLoader {
         return options;
     }
 
-    private static int calculateInSampleSize(
-            BitmapFactory.Options options, int reqWidth, int reqHeight) {
+    private static int calculateInSampleSize(Options options, int reqWidth, int reqHeight) {
         // Raw height and width of image
         final int height = options.outHeight;
         final int width = options.outWidth;
@@ -62,4 +62,5 @@ public abstract class ImageLoader {
         }
         return inSampleSize;
     }
+
 }

@@ -35,7 +35,7 @@ public class MediumCollectionCard extends CollectionCardHolder {
             public boolean onPreDraw() {
                 imageRef.getViewTreeObserver().removeOnPreDrawListener(this);
                 ImageLoader loader = new ResourceImageLoader(kParent.getResources(), R.drawable.temp_img02);
-                imageRef.setImageBitmap(loader.decodeSampledBitmapFromResource(imageRef.getMeasuredWidth(), imageRef.getMeasuredHeight()));
+                imageRef.setImageBitmap(loader.decodeSampledBitmap(imageRef.getMeasuredWidth(), imageRef.getMeasuredHeight()));
                 return true;
             }
         });
