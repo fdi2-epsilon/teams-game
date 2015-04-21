@@ -1,11 +1,14 @@
 package eu.unipv.epsilon.enigma;
 
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
+/**
+ * Visualize the web page corresponding to the Quiz view
+ */
 
 public class QuizActivity extends ActionBarActivity {
 
