@@ -2,11 +2,8 @@ package eu.unipv.epsilon.enigma.ui.main.card;
 
 import android.support.annotation.LayoutRes;
 import android.view.ViewGroup;
-import android.view.ViewTreeObserver;
 import android.widget.TextView;
 import eu.unipv.epsilon.enigma.R;
-import eu.unipv.epsilon.enigma.ui.bitmap.ImageLoader;
-import eu.unipv.epsilon.enigma.ui.bitmap.ResourceImageLoader;
 import eu.unipv.epsilon.enigma.ui.main.TempElement;
 
 public class SmallCollectionCard extends CollectionCardHolder {
@@ -23,16 +20,7 @@ public class SmallCollectionCard extends CollectionCardHolder {
         subtitleRef = (TextView) itemView.findViewById(R.id.card_subtitle);
 
         // TEMP CODE
-        final ViewGroup kParent = parent;
-        imageRef.getViewTreeObserver().addOnPreDrawListener(new ViewTreeObserver.OnPreDrawListener() {
-            @Override
-            public boolean onPreDraw() {
-                imageRef.getViewTreeObserver().removeOnPreDrawListener(this);
-                ImageLoader loader = new ResourceImageLoader(kParent.getResources(), R.drawable.temp_img03);
-                imageRef.setImageBitmap(loader.decodeSampledBitmap(imageRef.getMeasuredWidth(), imageRef.getMeasuredHeight()));
-                return true;
-            }
-        });
+        _tempLoadImageFromAssets(parent.getContext(), "temp_img03.jpg");
     }
 
     @Override

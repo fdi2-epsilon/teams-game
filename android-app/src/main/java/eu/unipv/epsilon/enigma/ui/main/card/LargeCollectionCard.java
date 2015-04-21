@@ -3,12 +3,9 @@ package eu.unipv.epsilon.enigma.ui.main.card;
 import android.support.annotation.LayoutRes;
 import android.text.Html;
 import android.view.ViewGroup;
-import android.view.ViewTreeObserver;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import eu.unipv.epsilon.enigma.R;
-import eu.unipv.epsilon.enigma.ui.bitmap.ImageLoader;
-import eu.unipv.epsilon.enigma.ui.bitmap.ResourceImageLoader;
 import eu.unipv.epsilon.enigma.ui.main.TempElement;
 
 public class LargeCollectionCard extends CollectionCardHolder {
@@ -29,16 +26,7 @@ public class LargeCollectionCard extends CollectionCardHolder {
         progressRef = (ProgressBar) itemView.findViewById(R.id.card_progressbar);
 
         // TEMP CODE
-        final ViewGroup kParent = parent;
-        imageRef.getViewTreeObserver().addOnPreDrawListener(new ViewTreeObserver.OnPreDrawListener() {
-            @Override
-            public boolean onPreDraw() {
-                imageRef.getViewTreeObserver().removeOnPreDrawListener(this);
-                ImageLoader loader = new ResourceImageLoader(kParent.getResources(), R.drawable.temp_img01);
-                imageRef.setImageBitmap(loader.decodeSampledBitmap(imageRef.getMeasuredWidth(), imageRef.getMeasuredHeight()));
-                return true;
-            }
-        });
+        _tempLoadImageFromAssets(parent.getContext(), "temp_img01.jpg");
     }
 
     @Override
