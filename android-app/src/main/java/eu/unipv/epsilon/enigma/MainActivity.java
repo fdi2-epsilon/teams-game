@@ -1,6 +1,7 @@
 package eu.unipv.epsilon.enigma;
 
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.RecyclerView;
@@ -19,7 +20,7 @@ public class MainActivity extends ActionBarActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        Log.i("MainActivity-DEBUG", "Activity started");
+        Log.i("MainActivity-DEBUG", "Activity started, display density: " + getResources().getDisplayMetrics().density);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
@@ -30,8 +31,10 @@ public class MainActivity extends ActionBarActivity {
         // Initialize view
         initializeElementsView();
 
-        // Semitransparent UI configuration, only on compatible devices
-        GuiHelper.extendMainActivityToSysytemArea(this, toolbar, collectionsView);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            // Semitransparent UI configuration, only on compatible devices
+            GuiHelper.extendMainActivityToSysytemArea(this, toolbar, collectionsView);
+        }
     }
 
     @Override
