@@ -10,9 +10,16 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+
 import eu.unipv.epsilon.enigma.ui.main.CardType;
 import eu.unipv.epsilon.enigma.ui.main.CollectionsViewAdapter;
 import eu.unipv.epsilon.enigma.ui.main.TempElement;
+
+/**
+ *
+ * Crea il menu principale dell'applicazione
+ *
+ */
 
 public class MainActivity extends ActionBarActivity {
 
