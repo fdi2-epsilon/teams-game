@@ -19,7 +19,9 @@
     <com.google.samples.apps.iosched.ui.widget.SlidingTabLayout
             a:id="@+id/sliding_tabs"
             a:layout_width="match_parent"
-            a:layout_height="wrap_content" />
+            a:layout_height="wrap_content"
+            a:background="@color/alphaColorPrimary" />
+    <!-- TODO consider changing background color -->
 
     <android.support.v4.view.ViewPager
             a:id="@+id/viewpager"

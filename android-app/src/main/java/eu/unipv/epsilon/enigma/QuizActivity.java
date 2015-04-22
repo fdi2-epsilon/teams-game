@@ -1,5 +1,6 @@
 package eu.unipv.epsilon.enigma;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBarActivity;
@@ -60,8 +61,20 @@ public class QuizActivity extends ActionBarActivity {
         //Give the SlidingTabLayout the ViewPager
         SlidingTabLayout slidingTabLayout = (SlidingTabLayout) findViewById(R.id.sliding_tabs);
 
+        slidingTabLayout.setCustomTabView(R.layout.temp_tab_view, R.id.text);
+
+
         //Center the tabs in the layout
         slidingTabLayout.setDistributeEvenly(true);
         slidingTabLayout.setViewPager(viewPager);
+
+        //customize tab color
+        slidingTabLayout.setCustomTabColorizer(new SlidingTabLayout.TabColorizer() {
+            @Override
+            public int getIndicatorColor(int position) {
+                return Color.WHITE;
+            }
+
+        });
     }
 }
