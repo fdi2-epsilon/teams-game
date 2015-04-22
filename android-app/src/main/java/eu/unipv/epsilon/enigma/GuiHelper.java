@@ -23,6 +23,7 @@ public class GuiHelper {
         return 0;
     }
 
+    /** Adds <i>transparencies</i> to system and navigation bar in the main activity. */
     static void extendMainActivityToSysytemArea(Activity activity, Toolbar toolbar, RecyclerView list) {
         int statusBarHeight = getDefaultStatusBarHeight(activity.getResources());
         int navigationBarHeight = getDefaultNavigationBarHeight(activity.getResources());

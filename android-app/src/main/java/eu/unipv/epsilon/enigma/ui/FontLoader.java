@@ -7,7 +7,7 @@ import android.util.Log;
 import java.util.HashMap;
 import java.util.Map;
 
-/** Provides a standard way to load fonts from application assets. **/
+/** Provides a standard way to load fonts from application assets. */
 public class FontLoader {
 
     public static final String FONTS_PATH = "fonts/";

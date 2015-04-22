@@ -6,10 +6,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
-/**
- * Visualize the web page corresponding to the Quiz view
- */
-
+/** Shows the quiz that is currently played. */
 public class QuizActivity extends ActionBarActivity {
 
     @Override

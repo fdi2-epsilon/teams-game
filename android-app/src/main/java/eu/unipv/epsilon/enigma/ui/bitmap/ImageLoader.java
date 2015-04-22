@@ -3,8 +3,13 @@ package eu.unipv.epsilon.enigma.ui.bitmap;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.util.Log;
+
 import static android.graphics.BitmapFactory.Options;
 
+/**
+ * Algoritms to load a sampled image, extending class must implement
+ * {@link ImageLoader#decodeBitmapWithOptions(Options)} to effectively load the image.
+ */
 public abstract class ImageLoader {
 
     public Bitmap decodeSampledBitmap(int reqWidth, int reqHeight) {
@@ -29,6 +34,11 @@ public abstract class ImageLoader {
         return bitmap;
     }
 
+    /**
+     * Called internally from {@link ImageLoader},
+     * returns a bitmap loaded with the given options, but can also return {@code null};
+     * if the passed in {@link Options#inJustDecodeBounds} is set to {@code true}.
+     */
     protected abstract Bitmap decodeBitmapWithOptions(Options options);
 
     private Options getImageOptions() {
