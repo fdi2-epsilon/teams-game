@@ -23,7 +23,7 @@ public class GuiHelper {
         return 0;
     }
 
-    static void extendMainActivityToSysytemArea(Activity activity, Toolbar toolbar, RecyclerView list) {
+    static void extendMainActivityToSystemArea(Activity activity, Toolbar toolbar, RecyclerView list) {
         int statusBarHeight = getDefaultStatusBarHeight(activity.getResources());
         int navigationBarHeight = getDefaultNavigationBarHeight(activity.getResources());
 

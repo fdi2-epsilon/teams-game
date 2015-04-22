@@ -33,7 +33,7 @@ public class MainActivity extends ActionBarActivity {
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             // Semitransparent UI configuration, only on compatible devices
-            GuiHelper.extendMainActivityToSysytemArea(this, toolbar, collectionsView);
+            GuiHelper.extendMainActivityToSystemArea(this, toolbar, collectionsView);
         }
     }
 
