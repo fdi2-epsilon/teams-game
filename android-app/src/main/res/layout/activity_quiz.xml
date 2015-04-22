@@ -16,9 +16,16 @@
             app:popupTheme="@style/Base.ThemeOverlay.AppCompat.Light"
             a:elevation="6dp" />
 
-    <TextView
-            a:text="questa è la pagina del quiz!"
-            a:layout_width="wrap_content"
+    <com.google.samples.apps.iosched.ui.widget.SlidingTabLayout
+            a:id="@+id/sliding_tabs"
+            a:layout_width="match_parent"
             a:layout_height="wrap_content" />
+
+    <android.support.v4.view.ViewPager
+            a:id="@+id/viewpager"
+            a:layout_width="match_parent"
+            a:layout_height="0px"
+            a:layout_weight="1"
+            a:background="@android:color/white" />
 
 </LinearLayout>

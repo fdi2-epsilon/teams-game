@@ -1,10 +1,13 @@
 package eu.unipv.epsilon.enigma;
 
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.support.v4.view.ViewPager;
+import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import com.google.samples.apps.iosched.ui.widget.SlidingTabLayout;
+import eu.unipv.epsilon.enigma.ui.quiz.SampleFragmentPageAdapter;
 
 
 public class QuizActivity extends ActionBarActivity {
@@ -20,6 +23,8 @@ public class QuizActivity extends ActionBarActivity {
 
         // Enable "up" button
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        setupTabs();
     }
 
 
@@ -43,5 +48,20 @@ public class QuizActivity extends ActionBarActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    private void setupTabs() {
+
+        //Get the ViewPager and set its PageAdapter so that it can display items
+        ViewPager viewPager = (ViewPager) findViewById(R.id.viewpager);
+        viewPager.setAdapter(new SampleFragmentPageAdapter
+                (getSupportFragmentManager(), QuizActivity.this));
+
+        //Give the SlidingTabLayout the ViewPager
+        SlidingTabLayout slidingTabLayout = (SlidingTabLayout) findViewById(R.id.sliding_tabs);
+
+        //Center the tabs in the layout
+        slidingTabLayout.setDistributeEvenly(true);
+        slidingTabLayout.setViewPager(viewPager);
     }
 }
