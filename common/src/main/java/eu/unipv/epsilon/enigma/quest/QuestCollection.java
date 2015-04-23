@@ -11,6 +11,7 @@ import java.util.List;
 public class QuestCollection {
 
     private String name;
+    private String description;
     private String iconPath;
     private List<Quest> quests = new LinkedList<>();
 
@@ -20,6 +21,14 @@ public class QuestCollection {
 
     public String getName() {
         return name;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public void setIconPath(String iconPath) {
