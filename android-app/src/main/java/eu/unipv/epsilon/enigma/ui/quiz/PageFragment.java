@@ -6,8 +6,9 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
-import eu.unipv.epsilon.enigma.R;
+import android.webkit.WebView;
+import android.webkit.WebViewClient;
+import android.widget.FrameLayout;
 
 /**
  * This fragment displays the page number passed as an argument to
@@ -36,9 +37,16 @@ public class PageFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.temp_fragment_page, container, false);
-        TextView textView = (TextView) view;
-        textView.setText("Fragment #" + mPage);
+        //View view = inflater.inflate(R.layout.myid, container, false);
+        //TextView textView = (TextView) view;
+        //textView.setText("Fragment #" + mPage);
+
+        WebView view = new WebView(container.getContext());
+        view.setLayoutParams(new FrameLayout.LayoutParams(
+                ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
+
+        view.setWebViewClient(new WebViewClient());
+        view.loadUrl("https://example.com");
         return view;
     }
 
