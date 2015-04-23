@@ -50,3 +50,8 @@ task collectLevels(group: 'install', type: Copy) {
     from levelProjects.collect { it.tasks.pack.archivePath }
     into "$buildDir/adb-push/collections"
 }
+
+task uploadLevels(group: 'install', type: Exec, dependsOn: collectLevels) {
+    def appId = android.defaultConfig.applicationId
+    commandLine 'adb', 'push', '-p', "$buildDir/adb-push", "/data/data/$appId/files"
+}
