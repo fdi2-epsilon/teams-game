@@ -20,7 +20,10 @@ public class DefaultQuestCollectionBuilder implements QuestCollectionBuilder {
 
     public static final String FILENAME_PACK_CONFIGURATION = "metadata.yaml";
 
+    // TODO Move algorithm and following fields to another class
     String collectionId;
+    ZipFile zipFile;
+
     BuilderDefaultsFactory<String> builderDefaults;
 
     public DefaultQuestCollectionBuilder() {
@@ -34,6 +37,7 @@ public class DefaultQuestCollectionBuilder implements QuestCollectionBuilder {
     @Override
     public QuestCollection createCollectionFromFile(File file) throws IOException {
         try (ZipFile zip = new ZipFile(file)) {
+            zipFile = zip;
             InputStream stream = zip.getInputStream(new ZipEntry(FILENAME_PACK_CONFIGURATION));
             // Zip file needs to be closed, however its derived streams not.
             collectionId = file.getName().substring(0, file.getName().lastIndexOf('.'));
@@ -43,7 +47,7 @@ public class DefaultQuestCollectionBuilder implements QuestCollectionBuilder {
 
     private QuestCollection generateCollection(Map meta) {
         QuestCollection qc = new QuestCollection();
-        DefaultFieldProvider<String> defaults = builderDefaults.getCollectionDefaults();
+        DefaultFieldProvider<String> defaults = builderDefaults.getCollectionDefaults(zipFile);
 
         qc.setId(collectionId);
         qc.setName(valueOrDefault(meta, KEY_QUESTCOLLECTION_NAME, defaults));
