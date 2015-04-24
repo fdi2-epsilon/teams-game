@@ -10,9 +10,15 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import eu.unipv.epsilon.enigma.io.url.EqcURLStreamHandler;
 import eu.unipv.epsilon.enigma.ui.main.CardType;
 import eu.unipv.epsilon.enigma.ui.main.CollectionsViewAdapter;
 import eu.unipv.epsilon.enigma.ui.main.TempElement;
+
+import java.io.File;
+import java.net.URL;
+import java.net.URLStreamHandler;
+import java.net.URLStreamHandlerFactory;
 
 public class MainActivity extends ActionBarActivity {
 
@@ -35,6 +41,17 @@ public class MainActivity extends ActionBarActivity {
             // Semitransparent UI configuration, only on compatible devices
             GuiHelper.extendMainActivityToSystemArea(this, toolbar, collectionsView);
         }
+
+        // TODO: Consider changing this call position, may throw an exception on activity regen.
+        URL.setURLStreamHandlerFactory(new URLStreamHandlerFactory() {
+            @Override
+            public URLStreamHandler createURLStreamHandler(String protocol) {
+                if (protocol.equalsIgnoreCase("eqc"))
+                    return new EqcURLStreamHandler(new File(getFilesDir(), "collections"));
+
+                return null;
+            }
+        });
     }
 
     @Override
