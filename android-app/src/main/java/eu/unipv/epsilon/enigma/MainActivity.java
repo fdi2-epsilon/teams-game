@@ -24,6 +24,8 @@ public class MainActivity extends ActionBarActivity {
 
     private RecyclerView collectionsView;
 
+    private DataSource dataSource;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         Log.i("MainActivity-DEBUG", "Activity started, display density: " + getResources().getDisplayMetrics().density);
@@ -34,6 +36,9 @@ public class MainActivity extends ActionBarActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);   // Title assigned by manifest
 
+        // Create a new data source to load collections
+        dataSource = new DataSource(getFilesDir(), getResources());
+
         // Initialize view
         initializeElementsView();
 
@@ -41,17 +46,6 @@ public class MainActivity extends ActionBarActivity {
             // Semitransparent UI configuration, only on compatible devices
             GuiHelper.extendMainActivityToSystemArea(this, toolbar, collectionsView);
         }
-
-        // TODO: Consider changing this call position, may throw an exception on activity regen.
-        URL.setURLStreamHandlerFactory(new URLStreamHandlerFactory() {
-            @Override
-            public URLStreamHandler createURLStreamHandler(String protocol) {
-                if (protocol.equalsIgnoreCase("eqc"))
-                    return new EqcURLStreamHandler(new File(getFilesDir(), "collections"));
-
-                return null;
-            }
-        });
     }
 
     @Override
@@ -90,17 +84,8 @@ public class MainActivity extends ActionBarActivity {
         // Use a staggered layout manager
         collectionsView.setLayoutManager(new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL));
 
-        Log.i("AHAH", "WFT HAPPENED HERE");
-
-        // Specify an adapter
-        collectionsView.setAdapter(new CollectionsViewAdapter(new TempElement[] {
-                new TempElement(CardType.FIRST_START),
-                new TempElement(getResources(), R.string.temp_ltit, R.string.temp_lsub, R.string.temp_ldsc, CardType.LARGE),
-                new TempElement(getResources(), R.string.temp_mtit, R.string.temp_msub, R.string.temp_mdsc, CardType.MEDIUM),
-                new TempElement(getResources(), R.string.temp_stit, R.string.temp_ssub, 0, CardType.SMALL),
-                new TempElement(getResources(), R.string.temp_ttit, 0, 0, CardType.TINY),
-                new TempElement(getResources(), R.string.temp_ttit2, 0, 0, CardType.TINY)
-        }));
+        // Populate with data
+        dataSource.populateMainView(collectionsView);
     }
 
 }
