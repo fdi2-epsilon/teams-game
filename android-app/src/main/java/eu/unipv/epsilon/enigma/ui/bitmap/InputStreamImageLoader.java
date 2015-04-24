@@ -7,7 +7,7 @@ import java.io.InputStream;
 
 public class InputStreamImageLoader extends ImageLoader {
 
-    private InputStream inputStream;
+    protected InputStream inputStream;
 
     public InputStreamImageLoader(InputStream inputStream) {
         this.inputStream = inputStream;
@@ -17,5 +17,7 @@ public class InputStreamImageLoader extends ImageLoader {
     protected Bitmap decodeBitmapWithOptions(BitmapFactory.Options options) {
         return BitmapFactory.decodeStream(inputStream, null, options);
     }
+
+    // Do not override 'postLoad' here since the caller creates the inputStream
 
 }
