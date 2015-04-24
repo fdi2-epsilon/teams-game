@@ -15,6 +15,7 @@ apply plugin: 'java'
 apply plugin: 'enigma-levels'
 
 questCollection {
-    name = 'Test Collection'
-    description = '... a <b>test</b>!'
+    name = 'Gremlins'
+    // subtitle
+    description = 'hahahah!'
 }

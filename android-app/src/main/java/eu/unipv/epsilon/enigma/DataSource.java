@@ -15,6 +15,7 @@ import java.net.URL;
 import java.net.URLStreamHandler;
 import java.net.URLStreamHandlerFactory;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class DataSource {
@@ -45,6 +46,9 @@ public class DataSource {
             }
         });
 
+        // Return if no content
+        if (collectionFiles == null) return;
+
         for (File file : collectionFiles) {
             try {
                 collections.add(QuestCollection.fromFile(file));
@@ -53,6 +57,7 @@ public class DataSource {
                 e.printStackTrace();
             }
         }
+        Collections.reverse(collections);
     }
 
     public void populateMainView(RecyclerView list) {

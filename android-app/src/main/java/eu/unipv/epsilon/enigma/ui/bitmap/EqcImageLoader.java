@@ -1,8 +1,11 @@
 package eu.unipv.epsilon.enigma.ui.bitmap;
 
+import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.util.DisplayMetrics;
+import android.util.Log;
 
+import java.io.BufferedInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
@@ -13,8 +16,13 @@ import java.net.URL;
  */
 public class EqcImageLoader extends InputStreamImageLoader {
 
+    // TODO: Transfer BufferedInputStream code to InputStream class and allow changing mark
+
     public EqcImageLoader(URL url) {
         super(openStream(url));
+        // With this, up to 50KB can be read while decoding bounds, avoiding to read them again when decoding image.
+        // So we don't need to reopen the URL stream.
+        inputStream.mark(50 * 1024);
     }
 
     @Override
@@ -23,6 +31,21 @@ public class EqcImageLoader extends InputStreamImageLoader {
 
         // Images in EQC archives are in xxhdpi density
         options.inDensity = DisplayMetrics.DENSITY_XXHIGH;
+    }
+
+    @Override
+    protected Bitmap decodeBitmapWithOptions(BitmapFactory.Options options) {
+        try {
+            //inputStream = url.openStream();
+            Log.i("--- LOOK AT ME LOOK ---", inputStream.markSupported() ? "Mark supported" : "Fail");
+            inputStream.reset();
+            Bitmap ret = super.decodeBitmapWithOptions(options);
+            //inputStream.close();
+            return ret;
+        } catch (IOException e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 
     @Override
@@ -40,7 +63,7 @@ public class EqcImageLoader extends InputStreamImageLoader {
     // This is only to handle exception in constructor
     private static InputStream openStream(URL url) {
         try {
-            return url.openStream();
+            return new BufferedInputStream(url.openStream());
         } catch (IOException e) {
             e.printStackTrace();
             return null;

@@ -1,0 +1,21 @@
+description = 'Game quest test levels'
+
+buildscript {
+    repositories {
+        ivy { url 'https://fdi2-epsilon.github.io/ivy' }
+        jcenter()
+    }
+
+    dependencies {
+        classpath 'eu.unipv.epsilon:equests-gradle:0.4'
+    }
+}
+
+apply plugin: 'java'
+apply plugin: 'enigma-levels'
+
+questCollection {
+    name = 'First Collection'
+    //subtitle = 'What the hell?'
+    description = '...and the computer caught up in fire in front of the paralyzed eyes of the team. <i>\"I am fat and I have a llama\"</i> said Vik, while the other guys tried to extinguish the fire.'
+}
