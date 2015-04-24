@@ -4,6 +4,7 @@ import android.support.annotation.LayoutRes;
 import android.view.ViewGroup;
 import android.widget.TextView;
 import eu.unipv.epsilon.enigma.R;
+import eu.unipv.epsilon.enigma.quest.QuestCollection;
 import eu.unipv.epsilon.enigma.ui.main.TempElement;
 
 public class SmallCollectionCard extends CollectionCardHolder {
@@ -18,15 +19,12 @@ public class SmallCollectionCard extends CollectionCardHolder {
 
         // Store additional layout specific references
         subtitleRef = (TextView) itemView.findViewById(R.id.card_subtitle);
-
-        // TEMP CODE
-        _tempLoadImageFromAssets(parent.getContext(), "temp_img03.jpg");
     }
 
     @Override
-    public void updateViewFromData(TempElement dataElement) {
+    public void updateViewFromData(QuestCollection dataElement) {
         super.updateViewFromData(dataElement);
-        subtitleRef.setText(dataElement.getSubtitle());
+        subtitleRef.setText("Not Defined");
     }
 
 }

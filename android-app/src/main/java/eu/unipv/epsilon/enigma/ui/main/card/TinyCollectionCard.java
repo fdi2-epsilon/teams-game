@@ -11,9 +11,6 @@ public class TinyCollectionCard extends CollectionCardHolder {
 
     public TinyCollectionCard(ViewGroup parent) {
         super(parent, LAYOUT_RESOURCE);
-
-        // TEMP CODE
-        _tempLoadImageFromAssets(parent.getContext(), "temp_img04.jpg");
     }
 
 }

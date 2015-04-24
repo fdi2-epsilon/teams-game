@@ -6,6 +6,7 @@ import android.view.ViewGroup;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import eu.unipv.epsilon.enigma.R;
+import eu.unipv.epsilon.enigma.quest.QuestCollection;
 import eu.unipv.epsilon.enigma.ui.main.TempElement;
 
 public class MediumCollectionCard extends CollectionCardHolder {
@@ -24,15 +25,12 @@ public class MediumCollectionCard extends CollectionCardHolder {
         subtitleRef = (TextView) itemView.findViewById(R.id.card_subtitle);
         descriptionRef = (TextView) itemView.findViewById(R.id.card_description);
         progressRef = (ProgressBar) itemView.findViewById(R.id.card_progressbar);
-
-        // TEMP CODE
-        _tempLoadImageFromAssets(parent.getContext(), "temp_img02.jpg");
     }
 
     @Override
-    public void updateViewFromData(TempElement dataElement) {
+    public void updateViewFromData(QuestCollection dataElement) {
         super.updateViewFromData(dataElement);
-        subtitleRef.setText(dataElement.getSubtitle());
+        subtitleRef.setText("Not Defined");
         descriptionRef.setText(Html.fromHtml(dataElement.getDescription()));
         //progressRef
     }

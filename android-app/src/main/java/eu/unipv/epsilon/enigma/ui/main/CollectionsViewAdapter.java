@@ -3,14 +3,17 @@ package eu.unipv.epsilon.enigma.ui.main;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.ViewGroup;
+import eu.unipv.epsilon.enigma.quest.QuestCollection;
 import eu.unipv.epsilon.enigma.ui.main.card.*;
+
+import java.util.List;
 
 public class CollectionsViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
-    private TempElement[] elements;
+    private List<QuestCollection> elements;
 
     // Provide a suitable constructor (depends on the kind of dataset)
-    public CollectionsViewAdapter(TempElement[] elements) {
+    public CollectionsViewAdapter(List<QuestCollection> elements) {
         this.elements = elements;
     }
 
@@ -39,19 +42,22 @@ public class CollectionsViewAdapter extends RecyclerView.Adapter<RecyclerView.Vi
 
         // If it is a card describing dynamic content like a Quest Collection, needs to be recycled with new parameters.
         if (holder instanceof CollectionCardHolder)
-            ((CollectionCardHolder) holder).updateViewFromData(elements[position]);
+            ((CollectionCardHolder) holder).updateViewFromData(elements.get(position));
 
         // Static views like CardType.FIRST_START do not need to be recycled, cause they don't have data.
     }
 
     @Override
     public int getItemCount() {
-        return elements.length;
+        return elements.size();
     }
 
     @Override
     public int getItemViewType(int position) {
-        return elements[position].getType().ordinal();
+        // Temporary algorithm to get card size
+        if (position == 0) return CardType.LARGE.ordinal();
+        CardType[] types = { CardType.MEDIUM, CardType.SMALL, CardType.TINY};
+        return types[position - 1].ordinal();
     }
 
 }

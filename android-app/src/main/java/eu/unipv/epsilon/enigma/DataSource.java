@@ -57,14 +57,7 @@ public class DataSource {
 
     public void populateMainView(RecyclerView list) {
         // Specify an adapter
-        list.setAdapter(new CollectionsViewAdapter(new TempElement[]{
-                new TempElement(CardType.FIRST_START),
-                new TempElement(resources, R.string.temp_ltit, R.string.temp_lsub, R.string.temp_ldsc, CardType.LARGE),
-                new TempElement(resources, R.string.temp_mtit, R.string.temp_msub, R.string.temp_mdsc, CardType.MEDIUM),
-                new TempElement(resources, R.string.temp_stit, R.string.temp_ssub, 0, CardType.SMALL),
-                new TempElement(resources, R.string.temp_ttit, 0, 0, CardType.TINY),
-                new TempElement(resources, R.string.temp_ttit2, 0, 0, CardType.TINY)
-        }));
+        list.setAdapter(new CollectionsViewAdapter(collections));
     }
 
 }
