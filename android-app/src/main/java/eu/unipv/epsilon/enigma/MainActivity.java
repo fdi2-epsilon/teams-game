@@ -55,6 +55,9 @@ public class MainActivity extends ActionBarActivity {
             Intent intent = new Intent(this, QuizActivity.class);
             startActivity(intent);
             return true;
+        } else if (id == R.id.filetest_button) {
+            // Implement here your test routines
+            return true;
         }
 
         return super.onOptionsItemSelected(item);

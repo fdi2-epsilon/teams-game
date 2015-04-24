@@ -45,6 +45,7 @@ public class PageFragment extends Fragment {
         view.setLayoutParams(new FrameLayout.LayoutParams(
                 ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
 
+        //view.getSettings().setJavaScriptEnabled(true);
         view.setWebViewClient(new WebViewClient());
         view.loadUrl("https://example.com");
         return view;
