@@ -10,7 +10,7 @@ import android.view.MenuItem;
 import com.google.samples.apps.iosched.ui.widget.SlidingTabLayout;
 import eu.unipv.epsilon.enigma.ui.quiz.SampleFragmentPageAdapter;
 
-
+/** Shows the quiz that is currently played. */
 public class QuizActivity extends ActionBarActivity {
 
     @Override

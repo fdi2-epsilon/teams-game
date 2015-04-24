@@ -5,6 +5,7 @@ import android.graphics.BitmapFactory;
 
 import java.io.InputStream;
 
+/** An {@link ImageLoader image loader} from {@link InputStream}. */
 public class InputStreamImageLoader extends ImageLoader {
 
     private InputStream inputStream;

@@ -8,9 +8,7 @@ import android.widget.TextView;
 import eu.unipv.epsilon.enigma.R;
 import eu.unipv.epsilon.enigma.ui.FontLoader;
 
-/**
- * An extended {@link TextView} capable of loading fonts from application assets.
- */
+/** An extended {@link TextView} capable of loading fonts from application assets. */
 public class TextViewExt extends TextView {
 
     public TextViewExt(Context context) {
