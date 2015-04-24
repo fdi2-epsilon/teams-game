@@ -1,13 +1,15 @@
 package eu.unipv.epsilon.enigma.quest;
 
+import java.net.URL;
+
 public class Quest {
 
     private String name;
     private String description;
 
-    private String iconPath;
-    private String mainDocumentPath;
-    private String infoDocumentPath;
+    private URL iconUrl;
+    private URL mainDocumentUrl;
+    private URL infoDocumentUrl;
 
     public String getName() {
         return name;
@@ -25,28 +27,28 @@ public class Quest {
         this.description = description;
     }
 
-    public String getIconPath() {
-        return iconPath;
+    public URL getIconUrl() {
+        return iconUrl;
     }
 
-    public void setIconPath(String iconPath) {
-        this.iconPath = iconPath;
+    public void setIconUrl(URL iconUrl) {
+        this.iconUrl = iconUrl;
     }
 
-    public String getMainDocumentPath() {
-        return mainDocumentPath;
+    public URL getMainDocumentUrl() {
+        return mainDocumentUrl;
     }
 
-    public void setMainDocumentPath(String mainDocumentPath) {
-        this.mainDocumentPath = mainDocumentPath;
+    public void setMainDocumentUrl(URL mainDocumentUrl) {
+        this.mainDocumentUrl = mainDocumentUrl;
     }
 
-    public String getInfoDocumentPath() {
-        return infoDocumentPath;
+    public URL getInfoDocumentUrl() {
+        return infoDocumentUrl;
     }
 
-    public void setInfoDocumentPath(String infoDocumentPath) {
-        this.infoDocumentPath = infoDocumentPath;
+    public void setInfoDocumentUrl(URL infoDocumentUrl) {
+        this.infoDocumentUrl = infoDocumentUrl;
     }
 
 }

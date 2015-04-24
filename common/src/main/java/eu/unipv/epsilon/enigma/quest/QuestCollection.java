@@ -5,15 +5,30 @@ import eu.unipv.epsilon.enigma.io.QuestCollectionBuilder;
 
 import java.io.File;
 import java.io.IOException;
+import java.net.URL;
 import java.util.LinkedList;
 import java.util.List;
 
 public class QuestCollection {
 
+    /**
+     * Used to reference this collection in saved data structures.
+     * Usually initialized to the collection source filename, without extension.
+     */
+    private String id;
+
     private String name;
     private String description;
-    private String iconPath;
+    private URL iconUrl;
     private List<Quest> quests = new LinkedList<>();
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
 
     public void setName(String name) {
         this.name = name;
@@ -31,12 +46,12 @@ public class QuestCollection {
         this.description = description;
     }
 
-    public void setIconPath(String iconPath) {
-        this.iconPath = iconPath;
+    public void setIconUrl(URL iconUrl) {
+        this.iconUrl = iconUrl;
     }
 
-    public String getIconPath() {
-        return iconPath;
+    public URL getIconUrl() {
+        return iconUrl;
     }
 
     public void addQuest(Quest quest) {
