@@ -5,11 +5,12 @@ import eu.unipv.epsilon.enigma.io.QuestCollectionBuilder;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.Serializable;
 import java.net.URL;
 import java.util.LinkedList;
 import java.util.List;
 
-public class QuestCollection {
+public class QuestCollection implements Serializable {
 
     /**
      * Used to reference this collection in saved data structures.

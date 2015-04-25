@@ -1,8 +1,9 @@
 package eu.unipv.epsilon.enigma.quest;
 
+import java.io.Serializable;
 import java.net.URL;
 
-public class Quest {
+public class Quest implements Serializable {
 
     private String name;
     private String description;
