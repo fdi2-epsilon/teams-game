@@ -2,21 +2,30 @@
 <html>
 <head lang="en">
     <meta charset="UTF-8">
-    <title></title>
+    <title>TestZoomImageEnigma</title>
+    <script src="jquery-1.8.3.min.js"></script>
+    <script src="jquery.elevateZoom-3.0.8.min.js"></script>
     <style>
         body {
-            text-align: center;
-            font-size: 120%;
-            font-style: italic;
+        text-align: center;
+        font-size: 120%;
+        font-style: italic;
         }
     </style>
 </head>
 <body>
-    <p>Find Text</p>
-    <img src="imgTest.png" alt="NO image found" usemap="#TESTmap">
-    <map name="TESTmap">
-        <area shape="rect" coords="45,65,75,80" alt="ZOOMtest" href="imgTextZoom.png">
-    </map>
+    <p>Find text</p>
+    <img id="zoom" src="prova2small.png" data-zoom-image="prova2large.png"/>
+
+    <script>
+    document.getElementById("zoom").addEventListener("mouseover", mouseOver);
+    function mouseOver() {
+        $("#zoom").elevateZoom({
+                                            zoomType    : "inner",
+                                            cursor      : "crosshair"
+                                                });;
+        }
+    </script>
 </body>
 </html>
 
