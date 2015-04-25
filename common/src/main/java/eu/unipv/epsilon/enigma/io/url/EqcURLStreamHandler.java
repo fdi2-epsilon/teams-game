@@ -34,6 +34,8 @@ public class EqcURLStreamHandler extends URLStreamHandler {
     protected URLConnection openConnection(URL u) throws IOException {
         String urlString = u.getFile();
 
+        if (urlString.startsWith("//")) urlString = urlString.substring(2);
+
         int sepIndex = urlString.indexOf('/');
         String containerName = urlString.substring(0, sepIndex);
         String entryPath = urlString.substring(sepIndex + 1);
@@ -44,8 +46,11 @@ public class EqcURLStreamHandler extends URLStreamHandler {
 
     @Override
     protected void parseURL(URL u, String spec, int start, int limit) {
+        String urlString = spec.substring(start, limit);
+        if (urlString.startsWith("//")) urlString = urlString.substring(2);
+
         // (u, protocol, host, port, authority, userInfo, path, query, ref)
-        setURL(u, u.getProtocol(), "", -1, "", "", spec.substring(start, limit), "", null);
+        setURL(u, u.getProtocol(), "", -1, "", "", urlString, "", null);
     }
 
     /**
@@ -56,7 +61,7 @@ public class EqcURLStreamHandler extends URLStreamHandler {
      */
     public static URL createURL(String fileId, String entryPath) {
         try {
-            return new URL("eqc", "", -1, fileId + '/' + entryPath);
+            return new URL("eqc", "", -1, "//" + fileId + '/' + entryPath);
         } catch (MalformedURLException e) {
             e.printStackTrace();
             return null;
