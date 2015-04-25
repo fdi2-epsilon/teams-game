@@ -8,10 +8,15 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import com.google.samples.apps.iosched.ui.widget.SlidingTabLayout;
+import eu.unipv.epsilon.enigma.quest.QuestCollection;
 import eu.unipv.epsilon.enigma.ui.quiz.SampleFragmentPageAdapter;
 
 
 public class QuizActivity extends ActionBarActivity {
+
+    QuestCollection qc;
+
+    public static final String PARAM_QUESTCOLLECTION = "param_questcollection";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,6 +29,9 @@ public class QuizActivity extends ActionBarActivity {
 
         // Enable "up" button
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        qc = (QuestCollection) getIntent().getSerializableExtra(PARAM_QUESTCOLLECTION);
+        setTitle(qc.getName());
 
         setupTabs();
     }
@@ -55,8 +63,7 @@ public class QuizActivity extends ActionBarActivity {
 
         //Get the ViewPager and set its PageAdapter so that it can display items
         ViewPager viewPager = (ViewPager) findViewById(R.id.viewpager);
-        viewPager.setAdapter(new SampleFragmentPageAdapter
-                (getSupportFragmentManager(), QuizActivity.this));
+        viewPager.setAdapter(new SampleFragmentPageAdapter(getSupportFragmentManager(), QuizActivity.this, qc));
 
         //Give the SlidingTabLayout the ViewPager
         SlidingTabLayout slidingTabLayout = (SlidingTabLayout) findViewById(R.id.sliding_tabs);

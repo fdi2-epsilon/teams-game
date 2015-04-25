@@ -1,6 +1,5 @@
 package eu.unipv.epsilon.enigma;
 
-import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
@@ -10,15 +9,6 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import eu.unipv.epsilon.enigma.io.url.EqcURLStreamHandler;
-import eu.unipv.epsilon.enigma.ui.main.CardType;
-import eu.unipv.epsilon.enigma.ui.main.CollectionsViewAdapter;
-import eu.unipv.epsilon.enigma.ui.main.TempElement;
-
-import java.io.File;
-import java.net.URL;
-import java.net.URLStreamHandler;
-import java.net.URLStreamHandlerFactory;
 
 public class MainActivity extends ActionBarActivity {
 
@@ -63,8 +53,8 @@ public class MainActivity extends ActionBarActivity {
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.temp_button) {
-            Intent intent = new Intent(this, QuizActivity.class);
-            startActivity(intent);
+            //Intent intent = new Intent(this, QuizActivity.class);
+            //startActivity(intent);
             return true;
         } else if (id == R.id.filetest_button) {
             // Implement here your test routines
