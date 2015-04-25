@@ -64,7 +64,7 @@
         }
 
         li.success { background-color: greenyellow; }
-
+	li.failure { background-color: red }
         li:hover { background-color: rgba(0, 0, 0, .12); }
 
     </style>
@@ -89,9 +89,9 @@
             //   x.addEventListener('[event]'), f)
             //       The new and widely supported event system, can register multiple listeners,
             //       stop propagation, and more. Listeners are removed with 'removeEventListener'.
-            el1.addEventListener('click', cbSuccess);
+            el1.addEventListener('click', cbFailure);
             el2.onclick = cbFailure;
-            el3.addEventListener('click', cbFailure);
+            el3.addEventListener('click', cbSuccess);
             //  Internet Explorer has a third way that behaves like 'addEventListener' but nobody cares...
         }
 
@@ -102,7 +102,8 @@
 
         // Epic fail handling (opposite as previous function)
         function cbFailure() {
-            alert("Wrong, shame on you!\n\nP.S. You are a terrible person.");
+		this.classList.add('failure');
+            	//alert("Wrong, shame on you!\n\nP.S. You are a terrible person.");
         }
 
         // Exec 'loadProc' only when the document is fully loaded,
@@ -122,14 +123,13 @@
     </div>
 
     <h1>
-        How many <i>turds</i> does Jim Carrey have in his apartment
-        in the film <i>Mr. Popper's penguins</i>?
+        In quale <i>data</i> cadde Pasqua nel 1999?
     </h1>
 
     <ul>
-        <li id="first-elem">five</li>
-        <li id="second-elem">seventeen</li>
-        <li id="third-elem">ninety-two</li>
+        <li id="first-elem">30/03</li>
+        <li id="second-elem">03/04</li>
+        <li id="third-elem">04/04</li>
     </ul>
 
 </body>
