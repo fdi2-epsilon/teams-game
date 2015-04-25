@@ -4,9 +4,7 @@ import android.content.res.Resources;
 import android.support.v7.widget.RecyclerView;
 import eu.unipv.epsilon.enigma.io.url.EqcURLStreamHandler;
 import eu.unipv.epsilon.enigma.quest.QuestCollection;
-import eu.unipv.epsilon.enigma.ui.main.CardType;
 import eu.unipv.epsilon.enigma.ui.main.CollectionsViewAdapter;
-import eu.unipv.epsilon.enigma.ui.main.TempElement;
 
 import java.io.File;
 import java.io.FilenameFilter;
@@ -20,9 +18,13 @@ import java.util.List;
 
 public class DataSource {
 
+    public static boolean isUrlHandlerRegistered = false;
+
+    // TODO Unused
     Resources resources;
 
     List<QuestCollection> collections = new ArrayList<>();
+
 
     public DataSource(File filesDir, Resources resources) {
         this.resources = resources;
@@ -37,14 +39,7 @@ public class DataSource {
             }
         });
 
-        // Initialize URL hander
-        URL.setURLStreamHandlerFactory(new URLStreamHandlerFactory() {
-            @Override
-            public URLStreamHandler createURLStreamHandler(String protocol) {
-                if (protocol.equalsIgnoreCase("eqc")) return new EqcURLStreamHandler(collectionsDir);
-                return null;
-            }
-        });
+        if (!isUrlHandlerRegistered) registerURLHandler(collectionsDir);
 
         // Return if no content
         if (collectionFiles == null) return;
@@ -63,6 +58,18 @@ public class DataSource {
     public void populateMainView(RecyclerView list) {
         // Specify an adapter
         list.setAdapter(new CollectionsViewAdapter(collections));
+    }
+
+    private static void registerURLHandler(final File baseDir) {
+        isUrlHandlerRegistered = true;
+        // Initialize URL hander
+        URL.setURLStreamHandlerFactory(new URLStreamHandlerFactory() {
+            @Override
+            public URLStreamHandler createURLStreamHandler(String protocol) {
+                if (protocol.equalsIgnoreCase("eqc")) return new EqcURLStreamHandler(baseDir);
+                return null;
+            }
+        });
     }
 
 }

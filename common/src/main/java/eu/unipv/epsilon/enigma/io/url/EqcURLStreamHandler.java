@@ -21,13 +21,13 @@ import java.net.URLStreamHandler;
  */
 public class EqcURLStreamHandler extends URLStreamHandler {
 
-    File homeDir;
+    File baseDir;
 
     /**
      * @param baseCollectionsDir The directory containing eqc files
      */
     public EqcURLStreamHandler(File baseCollectionsDir) {
-        this.homeDir = baseCollectionsDir;
+        this.baseDir = baseCollectionsDir;
     }
 
     @Override
@@ -40,7 +40,7 @@ public class EqcURLStreamHandler extends URLStreamHandler {
         String containerName = urlString.substring(0, sepIndex);
         String entryPath = urlString.substring(sepIndex + 1);
 
-        File eqcFile = new File(homeDir, containerName + ".eqc");
+        File eqcFile = new File(baseDir, containerName + ".eqc");
         return new ZipURLConnection(u, eqcFile, entryPath);
     }
 
