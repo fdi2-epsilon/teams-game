@@ -7,23 +7,32 @@
     <script src="jquery.elevateZoom-3.0.8.min.js"></script>
     <style>
         body {
-        text-align: center;
-        font-size: 120%;
-        font-style: italic;
+            text-align: center;
+            color: white;
+            font: italic bold 150% serif;
+            background: url(background.jpg) no-repeat center/cover fixed;
+            position: absolute;
+            margin: 0;
+            width:100%;
+            height:100%;
+        }
+
+        img {
+            border:5px double black;
+            width: 90%;
+            margin: 0 5%;
+            box-sizing: border-box;
         }
     </style>
 </head>
 <body>
-    <p>Find text</p>
-    <img id="zoom" src="prova2small.png" data-zoom-image="prova2large.png"/>
-
+    <p>Find text </p>
+    <img id="zoom" src="prova2small.png" data-zoom-image="prova2large.png" />
     <script>
-    document.getElementById("zoom").addEventListener("mouseover", mouseOver);
-    function mouseOver() {
-        $("#zoom").elevateZoom({
-                                            zoomType    : "inner",
-                                            cursor      : "crosshair"
-                                                });;
+        document.getElementById("zoom").addEventListener("mouseover", mouseOver);
+
+        function mouseOver() {
+            $("#zoom").elevateZoom({ zoomType: "inner", cursor: "crosshair" });
         }
     </script>
 </body>
