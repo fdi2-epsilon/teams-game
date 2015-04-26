@@ -7,7 +7,7 @@ buildscript {
     }
 
     dependencies {
-        classpath 'eu.unipv.epsilon:equests-gradle:0.4'
+        classpath 'eu.unipv.epsilon:equests-gradle:0.5'
     }
 }
 
@@ -16,6 +16,6 @@ apply plugin: 'enigma-levels'
 
 questCollection {
     name = 'Void'
-    //subtitle = 'Quantum leap'
+    subtitle = 'Quantum leap'
     description = '... a <b>test</b>!'
 }
