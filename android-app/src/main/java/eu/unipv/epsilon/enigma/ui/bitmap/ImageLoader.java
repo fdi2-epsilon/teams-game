@@ -20,8 +20,9 @@ public abstract class ImageLoader {
         int srcWidth = options.outWidth;
         int srcHeight = options.outHeight;
 
-        // Calculate inSampleSize
+        // Calculate inSampleSize and set additional options
         options.inSampleSize = calculateInSampleSize(options, reqWidth, reqHeight);
+        setAdditionalDecodingOptions(options);
 
         int sampleSize = options.inSampleSize;
 
@@ -30,6 +31,9 @@ public abstract class ImageLoader {
 
         Log.i(getClass().getName(), String.format("Loaded %dx%d image as %dx%d (requested %dx%d) with sample size = %d",
                 srcWidth, srcHeight, options.outWidth, options.outHeight, reqWidth, reqHeight, sampleSize));
+
+        // Post loading operations
+        postLoad();
 
         return bitmap;
     }
@@ -40,6 +44,14 @@ public abstract class ImageLoader {
      * if the passed in {@link Options#inJustDecodeBounds} is set to {@code true}.
      */
     protected abstract Bitmap decodeBitmapWithOptions(Options options);
+
+    protected void setAdditionalDecodingOptions(Options options) {
+        // Override me to add additional options like Options#inDensity.
+    }
+
+    protected void postLoad() {
+        // Override me to add post-loading behavior like stream closing.
+    }
 
     private Options getImageOptions() {
         Options options = new BitmapFactory.Options();

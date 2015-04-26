@@ -1,1 +1,4 @@
-include 'levels:testing'
+include 'levels:test-a',
+        'levels:test-b',
+        'levels:test-c',
+        'levels:test-d'

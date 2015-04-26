@@ -14,21 +14,4 @@
     <string name="main_card_comm_share_contentDescription">Share</string>
     <string name="main_card_comm_star_contentDescription">Mark as favorite</string>
 
-    <!-- ~~~ TEMPORARY ~~~ -->
-    <string name="temp_ltit">First Collection</string>
-    <string name="temp_lsub">What the hell?</string>
-    <string name="temp_ldsc">
-        <![CDATA[…and the computer caught up in fire in front of the paralyzed eyes of the team. <i>\"I am fat and I have a llama\"</i> said Vik, while the other guys tried to extinguish the fire.]]></string>
-
-    <string name="temp_mtit">Question!</string>
-    <string name="temp_msub">Rabbits 4ever</string>
-    <string name="temp_mdsc">
-        <![CDATA[[<i>Lorem ipsum Lalo est</i>, rabbits run on red toilet paper leading to the green lawn.]]></string>
-
-    <string name="temp_stit">Void</string>
-    <string name="temp_ssub">Quantum leap</string>
-
-    <string name="temp_ttit">Tiny!</string>
-    <string name="temp_ttit2">Gremlins</string>
-
 </resources>

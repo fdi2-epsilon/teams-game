@@ -1,5 +1,7 @@
 package eu.unipv.epsilon.enigma.io.builderdefaults;
 
+import java.util.zip.ZipFile;
+
 /**
  * Used by a {@link eu.unipv.epsilon.enigma.io.QuestCollectionBuilder} to get an implementation of
  * {@link DefaultFieldProvider} in order to assign default
@@ -7,8 +9,10 @@ package eu.unipv.epsilon.enigma.io.builderdefaults;
  */
 public interface BuilderDefaultsFactory<T> {
 
+    // TODO Remove dependency from implementation specific file existence checker
+
     /** Creates a provider for default quest collection metadata values. */
-    DefaultFieldProvider<T> getCollectionDefaults();
+    DefaultFieldProvider<T> getCollectionDefaults(ZipFile zipFile);
 
     /** Creates a provider for default quest metadata values using the passed in index inside the collection. */
     DefaultFieldProvider<T> getQuestDefaults(int index);

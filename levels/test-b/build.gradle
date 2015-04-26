@@ -1,0 +1,21 @@
+description = 'Game quest test levels'
+
+buildscript {
+    repositories {
+        ivy { url 'https://fdi2-epsilon.github.io/ivy' }
+        jcenter()
+    }
+
+    dependencies {
+        classpath 'eu.unipv.epsilon:equests-gradle:0.4'
+    }
+}
+
+apply plugin: 'java'
+apply plugin: 'enigma-levels'
+
+questCollection {
+    name = 'Question!'
+    //subtitle = 'Rabbits 4ever'
+    description = '<i>Lorem ipsum Lalo est</i>, rabbits run on red toilet paper leading to the green lawn.'
+}

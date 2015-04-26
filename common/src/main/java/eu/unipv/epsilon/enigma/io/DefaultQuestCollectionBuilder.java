@@ -3,6 +3,7 @@ package eu.unipv.epsilon.enigma.io;
 import eu.unipv.epsilon.enigma.io.builderdefaults.BuilderDefaultsFactory;
 import eu.unipv.epsilon.enigma.io.builderdefaults.DefaultFieldProvider;
 import eu.unipv.epsilon.enigma.io.builderdefaults.RefBuilderDefaults;
+import eu.unipv.epsilon.enigma.io.url.EqcURLStreamHandler;
 import eu.unipv.epsilon.enigma.quest.Quest;
 import eu.unipv.epsilon.enigma.quest.QuestCollection;
 import org.yaml.snakeyaml.Yaml;
@@ -19,6 +20,10 @@ public class DefaultQuestCollectionBuilder implements QuestCollectionBuilder {
 
     public static final String FILENAME_PACK_CONFIGURATION = "metadata.yaml";
 
+    // TODO Move algorithm and following fields to another class
+    String collectionId;
+    ZipFile zipFile;
+
     BuilderDefaultsFactory<String> builderDefaults;
 
     public DefaultQuestCollectionBuilder() {
@@ -32,19 +37,24 @@ public class DefaultQuestCollectionBuilder implements QuestCollectionBuilder {
     @Override
     public QuestCollection createCollectionFromFile(File file) throws IOException {
         try (ZipFile zip = new ZipFile(file)) {
+            zipFile = zip;
             InputStream stream = zip.getInputStream(new ZipEntry(FILENAME_PACK_CONFIGURATION));
             // Zip file needs to be closed, however its derived streams not.
+            collectionId = file.getName().substring(0, file.getName().lastIndexOf('.'));
             return generateCollection((Map) new Yaml().load(stream));
         }
     }
 
     private QuestCollection generateCollection(Map meta) {
         QuestCollection qc = new QuestCollection();
-        DefaultFieldProvider<String> defaults = builderDefaults.getCollectionDefaults();
+        DefaultFieldProvider<String> defaults = builderDefaults.getCollectionDefaults(zipFile);
 
+        qc.setId(collectionId);
         qc.setName(valueOrDefault(meta, KEY_QUESTCOLLECTION_NAME, defaults));
         qc.setDescription(valueOrDefault(meta, KEY_QUESTCOLLECTION_DESCRIPTION, defaults));
-        qc.setIconPath(valueOrDefault(meta, KEY_QUESTCOLLECTION_PATH_ICON, defaults));
+
+        String iconPathStr = valueOrDefault(meta, KEY_QUESTCOLLECTION_PATH_ICON, defaults);
+        qc.setIconUrl(EqcURLStreamHandler.createURL(collectionId, iconPathStr));
 
         List quests = (List) meta.get(KEY_QUESTCOLLECTION_ELEMENTS);
         if (quests != null)
@@ -61,10 +71,16 @@ public class DefaultQuestCollectionBuilder implements QuestCollectionBuilder {
         q.setDescription(valueOrDefault(meta, KEY_QUEST_DESCRIPTION, defaults));
 
         Map paths = (Map) meta.get(KEY_QUEST_PATH_NODE);
-        // Check if 'paths' node collection exists moved inside 'valueOrDefault'
-        q.setMainDocumentPath(valueOrDefault(paths, KEY_QUEST_PATH_MAINDOCUMENT, defaults));
-        q.setInfoDocumentPath(valueOrDefault(paths, KEY_QUEST_PATH_INFODOCUMENT, defaults));
-        q.setIconPath(valueOrDefault(paths, KEY_QUEST_PATH_ICON, defaults));
+        // Following statements: check if 'paths' node collection exists moved inside 'valueOrDefault'
+
+        String mainDocPathStr = valueOrDefault(paths, KEY_QUEST_PATH_MAINDOCUMENT, defaults);
+        q.setMainDocumentUrl(EqcURLStreamHandler.createURL(collectionId, mainDocPathStr));
+
+        String infoDocPathStr = valueOrDefault(paths, KEY_QUEST_PATH_INFODOCUMENT, defaults);
+        q.setInfoDocumentUrl(EqcURLStreamHandler.createURL(collectionId, infoDocPathStr));
+
+        String iconPathStr = valueOrDefault(paths, KEY_QUEST_PATH_ICON, defaults);
+        q.setIconUrl(EqcURLStreamHandler.createURL(collectionId, iconPathStr));
 
         return q;
     }

@@ -4,6 +4,7 @@ import android.support.annotation.LayoutRes;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
 
 // A ViewHolder provides a reference to the views for each data item.
@@ -17,6 +18,10 @@ public abstract class CardHolder extends RecyclerView.ViewHolder {
         if (isFullSpan) {
             ((StaggeredGridLayoutManager.LayoutParams) itemView.getLayoutParams()).setFullSpan(true);
         }
+    }
+
+    public View getItemView() {
+        return this.itemView;
     }
 
 }

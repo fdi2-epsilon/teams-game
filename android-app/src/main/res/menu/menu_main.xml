@@ -3,9 +3,16 @@
       xmlns:app="http://schemas.android.com/apk/res-auto"
       xmlns:tools="http://schemas.android.com/tools"
       tools:context=".MainActivity">
+
     <item android:id="@+id/temp_button"
           android:title="Placeholder"
           android:orderInCategory="100"
           app:showAsAction="never"/>
+
+    <item android:id="@+id/filetest_button"
+          android:title="Do not click"
+          android:orderInCategory="101"
+          app:showAsAction="never"/>
+
 </menu>
 
