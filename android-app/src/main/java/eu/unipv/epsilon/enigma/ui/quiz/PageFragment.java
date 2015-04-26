@@ -43,23 +43,12 @@ public class PageFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         //View view = inflater.inflate(R.layout.myid, container, false);
-        //TextView textView = (TextView) view;
-        //textView.setText("Fragment #" + mPage);
 
         WebView view = new WebView(container.getContext());
         view.setLayoutParams(new FrameLayout.LayoutParams(
                 ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
 
         WebViewClient wvc = new WebViewClient() {
-            /*@Override
-            public boolean shouldOverrideUrlLoading(WebView view, String url) {
-
-                if (url.startsWith("eqc:")) {
-                    view.loadUrl(url);
-                    return true;
-                }
-                return false;
-            }*/
 
             // http://stackoverflow.com/questions/8332474/android-webview-protocol-handler
             // http://stackoverflow.com/questions/8273991/webview-shouldinterceptrequest-example
@@ -70,7 +59,7 @@ public class PageFragment extends Fragment {
 
                 if (urlString.startsWith("eqc:")) {
                     try {
-                        String ext = urlString.substring(urlString.indexOf('.') + 1);
+                        String ext = urlString.substring(urlString.lastIndexOf('.') + 1);
 
                         URL url = new URL(urlString);
                         String mime = MimeTypeMap.getSingleton().getMimeTypeFromExtension(ext);
@@ -88,10 +77,6 @@ public class PageFragment extends Fragment {
         view.setWebViewClient(wvc);
 
         view.getSettings().setJavaScriptEnabled(true);
-        /*view.getSettings().setAllowFileAccess(true);
-        view.getSettings().setAllowContentAccess(true);
-        view.getSettings().setAllowFileAccessFromFileURLs(true);
-        view.getSettings().setAllowUniversalAccessFromFileURLs(true);*/
 
         //view.clearCache(true);
         view.loadUrl(mDocumentUrl.toString());

@@ -1,5 +1,6 @@
 package eu.unipv.epsilon.enigma.ui.main;
 
+import android.content.Context;
 import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -39,7 +40,7 @@ public class CollectionsViewAdapter extends RecyclerView.Adapter<RecyclerView.Vi
             default:            throw new RuntimeException("Unhandled view type in main view");
         }
 
-        viewHolder.getItemView().setOnClickListener(new CardClickListener((RecyclerView) parent));
+        viewHolder.getItemView().setOnClickListener(new CardClickListener());
         return viewHolder;
     }
 
@@ -67,30 +68,26 @@ public class CollectionsViewAdapter extends RecyclerView.Adapter<RecyclerView.Vi
         // Temporary algorithm to get card size
         if (position == 0) return CardType.LARGE.ordinal();
         CardType[] types = { CardType.MEDIUM, CardType.SMALL, CardType.TINY};
-        return types[position - 1].ordinal();
+        return types[(position - 1) % types.length].ordinal();
     }
 
     private class CardClickListener implements View.OnClickListener {
 
-        RecyclerView recyclerView;
-
-        public CardClickListener(RecyclerView recyclerView) {
-            this.recyclerView = recyclerView;
-        }
-
         @Override
         public void onClick(View v) {
-            int idx = recyclerView.getChildAdapterPosition(v);
-            Log.i("AAHHAH", "Clicked #" + idx);
-            // TODO: Is this context OK?
+            int index = ((RecyclerView) v.getParent()).getChildAdapterPosition(v);
+            Log.i(getClass().getName(), "Clicked #" + index);
 
-            QuestCollection qc = elements.get(idx);
+            QuestCollection qc = elements.get(index);
+
             if (qc.size() > 0) {
-                Intent intent = new Intent(recyclerView.getContext(), QuizActivity.class);
+                Context context = v.getContext();
+                Intent intent = new Intent(context, QuizActivity.class);
                 intent.putExtra(QuizActivity.PARAM_QUESTCOLLECTION, qc);
-                recyclerView.getContext().startActivity(intent);
+                context.startActivity(intent);
             } else {
-                Log.i("AHAHHA", "No Quests in this collection");
+                //TODO: use toast notification
+                Log.i(getClass().getName(), "No Quests in this collection");
             }
 
         }

@@ -1,6 +1,5 @@
 package eu.unipv.epsilon.enigma;
 
-import android.content.res.Resources;
 import android.support.v7.widget.RecyclerView;
 import eu.unipv.epsilon.enigma.io.url.EqcURLStreamHandler;
 import eu.unipv.epsilon.enigma.quest.QuestCollection;
@@ -20,18 +19,18 @@ public class DataSource {
 
     public static boolean isUrlHandlerRegistered = false;
 
-    // TODO Unused
-    Resources resources;
-
     List<QuestCollection> collections = new ArrayList<>();
 
-
-    public DataSource(File filesDir, Resources resources) {
-        this.resources = resources;
-
+    public DataSource(File filesDir) {
         final File collectionsDir = new File(filesDir, "collections");
 
-        // Get all files inside directory with 'eqc' extension
+        //Register "eqc:" protocol (must be done only once)
+        if (!isUrlHandlerRegistered) {
+            registerURLHandler(collectionsDir);
+            isUrlHandlerRegistered = true;
+        }
+
+        // Get all ".eqc" files inside "collections" directory
         File[] collectionFiles = collectionsDir.listFiles(new FilenameFilter() {
             @Override
             public boolean accept(File dir, String filename) {
@@ -39,9 +38,7 @@ public class DataSource {
             }
         });
 
-        if (!isUrlHandlerRegistered) registerURLHandler(collectionsDir);
-
-        // Return if no content
+        // Return if no files were found
         if (collectionFiles == null) return;
 
         for (File file : collectionFiles) {
@@ -61,7 +58,6 @@ public class DataSource {
     }
 
     private static void registerURLHandler(final File baseDir) {
-        isUrlHandlerRegistered = true;
         // Initialize URL hander
         URL.setURLStreamHandlerFactory(new URLStreamHandlerFactory() {
             @Override

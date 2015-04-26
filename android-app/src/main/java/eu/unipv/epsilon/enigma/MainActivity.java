@@ -27,7 +27,7 @@ public class MainActivity extends ActionBarActivity {
         setSupportActionBar(toolbar);   // Title assigned by manifest
 
         // Create a new data source to load collections
-        dataSource = new DataSource(getFilesDir(), getResources());
+        dataSource = new DataSource(getFilesDir());
 
         // Initialize view
         initializeElementsView();
