@@ -16,8 +16,6 @@ import java.util.List;
 
 public class CollectionsViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
-    // TODO: Restore first start card
-
     private List<QuestCollection> elements;
 
     // Provide a suitable constructor (depends on the kind of dataset)
@@ -42,7 +40,8 @@ public class CollectionsViewAdapter extends RecyclerView.Adapter<RecyclerView.Vi
             default:            throw new RuntimeException("Unhandled view type in main view");
         }
 
-        viewHolder.getItemView().setOnClickListener(new CardClickListener());
+        if (viewHolder instanceof CollectionCardHolder)
+            viewHolder.getItemView().setOnClickListener(new CardClickListener());
         return viewHolder;
     }
 
@@ -55,18 +54,20 @@ public class CollectionsViewAdapter extends RecyclerView.Adapter<RecyclerView.Vi
 
         // If it is a card describing dynamic content like a Quest Collection, needs to be recycled with new parameters.
         if (holder instanceof CollectionCardHolder)
-            ((CollectionCardHolder) holder).updateViewFromData(elements.get(position));
+            ((CollectionCardHolder) holder).updateViewFromData(elements.get(position - 1));
 
         // Static views like CardType.FIRST_START do not need to be recycled, cause they don't have data.
     }
 
     @Override
     public int getItemCount() {
-        return elements.size();
+        return elements.size() + 1;
     }
 
     @Override
     public int getItemViewType(int position) {
+        if (position == 0) return CardType.FIRST_START.ordinal();
+        position--;
         // Temporary algorithm to get card size
         if (position == 0) return CardType.LARGE.ordinal();
         CardType[] types = { CardType.MEDIUM, CardType.SMALL, CardType.TINY};
@@ -77,7 +78,7 @@ public class CollectionsViewAdapter extends RecyclerView.Adapter<RecyclerView.Vi
 
         @Override
         public void onClick(View v) {
-            int index = ((RecyclerView) v.getParent()).getChildAdapterPosition(v);
+            int index = ((RecyclerView) v.getParent()).getChildAdapterPosition(v) - 1;
             Log.i(getClass().getName(), "Clicked #" + index);
 
             QuestCollection qc = elements.get(index);
