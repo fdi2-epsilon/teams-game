@@ -1,6 +1,6 @@
 <img align="left" alt="logo" title="A chicken with a pulley!" src="/android-app/src/main/res/mipmap-xxhdpi/ic_launcher.png"/>
 
-#### A simple quiz game... starring our buddies.
+#### A simple quiz game... starring our buddies.&nbsp;&nbsp;[![Build Status](https://travis-ci.org/fdi2-epsilon/teams-game.svg?branch=master)](https://travis-ci.org/fdi2-epsilon/teams-game)
 *Our co-workers are the stars here: a quest series for each team and their problems!*
 <br><br><br>
 
