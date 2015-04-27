@@ -1,5 +1,6 @@
 package eu.unipv.epsilon.enigma.ui.quiz;
 
+import android.annotation.TargetApi;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -53,6 +54,10 @@ public class PageFragment extends Fragment {
             // http://stackoverflow.com/questions/8332474/android-webview-protocol-handler
             // http://stackoverflow.com/questions/8273991/webview-shouldinterceptrequest-example
 
+            // View @ level 19:
+            // http://developer.android.com/reference/android/webkit/WebViewClient.html
+
+            @TargetApi(21)
             @Override
             public WebResourceResponse shouldInterceptRequest(WebView view, WebResourceRequest request) {
                 String urlString = request.getUrl().toString();
