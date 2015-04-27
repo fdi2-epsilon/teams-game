@@ -19,7 +19,7 @@ import static org.junit.Assert.assertTrue;
 public class DefaultQuestCollectionBuilderTest {
 
     public static final String FILE_PATH = "/test_package01.eqc";
-    public static final String PROTO_HEAD = "eqc:test_package01/";
+    public static final String PROTO_HEAD = "eqc://test_package01/";
 
     QuestCollection questCollection;
 
