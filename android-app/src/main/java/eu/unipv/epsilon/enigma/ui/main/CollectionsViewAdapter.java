@@ -6,7 +6,9 @@ import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 import eu.unipv.epsilon.enigma.QuizActivity;
+import eu.unipv.epsilon.enigma.R;
 import eu.unipv.epsilon.enigma.quest.QuestCollection;
 import eu.unipv.epsilon.enigma.ui.main.card.*;
 
@@ -79,17 +81,15 @@ public class CollectionsViewAdapter extends RecyclerView.Adapter<RecyclerView.Vi
             Log.i(getClass().getName(), "Clicked #" + index);
 
             QuestCollection qc = elements.get(index);
+            Context context = v.getContext();
 
             if (qc.size() > 0) {
-                Context context = v.getContext();
                 Intent intent = new Intent(context, QuizActivity.class);
                 intent.putExtra(QuizActivity.PARAM_QUESTCOLLECTION, qc);
                 context.startActivity(intent);
             } else {
-                //TODO: use toast notification
-                Log.i(getClass().getName(), "No Quests in this collection");
+                Toast.makeText(context, R.string.main_toast_no_content, Toast.LENGTH_SHORT).show();
             }
-
         }
 
     }
