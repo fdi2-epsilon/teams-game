@@ -50,7 +50,8 @@ public class DefaultQuestCollectionBuilder implements QuestCollectionBuilder {
         DefaultFieldProvider<String> defaults = builderDefaults.getCollectionDefaults(zipFile);
 
         qc.setId(collectionId);
-        qc.setName(valueOrDefault(meta, KEY_QUESTCOLLECTION_NAME, defaults));
+        qc.setTitle(valueOrDefault(meta, KEY_QUESTCOLLECTION_TITLE, defaults));
+        qc.setSubtitle(valueOrDefault(meta, KEY_QUESTCOLLECTION_SUBTITLE, defaults));
         qc.setDescription(valueOrDefault(meta, KEY_QUESTCOLLECTION_DESCRIPTION, defaults));
 
         String iconPathStr = valueOrDefault(meta, KEY_QUESTCOLLECTION_PATH_ICON, defaults);

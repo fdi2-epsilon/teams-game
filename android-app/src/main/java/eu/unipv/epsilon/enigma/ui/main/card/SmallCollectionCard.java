@@ -5,7 +5,6 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import eu.unipv.epsilon.enigma.R;
 import eu.unipv.epsilon.enigma.quest.QuestCollection;
-import eu.unipv.epsilon.enigma.ui.main.TempElement;
 
 public class SmallCollectionCard extends CollectionCardHolder {
 
@@ -24,7 +23,7 @@ public class SmallCollectionCard extends CollectionCardHolder {
     @Override
     public void updateViewFromData(QuestCollection dataElement) {
         super.updateViewFromData(dataElement);
-        subtitleRef.setText("Not Defined");
+        subtitleRef.setText(dataElement.getSubtitle());
     }
 
 }

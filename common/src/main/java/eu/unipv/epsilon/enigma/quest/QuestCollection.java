@@ -18,7 +18,8 @@ public class QuestCollection implements Serializable {
      */
     private String id;
 
-    private String name;
+    private String title;
+    private String subtitle;
     private String description;
     private URL iconUrl;
     private List<Quest> quests = new LinkedList<>();
@@ -31,12 +32,20 @@ public class QuestCollection implements Serializable {
         this.id = id;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setTitle(String title) {
+        this.title = title;
     }
 
-    public String getName() {
-        return name;
+    public String getTitle() {
+        return title;
+    }
+
+    public String getSubtitle() {
+        return subtitle;
+    }
+
+    public void setSubtitle(String subtitle) {
+        this.subtitle = subtitle;
     }
 
     public String getDescription() {

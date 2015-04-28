@@ -30,7 +30,7 @@ public class QuizActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         QuestCollection collection = (QuestCollection) getIntent().getSerializableExtra(PARAM_QUESTCOLLECTION);
-        setTitle(collection.getName());
+        setTitle(collection.getTitle());
 
         setupTabs(collection);
     }

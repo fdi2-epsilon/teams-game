@@ -9,7 +9,8 @@ public interface QuestCollectionBuilder {
 
     /* NOTE: Interface fields are always public, static and final. */
 
-    String KEY_QUESTCOLLECTION_NAME = "name";
+    String KEY_QUESTCOLLECTION_TITLE = "name";
+    String KEY_QUESTCOLLECTION_SUBTITLE = "subtitle";
     String KEY_QUESTCOLLECTION_DESCRIPTION = "description";
     String KEY_QUESTCOLLECTION_PATH_ICON = "icon";
     String KEY_QUESTCOLLECTION_ELEMENTS = "quests";

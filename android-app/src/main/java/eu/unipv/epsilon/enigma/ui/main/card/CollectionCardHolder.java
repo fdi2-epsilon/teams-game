@@ -30,7 +30,7 @@ public abstract class CollectionCardHolder extends CardHolder {
     }
 
     public void updateViewFromData(QuestCollection dataElement) {
-        titleRef.setText(dataElement.getName());
+        titleRef.setText(dataElement.getTitle());
         loadImage(dataElement.getIconUrl());
     }
 
