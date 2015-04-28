@@ -49,7 +49,7 @@ public class DefaultQuestCollectionBuilderTest {
 
     @Test
     public void testCollectionMetadata() {
-        assertEquals("Name must be as defined", "Sample collection, for testing!", questCollection.getName());
+        assertEquals("Name must be as defined", "Sample collection, for testing!", questCollection.getTitle());
         assertEquals("Icon must be not default", PROTO_HEAD + "pack_override.png", questCollection.getIconUrl().toString());
     }
 
