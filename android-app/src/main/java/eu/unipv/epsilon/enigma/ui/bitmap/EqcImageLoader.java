@@ -3,7 +3,6 @@ package eu.unipv.epsilon.enigma.ui.bitmap;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.util.DisplayMetrics;
-import android.util.Log;
 
 import java.io.BufferedInputStream;
 import java.io.IOException;
@@ -37,11 +36,9 @@ public class EqcImageLoader extends InputStreamImageLoader {
     protected Bitmap decodeBitmapWithOptions(BitmapFactory.Options options) {
         try {
             //inputStream = url.openStream();
-            Log.i("--- LOOK AT ME LOOK ---", inputStream.markSupported() ? "Mark supported" : "Fail");
+            //Log.i("", inputStream.markSupported() ? "Mark supported" : "Fail");
             inputStream.reset();
-            Bitmap ret = super.decodeBitmapWithOptions(options);
-            //inputStream.close();
-            return ret;
+            return super.decodeBitmapWithOptions(options);
         } catch (IOException e) {
             e.printStackTrace();
             return null;

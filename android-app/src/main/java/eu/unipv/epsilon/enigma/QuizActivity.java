@@ -3,7 +3,7 @@ package eu.unipv.epsilon.enigma;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
-import android.support.v7.app.ActionBarActivity;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -12,7 +12,7 @@ import eu.unipv.epsilon.enigma.quest.QuestCollection;
 import eu.unipv.epsilon.enigma.ui.quiz.QuizFragmentPageAdapter;
 
 /** Shows the quiz that is currently played. */
-public class QuizActivity extends ActionBarActivity {
+public class QuizActivity extends AppCompatActivity {
 
     public static final String PARAM_QUESTCOLLECTION = "param_questcollection";
 
@@ -26,6 +26,7 @@ public class QuizActivity extends ActionBarActivity {
         setSupportActionBar(toolbar);
 
         // Enable "up" button
+        assert getSupportActionBar() != null;
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         QuestCollection collection = (QuestCollection) getIntent().getSerializableExtra(PARAM_QUESTCOLLECTION);

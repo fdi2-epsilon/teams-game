@@ -2,8 +2,8 @@
 
     <style name="AppThemeBase" parent="Theme.AppCompat.Light.DarkActionBar">
         <!-- We are using a Toolbar, so we don't need an ActionBar -->
-        <item name="android:windowNoTitle">true</item>
         <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
 
         <!-- Default transparency switches in Android 4.4 -->
         <!--<item name="android:windowTranslucentStatus">true</item>-->
