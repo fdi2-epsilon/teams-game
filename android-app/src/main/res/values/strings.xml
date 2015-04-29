@@ -1,8 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
 
     <!-- Core strings -->
     <string name="app_name">Enigma</string>
-    <string name="title_activity_main">Team Stories</string>
+    <string name="title_activity_main" translatable="false">Team Stories</string>
     <string name="title_activity_quiz">Quiz</string>
 
     <!-- Main activity cards related -->

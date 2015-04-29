@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- Main activity cards related -->
+    <string name="main_card_first_start_title">Ehilà, straniero!</string>
+    <string name="main_card_first_start_content">Benvenuto in <b>Enigma</b>, tocca una carta per iniziare la sua storia. <i>Buona fortuna!</i></string>
+
+    <string name="main_toast_no_content">Questa collezione è vuota!</string>
+
+</resources>

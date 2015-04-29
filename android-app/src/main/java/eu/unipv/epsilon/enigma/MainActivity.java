@@ -18,7 +18,8 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        Log.i("MainActivity-DEBUG", "Activity started, display density: " + getResources().getDisplayMetrics().density);
+        Log.i(getClass().getName(), String.format("Activity started, display density: %f, locale: %s",
+                getResources().getDisplayMetrics().density, getResources().getConfiguration().locale.getLanguage()));
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
