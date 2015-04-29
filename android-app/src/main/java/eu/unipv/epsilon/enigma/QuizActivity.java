@@ -69,7 +69,7 @@ public class QuizActivity extends AppCompatActivity {
         slidingTabLayout.setCustomTabView(R.layout.temp_tab_view, R.id.text);
 
         //Center the tabs in the layout
-        slidingTabLayout.setDistributeEvenly(true);
+        slidingTabLayout.setDistributeEvenly(false);
         slidingTabLayout.setViewPager(viewPager);
 
         //customize tab color
