@@ -1,5 +1,6 @@
 package eu.unipv.epsilon.enigma.ui.quiz;
 
+import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -42,6 +43,7 @@ public class PageFragment extends Fragment {
 
     @Nullable
     @Override
+    @SuppressLint("SetJavaScriptEnabled")
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         //View view = inflater.inflate(R.layout.myid, container, false);
 
@@ -54,28 +56,30 @@ public class PageFragment extends Fragment {
             // http://stackoverflow.com/questions/8332474/android-webview-protocol-handler
             // http://stackoverflow.com/questions/8273991/webview-shouldinterceptrequest-example
 
-            // View @ level 19:
-            // http://developer.android.com/reference/android/webkit/WebViewClient.html
-
-            @TargetApi(21)
             @Override
+            @TargetApi(21)
             public WebResourceResponse shouldInterceptRequest(WebView view, WebResourceRequest request) {
-                String urlString = request.getUrl().toString();
+                // This causes a call to the pre-21 version 'shouldInterceptRequest(WebView, String)'
+                return super.shouldInterceptRequest(view, request);
+            }
 
-                if (urlString.startsWith("eqc:")) {
+            // Android pre-21 calls this instead
+            @Override
+            @SuppressWarnings("deprecation")
+            public WebResourceResponse shouldInterceptRequest(WebView view, String url) {
+
+                if (url.startsWith("eqc:")) {
                     try {
-                        String ext = urlString.substring(urlString.lastIndexOf('.') + 1);
-
-                        URL url = new URL(urlString);
+                        String ext = url.substring(url.lastIndexOf('.') + 1);
                         String mime = MimeTypeMap.getSingleton().getMimeTypeFromExtension(ext);
-
-                        return new WebResourceResponse(mime, "UTF-8", url.openStream());
+                        return new WebResourceResponse(mime, "UTF-8", new URL(url).openStream());
                     } catch (Exception e) {
                         e.printStackTrace();
-                        return super.shouldInterceptRequest(view, request);
+                        // Return super
                     }
-                } else
-                    return super.shouldInterceptRequest(view, request);
+                }
+
+                return super.shouldInterceptRequest(view, url);
             }
 
         };
