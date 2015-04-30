@@ -66,7 +66,7 @@ public class QuizActivity extends AppCompatActivity {
         //Give the SlidingTabLayout the ViewPager
         SlidingTabLayout slidingTabLayout = (SlidingTabLayout) findViewById(R.id.sliding_tabs);
 
-        slidingTabLayout.setCustomTabView(R.layout.temp_tab_view, R.id.text);
+        slidingTabLayout.setCustomTabView(R.layout.quiz_tab_element, R.id.text);
 
         //Center the tabs in the layout
         slidingTabLayout.setDistributeEvenly(false);

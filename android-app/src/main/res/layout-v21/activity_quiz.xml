@@ -13,7 +13,8 @@
             a:minHeight="?android:attr/actionBarSize"
             a:background="@color/alphaColorPrimary"
             a:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
-            app:popupTheme="@style/Base.ThemeOverlay.AppCompat.Light" />
+            app:popupTheme="@style/Base.ThemeOverlay.AppCompat.Light"
+            a:elevation="6dp" />
 
     <com.google.samples.apps.iosched.ui.widget.SlidingTabLayout
             a:id="@+id/sliding_tabs"
@@ -21,7 +22,7 @@
             a:layout_height="wrap_content"
             a:background="@color/alphaColorPrimary"
             a:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
-            a:foreground="?android:windowContentOverlay" />
+            a:elevation="6dp" />
 
     <include layout="@layout/include_quiz_viewpager" />
 

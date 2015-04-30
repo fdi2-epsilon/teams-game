@@ -14,7 +14,7 @@
             a:background="@color/alphaColorPrimary"
             a:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
             app:popupTheme="@style/Base.ThemeOverlay.AppCompat.Light"
-            a:foreground="?android:windowContentOverlay" />
+            a:elevation="6dp" />
 
     <include layout="@layout/include_main_contentview"
              a:layout_width="match_parent"

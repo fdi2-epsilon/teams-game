@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TextView xmlns:a="http://schemas.android.com/apk/res/android"
+          a:id="@+id/text"
+          a:gravity="center"
+          a:textSize="12sp"
+          a:textStyle="bold"
+          a:layout_width="wrap_content"
+          a:layout_height="wrap_content"
+          a:background="?android:attr/selectableItemBackground"
+          a:textAllCaps="true"
+          a:paddingStart="16dip"
+          a:paddingEnd="16dip"
+          a:paddingTop="8dip"
+          a:paddingBottom="8dip" />

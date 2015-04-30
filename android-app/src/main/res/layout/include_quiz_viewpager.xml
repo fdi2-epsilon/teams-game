@@ -1,0 +1,7 @@
+<android.support.v4.view.ViewPager
+        xmlns:a="http://schemas.android.com/apk/res/android"
+        a:id="@+id/viewpager"
+        a:layout_width="match_parent"
+        a:layout_height="0px"
+        a:layout_weight="1"
+        a:background="@android:color/white" />

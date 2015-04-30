@@ -5,12 +5,12 @@
       tools:context=".MainActivity">
 
     <item android:id="@+id/temp_button"
-          android:title="Placeholder"
+          android:title="Placeholder" tools:ignore="HardcodedText"
           android:orderInCategory="100"
           app:showAsAction="never"/>
 
     <item android:id="@+id/filetest_button"
-          android:title="Do not click"
+          android:title="Do not click" tools:ignore="HardcodedText"
           android:orderInCategory="101"
           app:showAsAction="never"/>
 

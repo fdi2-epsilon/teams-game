@@ -4,7 +4,7 @@
       tools:context="eu.unipv.epsilon.enigma.QuizActivity">
 
     <item android:id="@+id/temp_button2"
-          android:title="wooo"
+          android:title="Placeholder" tools:ignore="HardcodedText"
           android:orderInCategory="100"
           app:showAsAction="never" />
 
