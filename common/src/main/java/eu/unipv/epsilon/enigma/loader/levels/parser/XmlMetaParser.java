@@ -7,12 +7,12 @@ import java.io.InputStream;
 
 public class XmlMetaParser implements MetadataParser {
 
-    public XmlMetaParser(InputStream in, DefaultsFactory defaultsFactory) {
+    public XmlMetaParser(String id, DefaultsFactory defaultsFactory) {
         // TODO implement
     }
 
     @Override
-    public QuestCollection loadCollectionMetadata() {
+    public QuestCollection loadCollectionMetadata(InputStream in) {
         return null;
     }
 

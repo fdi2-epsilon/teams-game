@@ -22,7 +22,8 @@ public class LevelAssetsURLConnection extends URLConnection {
     @Override
     public void connect() throws IOException {
         if (!connected) {
-            containerEntry = assetsSystem.getCollectionContainer(url.getHost()).getEntry(url.getPath());
+            String urlPath = url.getPath().startsWith("/") ? url.getPath().substring(1) : url.getPath();
+            containerEntry = assetsSystem.getCollectionContainer(url.getHost()).getEntry(urlPath);
             connected = true;
         }
     }

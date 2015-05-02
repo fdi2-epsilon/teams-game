@@ -20,7 +20,7 @@ public class DirectoryPool extends CollectionsPool {
 
     @Override
     protected CollectionContainer createCollectionContainer(String id) throws IOException {
-        return new EqcFile(getFileFromID(id));
+        return new EqcFile(id, getFileFromID(id));
     }
 
     @Override
@@ -35,7 +35,7 @@ public class DirectoryPool extends CollectionsPool {
 
         TreeSet<String> names = new TreeSet<>();
         for (File file : files) {
-            if (file.isFile() && file.getName().endsWith("." + EqcFile.FILE_EXTENSION)) {
+            if (file.isFile() && file.getName().endsWith("." + EqcFile.CONTAINER_FILE_EXTENSION)) {
                 int extIndex = file.getName().lastIndexOf('.');
                 names.add(file.getName().substring(0, extIndex));
             }
@@ -44,7 +44,7 @@ public class DirectoryPool extends CollectionsPool {
     }
 
     private File getFileFromID(String id) {
-        return new File(baseDirectory, id + '.' + EqcFile.FILE_EXTENSION);
+        return new File(baseDirectory, id + '.' + EqcFile.CONTAINER_FILE_EXTENSION);
     }
 
 }

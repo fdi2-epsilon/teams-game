@@ -4,12 +4,28 @@ import eu.unipv.epsilon.enigma.quest.QuestCollection;
 
 import java.io.IOException;
 
-public interface CollectionContainer {
+public abstract class CollectionContainer {
 
-    QuestCollection loadCollectionMeta() throws IOException;
+    private boolean closed = false;
 
-    boolean containsEntry(String entryPath);
+    public void invalidate() {
+        closed = true;
+    }
 
-    ContainerEntry getEntry(String entryPath) throws IOException;
+    public boolean isInvalidated() {
+        return closed;
+    }
+
+    @Override
+    protected void finalize() throws Throwable {
+        super.finalize();
+        invalidate();
+    }
+
+    public abstract QuestCollection loadCollectionMeta() throws IOException;
+
+    public abstract boolean containsEntry(String entryPath);
+
+    public abstract ContainerEntry getEntry(String entryPath) throws IOException;
 
 }

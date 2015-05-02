@@ -14,7 +14,7 @@ public class LevelAssetsURLStreamHandler extends URLStreamHandler {
 
     GameAssetsSystem assetsSystem;
 
-    LevelAssetsURLStreamHandler(GameAssetsSystem assetsSystem) {
+    public LevelAssetsURLStreamHandler(GameAssetsSystem assetsSystem) {
         this.assetsSystem = assetsSystem;
     }
 
@@ -23,24 +23,13 @@ public class LevelAssetsURLStreamHandler extends URLStreamHandler {
         return new LevelAssetsURLConnection(assetsSystem, u);
     }
 
-    @Override
-    protected void parseURL(URL u, String spec, int start, int limit) {
-        String urlString = spec.substring(start, limit);
-        int slashIndex = urlString.indexOf('/');
-
-        String host = urlString.substring(0, slashIndex);
-        String path = urlString.substring(slashIndex + 1);
-
-        // (u, protocol, host, port, authority, userInfo, path, query, ref)
-        setURL(u, u.getProtocol(), host, -1, "", "", path, "", null);
-    }
-
     public static URL createURL(String collectionId, String entryPath) {
+        if (!entryPath.startsWith("/")) entryPath = '/' + entryPath;
         try {
             return new URL(PROTOCOL_NAME, collectionId, -1, entryPath);
         } catch (MalformedURLException e) {
-            e.printStackTrace();
-            return null;
+            throw new RuntimeException("Failed to create an \"" + PROTOCOL_NAME +
+                    "\" url, have you correctly registered an URLStreamHandlerFactory?");
         }
     }
 

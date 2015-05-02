@@ -2,6 +2,8 @@ package eu.unipv.epsilon.enigma.loader.levels.parser;
 
 import eu.unipv.epsilon.enigma.quest.QuestCollection;
 
+import java.io.InputStream;
+
 public interface MetadataParser {
 
     String KEY_QUESTCOLLECTION_TITLE = "name";
@@ -17,6 +19,6 @@ public interface MetadataParser {
     String KEY_QUEST_PATH_INFODOCUMENT = "info-document";
     String KEY_QUEST_PATH_ICON = "icon";
 
-    QuestCollection loadCollectionMetadata();
+    QuestCollection loadCollectionMetadata(InputStream in);
 
 }

@@ -12,30 +12,39 @@ import java.io.File;
 import java.io.IOException;
 import java.util.zip.ZipFile;
 
-public class EqcFile implements CollectionContainer {
+public class EqcFile extends CollectionContainer {
 
-    public static final Logger logger = LoggerFactory.getLogger(EqcFile.class);
-    public static final String FILE_EXTENSION = "eqc";
+    private static final Logger logger = LoggerFactory.getLogger(EqcFile.class);
+    public static final String CONTAINER_FILE_EXTENSION = "eqc";
+    public static final String CONFIG_YAML_FILENAME = "metadata.yaml";
+    public static final String CONFIG_XML_FILENAME = "metadata.xml";
 
+    String id;
     ZipFile zipFile;
 
-    public EqcFile(File file) throws IOException {
+    public EqcFile(String id, File file) throws IOException {
+        this.id = id;
         this.zipFile = new ZipFile(file);
-        logger.debug("Opened container \"%s\"", zipFile.getName());
+        logger.info("Opened container \"{}\"", zipFile.getName());
     }
 
     @Override
     public QuestCollection loadCollectionMeta() throws IOException {
+        String fileName;
         MetadataParser parser;
 
-        if (containsEntry("metadata.yaml"))
-            parser = new YamlMetaParser(getEntry("metadata.yaml").getStream(), new DefaultsFactory(this));
-        else if (containsEntry("metadata.xml"))
-            parser = new XmlMetaParser(getEntry("metadata.xml").getStream(), new DefaultsFactory(this));
+        if (containsEntry(CONFIG_YAML_FILENAME)) {
+            fileName = CONFIG_YAML_FILENAME;
+            parser = new YamlMetaParser(id, new DefaultsFactory(this));
+        }
+        else if (containsEntry(CONFIG_XML_FILENAME)) {
+            fileName = CONFIG_XML_FILENAME;
+            parser = new XmlMetaParser(id, new DefaultsFactory(this));
+        }
         else
             throw new IOException("Collection metadata not found");
 
-        return parser.loadCollectionMetadata();
+        return parser.loadCollectionMetadata(getEntry(fileName).getStream());
     }
 
     @Override
@@ -49,10 +58,14 @@ public class EqcFile implements CollectionContainer {
     }
 
     @Override
-    protected void finalize() throws Throwable {
-        logger.debug("Closing container \"%s\" (garbage collected)", zipFile.getName());
-        super.finalize();
-        zipFile.close();
+    public void invalidate() {
+        super.invalidate();
+        logger.info("Closing container (invalidated) \"{}\"", zipFile.getName());
+        try {
+            zipFile.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
 }

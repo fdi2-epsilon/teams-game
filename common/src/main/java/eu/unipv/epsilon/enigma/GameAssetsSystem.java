@@ -2,8 +2,10 @@ package eu.unipv.epsilon.enigma;
 
 import eu.unipv.epsilon.enigma.loader.levels.CollectionContainer;
 import eu.unipv.epsilon.enigma.loader.levels.pool.CollectionsPool;
+import eu.unipv.epsilon.enigma.loader.levels.protocol.LevelAssetsURLStreamHandler;
 
 import java.io.IOException;
+import java.net.URLStreamHandler;
 import java.util.TreeSet;
 
 public class GameAssetsSystem {
@@ -17,8 +19,8 @@ public class GameAssetsSystem {
         this.sources = sources;
     }
 
-    public void getURLStreamHandler() {
-
+    public URLStreamHandler getURLStreamHandler() {
+        return new LevelAssetsURLStreamHandler(this);
     }
 
     public TreeSet<String> getAvailableCollectionIDs() {
