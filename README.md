@@ -10,6 +10,17 @@ Codename `Enigma` is a framework for quiz collections produced at the teams soft
 We have plans for an Android and a Desktop application, including also multiplayer support in the next releases.  
 Check out [the docs](https://github.com/fdi2-epsilon/teams-game/wiki) if you want learn more and contribute.
 
+## I want to try it!
+Let the built-in Gradle wrapper do everything for you:
+```shell
+# This will compile the project, assemble game levels and upload the app to your device
+> ./gradlew build installDebug
+
+# Upload game levels to your Android thingy using ADB, only tested with the SDK emulator
+> ./gradlew uploadLevels
+```
+If you have problems in running these simple commands, this may be because your environment isn't setup correctly, (i.e. you don't have the latest version of the Android SDK installed), so please continue reading to fix things up.
+
 ## Inside the box...
 - `android-app` is the Android application;
 - `desktop-app` is the Java Desktop application;
@@ -18,6 +29,7 @@ Check out [the docs](https://github.com/fdi2-epsilon/teams-game/wiki) if you wan
 - `build.gradle` and `settings.gradle` are part of the buildscript and define projects and tasks;
 - The `gradle` folder, `gradlew` and `gradlew.bat` allow you to run build tasks and fetch dependencies without having Gradle installed;
 - `gradle.properties` enables some incubating Gradle features to speed up builds;
+- `.travis.yml` is a configuration file for build automation, provided by [Travis CI](https://travis-ci.org);
 - Finally`README.md`, `CONTRIBUTING` and `LICENSE` are simply good things to have in a repo.
 
 
@@ -25,7 +37,7 @@ Check out [the docs](https://github.com/fdi2-epsilon/teams-game/wiki) if you wan
 > I will assume that you are using Windows x64 here, since 4/5 of the team actually uses it *(ME INCLUDED, VEERY BAD)*
 
 - **Get what you need**
-  1. Install Git, download it from [here][GIT];
+  1. Install Git, download it from [here][GIT], you can also use Subversion of you want, a guide is on the wiki;
   2. [Download][JDK7] and install JDK 7;
   3. [Get the Android][ASDK] SDK. You can also get it with [Android Studio] of you don't have any other IDE installed.
   4. If you decided to get only the SDK from step **3**, you will also need an IDE like [IntelliJ IDEA] Community,
