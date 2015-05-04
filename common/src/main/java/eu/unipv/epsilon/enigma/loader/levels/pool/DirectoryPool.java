@@ -7,7 +7,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.TreeSet;
 
-public class DirectoryPool extends CollectionsPool {
+public class DirectoryPool extends CachedCollectionsPool {
 
     File baseDirectory;
 
