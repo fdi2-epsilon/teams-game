@@ -9,6 +9,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+/**
+ * Activity with all enigma's title
+ */
+
 public class ListActivity extends AppCompatActivity{
 
     private RecyclerView levelsView;
@@ -41,21 +45,19 @@ public class ListActivity extends AppCompatActivity{
     }
 }
 
-class TmpAdapter extends RecyclerView.Adapter {
+class TmpAdapter extends RecyclerView.Adapter<TmpViewHolder> {
 
     @Override
-    public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public TmpViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
 
         TextView text = new TextView(parent.getContext());
         return new TmpViewHolder(text);
     }
 
     @Override
-    public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
+    public void onBindViewHolder(TmpViewHolder holder, int position) {
 
-        TmpViewHolder h = (TmpViewHolder) holder;
-        TextView t = (TextView) h.getMyItemView();
-        t.setText("PROVA "+ position);
+        holder.getMyItemView().setText("PROVA " + position);
     }
 
     @Override
@@ -66,14 +68,11 @@ class TmpAdapter extends RecyclerView.Adapter {
 
 class TmpViewHolder extends RecyclerView.ViewHolder {
 
-    View myItemView;
-
     public TmpViewHolder(View itemView) {
         super(itemView);
-        this.myItemView = itemView;
     }
 
-    public View getMyItemView() {
-        return myItemView;
+    public TextView getMyItemView() {
+        return (TextView) itemView;
     }
 }
