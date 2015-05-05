@@ -4,7 +4,15 @@ import eu.unipv.epsilon.enigma.quest.QuestCollection;
 
 import java.io.InputStream;
 
+/**
+ * A {@link QuestCollection} metadata parser.
+ *
+ * @see YamlMetaParser
+ * @see XmlMetaParser
+ */
 public interface MetadataParser {
+
+    /* NOTE: Interface fields are always public, static and final. */
 
     String KEY_QUESTCOLLECTION_TITLE = "name";
     String KEY_QUESTCOLLECTION_SUBTITLE = "subtitle";
@@ -19,6 +27,10 @@ public interface MetadataParser {
     String KEY_QUEST_PATH_INFODOCUMENT = "info-document";
     String KEY_QUEST_PATH_ICON = "icon";
 
+    /**
+     * Populates a new {@link QuestCollection} from the metadata inside the given {@link InputStream}.
+     * Stream data format is implementation-specific.
+     */
     QuestCollection loadCollectionMetadata(InputStream in);
 
 }
