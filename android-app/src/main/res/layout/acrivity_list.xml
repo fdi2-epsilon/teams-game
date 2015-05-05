@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:a="http://schemas.android.com/apk/res/android"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
+              a:orientation="vertical"
+              a:layout_width="match_parent"
+              a:layout_height="match_parent">
+
+    <android.support.v7.widget.Toolbar
+            a:id="@+id/toolbar"
+            a:layout_width="match_parent"
+            a:layout_height="wrap_content"
+            a:minHeight="?android:attr/actionBarSize"
+            a:background="@color/alphaColorPrimary"
+            a:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+            app:popupTheme="@style/Base.ThemeOverlay.AppCompat.Light"
+            a:foreground="?android:windowContentOverlay" />
+
+    <android.support.v7.widget.RecyclerView
+            xmlns:a="http://schemas.android.com/apk/res/android"
+            a:id="@+id/list_levels_view"
+            a:scrollbars="vertical"
+            a:layout_width="match_parent"
+            a:layout_height="match_parent"
+            a:paddingLeft="@dimen/card_screen_edge_padding_half"
+            a:paddingRight="@dimen/card_screen_edge_padding_half" />
+
+</LinearLayout>

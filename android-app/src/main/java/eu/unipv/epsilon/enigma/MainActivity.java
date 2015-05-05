@@ -2,6 +2,7 @@ package eu.unipv.epsilon.enigma;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -71,8 +72,8 @@ public class MainActivity extends AppCompatActivity {
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.temp_button) {
-            //Intent intent = new Intent(this, QuizActivity.class);
-            //startActivity(intent);
+            Intent intent = new Intent(this, ListActivity.class);
+            startActivity(intent);
             return true;
         } else if (id == R.id.filetest_button) {
             // Implement here your test routines
