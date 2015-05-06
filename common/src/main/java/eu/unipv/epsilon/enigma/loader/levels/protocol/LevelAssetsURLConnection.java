@@ -1,6 +1,7 @@
 package eu.unipv.epsilon.enigma.loader.levels.protocol;
 
 import eu.unipv.epsilon.enigma.GameAssetsSystem;
+import eu.unipv.epsilon.enigma.loader.levels.CollectionContainer;
 import eu.unipv.epsilon.enigma.loader.levels.ContainerEntry;
 
 import java.io.IOException;
@@ -23,7 +24,15 @@ public class LevelAssetsURLConnection extends URLConnection {
     public void connect() throws IOException {
         if (!connected) {
             String urlPath = url.getPath().startsWith("/") ? url.getPath().substring(1) : url.getPath();
-            containerEntry = assetsSystem.getCollectionContainer(url.getHost()).getEntry(urlPath);
+
+            CollectionContainer container = assetsSystem.getCollectionContainer(url.getHost());
+            if (container == null)
+                throw new IOException("Collection \"" + url.getHost() + "\" not found.");
+
+            containerEntry = container.getEntry(urlPath);
+            if (containerEntry == null)
+                throw new IOException("Entry \"" + urlPath + "\" not found in \"" + url.getHost() + "\".");
+
             connected = true;
         }
     }

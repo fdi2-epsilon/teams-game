@@ -18,8 +18,7 @@ import java.net.URLStreamHandlerFactory;
 import java.util.Arrays;
 import java.util.Collection;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 @RunWith(Parameterized.class)
 public class GameAssetsSystemTest {
@@ -67,8 +66,11 @@ public class GameAssetsSystemTest {
     }
 
     @Test
-    public void testContainerContent() throws IOException {
+    public void testContainerContent() {
         CollectionContainer container = system.getCollectionContainer(cid);
+
+        assertNotNull("Container should exist",
+                container);
 
         assertTrue("The system should be able to find entries",
                 container.containsEntry("quests/03/story.html"));
@@ -115,6 +117,7 @@ public class GameAssetsSystemTest {
         assertEquals(PROTO_HEAD + cid + "/quests/q3main.html", q3.getMainDocumentUrl().toString());     // Configured
         assertEquals(PROTO_HEAD + cid + "/quests/03/story.html", q3.getInfoDocumentUrl().toString());   // Default
         assertEquals(PROTO_HEAD + cid + "/quests/3icon.png", q3.getIconUrl().toString());               // Configured
+
         system.getCollectionContainer(cid).invalidate();
     }
 

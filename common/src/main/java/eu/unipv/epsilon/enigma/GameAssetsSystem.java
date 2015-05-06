@@ -4,7 +4,6 @@ import eu.unipv.epsilon.enigma.loader.levels.CollectionContainer;
 import eu.unipv.epsilon.enigma.loader.levels.pool.CollectionsPool;
 import eu.unipv.epsilon.enigma.loader.levels.protocol.LevelAssetsURLStreamHandler;
 
-import java.io.IOException;
 import java.net.URLStreamHandler;
 import java.util.TreeSet;
 
@@ -34,10 +33,10 @@ public class GameAssetsSystem {
         return false;
     }
 
-    public CollectionContainer getCollectionContainer(String id) throws IOException {
+    public CollectionContainer getCollectionContainer(String id) {
         for (CollectionsPool source : sources)
             if (source.containsCollection(id)) return source.getCollectionContainer(id);
-        throw new IOException("Collection \"" + id + "\" not found.");
+        return null;
     }
 
 }

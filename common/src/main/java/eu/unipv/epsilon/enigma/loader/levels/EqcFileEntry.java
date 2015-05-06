@@ -10,11 +10,13 @@ public class EqcFileEntry implements ContainerEntry {
     ZipFile zip;
     ZipEntry zipEntry;
 
-    public EqcFileEntry(ZipFile zip, String entryPath) throws IOException {
+    public EqcFileEntry(ZipFile zip, String entryPath) {
         this.zip = zip;
         this.zipEntry = zip.getEntry(entryPath);
-        if (zipEntry == null)
-            throw new IOException("Entry \"" + entryPath + "\" not found in \"" + zip.getName() + "\".");
+        if (zipEntry == null) {
+            // This should already be checked by EqcFile for existence
+            throw new RuntimeException("Entry \"" + entryPath + "\" not found in \"" + zip.getName() + "\".");
+        }
     }
 
     @Override

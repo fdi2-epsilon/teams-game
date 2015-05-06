@@ -1,5 +1,6 @@
 package eu.unipv.epsilon.enigma.loader.levels;
 
+import eu.unipv.epsilon.enigma.loader.levels.exception.MetadataNotFoundException;
 import eu.unipv.epsilon.enigma.loader.levels.parser.MetadataParser;
 import eu.unipv.epsilon.enigma.loader.levels.parser.XmlMetaParser;
 import eu.unipv.epsilon.enigma.loader.levels.parser.YamlMetaParser;
@@ -10,6 +11,7 @@ import org.slf4j.LoggerFactory;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.zip.ZipFile;
 
 public class EqcFile extends CollectionContainer {
@@ -42,9 +44,10 @@ public class EqcFile extends CollectionContainer {
             parser = new XmlMetaParser(id, new DefaultsFactory(this));
         }
         else
-            throw new IOException("Collection metadata not found");
+            throw new MetadataNotFoundException(id);
 
-        return parser.loadCollectionMetadata(getEntry(fileName).getStream());
+        InputStream entryStream = getEntry(fileName).getStream();
+        return parser.loadCollectionMetadata(entryStream);
     }
 
     @Override
@@ -53,8 +56,9 @@ public class EqcFile extends CollectionContainer {
     }
 
     @Override
-    public ContainerEntry getEntry(String entryPath) throws IOException {
-        return new EqcFileEntry(zipFile, entryPath);
+    public ContainerEntry getEntry(String entryPath) {
+        if (containsEntry(entryPath)) return new EqcFileEntry(zipFile, entryPath);
+        return null;
     }
 
     @Override

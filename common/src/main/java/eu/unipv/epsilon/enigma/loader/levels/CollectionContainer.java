@@ -1,5 +1,6 @@
 package eu.unipv.epsilon.enigma.loader.levels;
 
+import eu.unipv.epsilon.enigma.loader.levels.exception.MetadataNotFoundException;
 import eu.unipv.epsilon.enigma.loader.levels.pool.CachedCollectionsPool;
 import eu.unipv.epsilon.enigma.quest.QuestCollection;
 
@@ -41,7 +42,8 @@ public abstract class CollectionContainer {
      * Loads the collection metadata bundled within this container.
      *
      * @return The loaded {@link QuestCollection} metadata
-     * @throws IOException if the contained collection does not have any metadata (which it should)
+     * @throws MetadataNotFoundException if the contained collection does not have any metadata (which it should)
+     * @throws IOException if there was an error opening the file
      */
     public abstract QuestCollection loadCollectionMeta() throws IOException;
 
@@ -57,9 +59,8 @@ public abstract class CollectionContainer {
      * Returns a {@link ContainerEntry} for an asset in this container.
      *
      * @param entryPath The path of the asset inside the container
-     * @return a {@link ContainerEntry} for the given entry
-     * @throws IOException if the entry was not found inside this container
+     * @return a {@link ContainerEntry} for the given entry, {@code null} if not found
      */
-    public abstract ContainerEntry getEntry(String entryPath) throws IOException;
+    public abstract ContainerEntry getEntry(String entryPath);
 
 }
