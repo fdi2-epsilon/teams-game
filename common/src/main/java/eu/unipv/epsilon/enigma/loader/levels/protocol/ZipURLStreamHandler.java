@@ -1,4 +1,4 @@
-package eu.unipv.epsilon.enigma.io.url;
+package eu.unipv.epsilon.enigma.loader.levels.protocol;
 
 import java.io.File;
 import java.io.IOException;
@@ -6,6 +6,8 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
 import java.net.URLStreamHandler;
+
+///// UNUSED CLASS IN NEWER VERSIONS BUT KEPT FOR REFERENCE /////
 
 /**
  * A {@link URLStreamHandler} which allows accessing specific zip entries within a zip file.

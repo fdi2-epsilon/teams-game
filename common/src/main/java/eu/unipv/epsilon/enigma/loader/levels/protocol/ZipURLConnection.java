@@ -1,4 +1,4 @@
-package eu.unipv.epsilon.enigma.io.url;
+package eu.unipv.epsilon.enigma.loader.levels.protocol;
 
 import java.io.File;
 import java.io.IOException;
@@ -7,6 +7,8 @@ import java.net.URL;
 import java.net.URLConnection;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
+
+///// UNUSED CLASS IN NEWER VERSIONS BUT KEPT FOR REFERENCE /////
 
 /**
  * A {@link java.net.URLConnection} which loads its content from a specified zip entry within a local file.
