@@ -1,11 +1,16 @@
-package eu.unipv.epsilon.enigma.io;
+package eu.unipv.epsilon.enigma.loader.levels.parser;
 
 import eu.unipv.epsilon.enigma.quest.QuestCollection;
 
-import java.io.File;
-import java.io.IOException;
+import java.io.InputStream;
 
-public interface QuestCollectionBuilder {
+/**
+ * A {@link QuestCollection} metadata parser.
+ *
+ * @see YamlMetaParser
+ * @see XmlMetaParser
+ */
+public interface MetadataParser {
 
     /* NOTE: Interface fields are always public, static and final. */
 
@@ -22,7 +27,10 @@ public interface QuestCollectionBuilder {
     String KEY_QUEST_PATH_INFODOCUMENT = "info-document";
     String KEY_QUEST_PATH_ICON = "icon";
 
-    /** Populates a new Quest Collection from the metadata inside the given file. */
-    QuestCollection createCollectionFromFile(File file) throws IOException;
+    /**
+     * Populates a new {@link QuestCollection} from the metadata inside the given {@link InputStream}.
+     * Stream data format is implementation-specific.
+     */
+    QuestCollection loadCollectionMetadata(InputStream in);
 
 }

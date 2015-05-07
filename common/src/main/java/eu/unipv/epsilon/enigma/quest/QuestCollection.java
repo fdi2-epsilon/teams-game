@@ -1,10 +1,5 @@
 package eu.unipv.epsilon.enigma.quest;
 
-import eu.unipv.epsilon.enigma.io.DefaultQuestCollectionBuilder;
-import eu.unipv.epsilon.enigma.io.QuestCollectionBuilder;
-
-import java.io.File;
-import java.io.IOException;
 import java.io.Serializable;
 import java.net.URL;
 import java.util.LinkedList;
@@ -12,10 +7,7 @@ import java.util.List;
 
 public class QuestCollection implements Serializable {
 
-    /**
-     * Used to reference this collection in saved data structures.
-     * Usually initialized to the collection source filename, without extension.
-     */
+    /** Used to reference this collection in saved data structures. */
     private String id;
 
     private String title;
@@ -74,22 +66,6 @@ public class QuestCollection implements Serializable {
 
     public int size() {
         return quests.size();
-    }
-
-    /* STATIC BUILDER UTILITIES */
-
-    private static QuestCollectionBuilder builder = new DefaultQuestCollectionBuilder();
-
-    public static void setBuilder(QuestCollectionBuilder builder) {
-        QuestCollection.builder = builder;
-    }
-
-    public static QuestCollection fromFile(String path) throws IOException {
-        return QuestCollection.fromFile(new File(path));
-    }
-
-    public static QuestCollection fromFile(File file) throws IOException {
-        return builder.createCollectionFromFile(file);
     }
 
 }

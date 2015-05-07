@@ -9,12 +9,21 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import eu.unipv.epsilon.enigma.loader.levels.exception.MetadataNotFoundException;
+import eu.unipv.epsilon.enigma.loader.levels.pool.DirectoryPool;
+import eu.unipv.epsilon.enigma.quest.QuestCollection;
+import eu.unipv.epsilon.enigma.ui.main.CollectionsViewAdapter;
+
+import java.io.File;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
     private RecyclerView collectionsView;
 
-    private DataSource dataSource;
+    private GameAssetsSystem assetsSystem;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,7 +37,11 @@ public class MainActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);   // Title assigned by manifest
 
         // Create a new data source to load collections
-        dataSource = new DataSource(getFilesDir());
+        File collectionsDir = new File(getFilesDir(), "collections");
+        assetsSystem = new GameAssetsSystem(new DirectoryPool(collectionsDir));
+
+        // Register Stream handler
+        URLHandlerFactory.register(assetsSystem);
 
         // Initialize view
         initializeElementsView();
@@ -77,7 +90,25 @@ public class MainActivity extends AppCompatActivity {
         collectionsView.setLayoutManager(new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL));
 
         // Populate with data
-        dataSource.populateMainView(collectionsView);
+        populateMainView(assetsSystem, collectionsView);
+    }
+
+    public static void populateMainView(GameAssetsSystem assetsSystem, RecyclerView list) {
+        List<QuestCollection> collections = new ArrayList<>();
+
+        for (String collectionId : assetsSystem.getAvailableCollectionIDs()) {
+            try {
+                collections.add(assetsSystem.getCollectionContainer(collectionId).loadCollectionMeta());
+            } catch (MetadataNotFoundException e) {
+                // Handle metadata not found exception
+                e.printStackTrace();
+            } catch (IOException e) {
+                // There was an error opening the file
+                e.printStackTrace();
+            }
+        }
+
+        list.setAdapter(new CollectionsViewAdapter(collections));
     }
 
 }

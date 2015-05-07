@@ -1,17 +1,21 @@
-package eu.unipv.epsilon.enigma.io.builderdefaults;
+package eu.unipv.epsilon.enigma.loader.levels.parser.defaults;
 
-import static eu.unipv.epsilon.enigma.io.QuestCollectionBuilder.*;
+import eu.unipv.epsilon.enigma.loader.levels.CollectionContainer;
 
-public class QuestDefaults implements DefaultFieldProvider<String> {
+import static eu.unipv.epsilon.enigma.loader.levels.parser.MetadataParser.*;
 
+public class QuestDefaults implements FieldProvider {
+
+    CollectionContainer context;
     int nameIndex;
 
-    public QuestDefaults(int index) {
-        nameIndex = index + 1;
+    public QuestDefaults(CollectionContainer context, int index) {
+        this.context = context;
+        this.nameIndex = index + 1;
     }
 
     @Override
-    public String getPropertyDefaultValue(String property) {
+    public String getPropertyValue(String property) {
         switch (property) {
             case KEY_QUEST_NAME:                return "Quest #" + nameIndex;
             case KEY_QUEST_DESCRIPTION:         return "";
