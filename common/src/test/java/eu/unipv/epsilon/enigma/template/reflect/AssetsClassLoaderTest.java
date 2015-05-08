@@ -41,6 +41,12 @@ public class AssetsClassLoaderTest {
     public void testClassLoading() throws Exception {
         ClassLoader cl = new AssetsClassLoader(system, "packcomp");
 
+        System.out.println("" +
+                "----------\n" +
+                "Trying to load \"MahClass\" from EQC file, which depends on \"Prank\"\n" +
+                "returns Math.PI + 3 and prints \"-> *\" messages on screen\n" +
+                "----------");
+
         Class<?> clazz = cl.loadClass("hayo.MahClass");
         Method m = clazz.getMethod("jokePlease");
 
@@ -62,7 +68,7 @@ public class AssetsClassLoaderTest {
     @Test
     public void testResourcesCust() throws ClassNotFoundException {
         ClassLoader cl = new AssetsClassLoader(system, "packcomp");
-        List<Class<?>> elements = PackageScanner.getClassesInPackage(cl, "eu.unipv.epsilon.enigma.loader.levels.protocol");
+        List<Class<?>> elements = PackageScanner.getClassesInPackage(cl, "hayo");
 
         // RESOURCES LOADING FALLS BACK TO PARENT CLASS LOADER
         System.out.println("*testResourcesCust*");

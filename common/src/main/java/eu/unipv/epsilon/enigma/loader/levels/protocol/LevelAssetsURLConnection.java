@@ -49,4 +49,9 @@ public class LevelAssetsURLConnection extends URLConnection {
         return containerEntry.getSize();
     }
 
+    public CollectionContainer getContainer() {
+        // Get always-valid copy from the assets system
+        return assetsSystem.getCollectionContainer(url.getHost());
+    }
+
 }
