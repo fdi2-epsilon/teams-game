@@ -3,6 +3,7 @@ package eu.unipv.epsilon.enigma.template.reflect;
 import eu.unipv.epsilon.enigma.GameAssetsSystem;
 import eu.unipv.epsilon.enigma.loader.levels.pool.DirectoryPool;
 import eu.unipv.epsilon.enigma.loader.levels.protocol.LevelAssetsURLStreamHandler;
+import eu.unipv.epsilon.enigma.template.reflect.classfinder.PackageScanner;
 import org.junit.Before;
 import org.junit.Test;
 

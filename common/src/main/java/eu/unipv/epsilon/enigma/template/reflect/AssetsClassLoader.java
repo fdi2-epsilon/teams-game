@@ -64,8 +64,13 @@ public class AssetsClassLoader extends ClassLoader {
     }
 
     @Override
+    protected URL findResource(String name) {
+        return LevelAssetsURLStreamHandler.createURL(collectionId, "classes/" + name);
+    }
+
+    @Override
     protected Enumeration<URL> findResources(String name) throws IOException {
-        final URL url = LevelAssetsURLStreamHandler.createURL(collectionId, "classes/" + name);
+        final URL url = findResource(name);
 
         return new Enumeration<URL>() {
             private boolean done = false;
