@@ -69,7 +69,7 @@ public class AssetsClassLoaderTest {
     @Test
     public void testResourcesCust() throws ClassNotFoundException {
         ClassLoader cl = new AssetsClassLoader(system, "packcomp");
-        List<Class<?>> elements = PackageScanner.getClassesInPackage(cl, "hayo");
+        List<Class<?>> elements = PackageScanner.getClassesInPackage("", cl, true);
 
         // RESOURCES LOADING FALLS BACK TO PARENT CLASS LOADER
         System.out.println("*testResourcesCust*");

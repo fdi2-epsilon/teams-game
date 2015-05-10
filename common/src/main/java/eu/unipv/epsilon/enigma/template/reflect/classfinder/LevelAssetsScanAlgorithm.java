@@ -2,25 +2,44 @@ package eu.unipv.epsilon.enigma.template.reflect.classfinder;
 
 import eu.unipv.epsilon.enigma.loader.levels.CollectionContainer;
 import eu.unipv.epsilon.enigma.loader.levels.EqcFile;
+import eu.unipv.epsilon.enigma.template.reflect.AssetsClassLoader;
 
 import java.util.List;
 import java.util.zip.ZipFile;
 
+/**
+ * A scan algorithm to search inside quest collection containers.
+ */
 public class LevelAssetsScanAlgorithm extends ScanAlgorithm {
 
+    // We use an ArchiveScanAlgorithm internally
     private final ArchiveScanAlgorithm archiveScanAlgorithm;
 
-    public LevelAssetsScanAlgorithm(ClassLoader classLoader, CollectionContainer collectionContainer) {
+    /**
+     * Creates a level assets scan algorithm.
+     *
+     * @param classLoader the class loader used to load found classes
+     * @param collectionContainer the collection container containing class files
+     * @throws ClassNotFoundException if an unsupported collection container is provided
+     */
+    public LevelAssetsScanAlgorithm(
+            ClassLoader classLoader, CollectionContainer collectionContainer) throws ClassNotFoundException {
+
         super(classLoader);
 
-        // TODO: generalize elements from ZipFile to CollectionContainer (may be a long task)
-        ZipFile eqcZip = ((EqcFile) collectionContainer).getZipFile();
-        this.archiveScanAlgorithm = new ArchiveScanAlgorithm(classLoader, eqcZip);
+        // Currently, only EQC files are supported, we should alter the API to add general support
+        if (collectionContainer instanceof EqcFile) {
+            // TODO: generalize elements from ZipFile to CollectionContainer (may be a long task)
+            ZipFile eqcZip = ((EqcFile) collectionContainer).getZipFile();
+            this.archiveScanAlgorithm = new ArchiveScanAlgorithm(classLoader, eqcZip);
+        } else
+            throw new ClassNotFoundException(getClass().getSimpleName() + "can only be used on EQC collections");
     }
 
     @Override
     public List<Class<?>> scan(String packageName) throws ClassNotFoundException {
-        return archiveScanAlgorithm.scan(packageName, "classes/");
+        // Use the algorithm for archives passing the inner directory to search in
+        return archiveScanAlgorithm.scan(packageName, AssetsClassLoader.EQC_CLASSES_PATH);
     }
 
 }
