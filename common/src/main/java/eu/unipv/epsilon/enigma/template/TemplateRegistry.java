@@ -10,21 +10,20 @@ import eu.unipv.epsilon.enigma.template.util.FilteredIterator;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
 
 public class TemplateRegistry {
 
     public static final String TEMPLATES_LOCATION_BUILTIN = "eu.unipv.epsilon.enigma.template.builtin";
 
-    private GameAssetsSystem assetsSystem;
     private HashMap<String, Class<?>> localTemplates = new HashMap<>();
     private HashMap<String, Class<?>> collectionTemplates = new HashMap<>();
 
-    public TemplateRegistry(GameAssetsSystem assetsSystem) {
-        this.assetsSystem = assetsSystem;
+    public TemplateRegistry() {
         registerLocalTemplates();
     }
 
-    public void registerCollectionTemplates(String collectionId) {
+    public void registerCollectionTemplates(GameAssetsSystem assetsSystem, String collectionId) {
         try {
             AssetsClassLoader classLoader = new AssetsClassLoader(assetsSystem, collectionId);
             List<Class<?>> classes = PackageScanner.getClassesInPackage("", classLoader, true);
@@ -34,6 +33,10 @@ public class TemplateRegistry {
             // No local templates or error
             e.printStackTrace();
         }
+    }
+
+    public Set<String> getLocalTemplateIDs() {
+        return localTemplates.keySet();
     }
 
     private void registerLocalTemplates() {

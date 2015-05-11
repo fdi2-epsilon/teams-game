@@ -12,6 +12,7 @@ import android.view.MenuItem;
 import eu.unipv.epsilon.enigma.loader.levels.exception.MetadataNotFoundException;
 import eu.unipv.epsilon.enigma.loader.levels.pool.DirectoryPool;
 import eu.unipv.epsilon.enigma.quest.QuestCollection;
+import eu.unipv.epsilon.enigma.template.DalvikPackageScanner;
 import eu.unipv.epsilon.enigma.ui.main.CollectionsViewAdapter;
 
 import java.io.File;
@@ -68,6 +69,21 @@ public class MainActivity extends AppCompatActivity {
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.temp_button) {
+
+            // Temp code to be put in an android-ready Template manager
+            System.out.println("---Test!---");
+            try {
+                // For internal classes
+                //List<Class<?>> classes = DalvikPackageScanner.getClassesInPackage(this, "com.google.samples.apps.iosched");
+
+                // For external
+                List<Class<?>> classes = DalvikPackageScanner.getClassesinZipPkg("", assetsSystem, "dxcoll");
+                for (Class<?> c : classes) System.out.println(c);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            System.out.println("---Test!---");
+
             //Intent intent = new Intent(this, QuizActivity.class);
             //startActivity(intent);
             return true;

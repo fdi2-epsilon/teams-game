@@ -3,6 +3,7 @@ package eu.unipv.epsilon.enigma.template.reflect;
 import eu.unipv.epsilon.enigma.GameAssetsSystem;
 import eu.unipv.epsilon.enigma.loader.levels.pool.DirectoryPool;
 import eu.unipv.epsilon.enigma.loader.levels.protocol.LevelAssetsURLStreamHandler;
+import eu.unipv.epsilon.enigma.template.TemplateRegistry;
 import eu.unipv.epsilon.enigma.template.reflect.classfinder.PackageScanner;
 import org.junit.Before;
 import org.junit.Test;
@@ -74,6 +75,15 @@ public class AssetsClassLoaderTest {
         // RESOURCES LOADING FALLS BACK TO PARENT CLASS LOADER
         System.out.println("*testResourcesCust*");
         for (Class clazz : elements) System.out.println("> " + clazz);
+    }
+
+    @Test
+    public void testTemplateRegistry() {
+        System.out.println("---TemplateRegistry---");
+        TemplateRegistry t = new TemplateRegistry();
+        for (String s : t.getLocalTemplateIDs())
+            System.out.println(s);
+        System.out.println("---TemplateRegistry---");
     }
 
 }

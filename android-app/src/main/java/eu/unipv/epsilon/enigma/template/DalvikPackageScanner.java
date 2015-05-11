@@ -1,0 +1,55 @@
+package eu.unipv.epsilon.enigma.template;
+
+import android.content.Context;
+import dalvik.system.DexFile;
+import dalvik.system.PathClassLoader;
+import eu.unipv.epsilon.enigma.GameAssetsSystem;
+import eu.unipv.epsilon.enigma.loader.levels.CollectionContainer;
+import eu.unipv.epsilon.enigma.loader.levels.EqcFile;
+import eu.unipv.epsilon.enigma.template.util.IterableEnumeration;
+
+import java.io.IOException;
+import java.util.LinkedList;
+import java.util.zip.ZipFile;
+
+public class DalvikPackageScanner {
+
+    /** Load from the local application dex using the context class loader */
+    public static LinkedList<Class<?>> getClassesInPackage(
+            Context context, String packageName) throws ClassNotFoundException {
+        ClassLoader cl = Thread.currentThread().getContextClassLoader();
+        return loadClasses(packageName, cl, context.getPackageCodePath());
+    }
+
+    /** Load from an eqc collection container using a PathClassLoader */
+    public static LinkedList<Class<?>> getClassesinZipPkg(
+            String packageName, GameAssetsSystem assetsSystem, String collectionId) throws ClassNotFoundException {
+
+        // Currently we haven't found a way yet to dynamically load "classes.dex" without passing in the a zipFile instance
+        CollectionContainer cc = assetsSystem.getCollectionContainer(collectionId);
+        if (!(cc instanceof EqcFile))
+            throw new ClassNotFoundException("Currently only EQC collections are supported");
+
+        ZipFile eqcZip = ((EqcFile) cc).getZipFile();
+        ClassLoader cl = new PathClassLoader(eqcZip.getName(), Thread.currentThread().getContextClassLoader());
+
+        return loadClasses(packageName, cl, eqcZip.getName());
+    }
+
+    /** Quick n' dirty implementation to load classes from a dex file with the passed in class loader **/
+    public static LinkedList<Class<?>> loadClasses(
+            String packageName, ClassLoader classLoader, String dexPath) throws ClassNotFoundException {
+        try {
+            DexFile dex = new DexFile(dexPath);
+
+            LinkedList<Class<?>> classes = new LinkedList<>();
+            for (String name : IterableEnumeration.make(dex.entries()))
+                if (name.startsWith(packageName)) classes.add(classLoader.loadClass(name));
+            return classes;
+
+        } catch (IOException e) {
+            throw new ClassNotFoundException("Cannot open DEX for reading", e);
+        }
+    }
+
+}
