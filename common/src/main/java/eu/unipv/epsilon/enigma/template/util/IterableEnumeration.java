@@ -3,9 +3,6 @@ package eu.unipv.epsilon.enigma.template.util;
 import java.util.Enumeration;
 import java.util.Iterator;
 
-/**
- * @see <a href="http://www.javaspecialists.eu/archive/Issue107.html">Original implementation</a>
- */
 public class IterableEnumeration<T> implements Iterable<T> {
 
     private final Enumeration<T> enumeration;
