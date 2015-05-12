@@ -15,6 +15,19 @@
     <!-- CSS Style: Fancy things go in here, a lot, but don't be scared,
          I suggest you to skip reading this and go directly to the <body>. -->
     <style>
+		
+		@-webkit-keyframes inOut {
+			0%{
+			transform: scale(1)
+			}
+			50%{
+			transform: scale(0.8)
+			}
+			100%{
+			transform: scale(1)
+			}
+		}
+		
         body {
             text-align: center;
             font-family: 'Open Sans', sans-serif;
@@ -64,8 +77,10 @@
         }
 
         li:hover { background-color: rgba(0, 0, 0, .12); }
-        li.success, li.success:hover { background-color: greenyellow; }
-        li.failure, li.failure:hover { background-color: red }
+        li.success, li.success:hover { background-color: greenyellow;}
+        li.failure, li.failure:hover { background-color: red; }
+		
+		li.success {-webkit-animation: inOut .5s ease-in-out;}
 
     </style>
 
@@ -103,7 +118,6 @@
         // Epic fail handling (opposite as previous function)
         function cbFailure() {
 		this.classList.add('failure');
-            	//alert("Wrong, shame on you!\n\nP.S. You are a terrible person.");
         }
 
         // Exec 'loadProc' only when the document is fully loaded,
