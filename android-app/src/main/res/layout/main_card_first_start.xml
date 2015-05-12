@@ -44,6 +44,7 @@
                 a:text="@string/main_card_first_start_content"/>
 
         <Button
+                a:id="@+id/ok_button"
                 a:layout_width="wrap_content"
                 a:layout_height="wrap_content"
                 a:text="@android:string/ok"

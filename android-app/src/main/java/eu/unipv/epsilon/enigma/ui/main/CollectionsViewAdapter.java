@@ -53,8 +53,10 @@ public class CollectionsViewAdapter extends RecyclerView.Adapter<RecyclerView.Vi
 
         if (viewHolder instanceof CollectionCardHolder)
             viewHolder.getItemView().setOnClickListener(new CardClickListener());
-        else if (viewHolder instanceof FirstStartCard)
-            viewHolder.getItemView().setOnClickListener(new FirstCardClickListener());
+        else if (viewHolder instanceof FirstStartCard) {
+            FirstStartCard fsc = (FirstStartCard) viewHolder;
+            fsc.setOkButtonClickListener(new FirstCardClickListener());
+        }
         return viewHolder;
     }
 
@@ -87,7 +89,7 @@ public class CollectionsViewAdapter extends RecyclerView.Adapter<RecyclerView.Vi
         if (position == 0) return CardType.LARGE.ordinal();
         CardType[] types = { CardType.MEDIUM, CardType.SMALL, CardType.TINY};
 
-        return types[(position - (firstStart ? 1 : 0)) % types.length].ordinal();
+        return types[(position - 1) % types.length].ordinal();
     }
 
     private class CardClickListener implements View.OnClickListener {
