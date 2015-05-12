@@ -12,6 +12,10 @@ import java.io.IOException;
 import java.util.LinkedList;
 import java.util.zip.ZipFile;
 
+/**
+ * An alternative to {@link eu.unipv.epsilon.enigma.template.reflect.classfinder.PackageScanner PackageScanner} for
+ * the Dalvik Virtual Machine (Android devices). This may be pluggable with the original PackageScanner in the future.
+ */
 public class DalvikPackageScanner {
 
     /** Load from the local application dex using the context class loader */
