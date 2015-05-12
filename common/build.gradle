@@ -10,7 +10,7 @@ targetCompatibility = '1.7'
 
 dependencies {
     compile 'org.slf4j:slf4j-api:1.7.12'
-    compile 'org.yaml:snakeyaml:1.15'
+    compile 'com.esotericsoftware.yamlbeans:yamlbeans:1.09'
     testCompile 'junit:junit:4.11'
     testCompile 'org.slf4j:slf4j-simple:1.7.12'
 }

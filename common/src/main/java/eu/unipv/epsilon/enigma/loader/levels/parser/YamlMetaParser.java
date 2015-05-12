@@ -1,13 +1,15 @@
 package eu.unipv.epsilon.enigma.loader.levels.parser;
 
+import com.esotericsoftware.yamlbeans.YamlReader;
 import eu.unipv.epsilon.enigma.loader.levels.parser.defaults.DefaultsFactory;
 import eu.unipv.epsilon.enigma.loader.levels.parser.defaults.FieldProvider;
 import eu.unipv.epsilon.enigma.loader.levels.protocol.LevelAssetsURLStreamHandler;
 import eu.unipv.epsilon.enigma.quest.Quest;
 import eu.unipv.epsilon.enigma.quest.QuestCollection;
-import org.yaml.snakeyaml.Yaml;
 
+import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.List;
 import java.util.Map;
 
@@ -22,8 +24,9 @@ public class YamlMetaParser implements MetadataParser {
     }
 
     @Override
-    public QuestCollection loadCollectionMetadata(InputStream in) {
-        return generateCollection((Map) new Yaml().load(in));
+    public QuestCollection loadCollectionMetadata(InputStream in) throws IOException {
+        YamlReader yamlReader = new YamlReader(new InputStreamReader(in));
+        return generateCollection((Map) yamlReader.read());
     }
 
     private QuestCollection generateCollection(Map meta) {

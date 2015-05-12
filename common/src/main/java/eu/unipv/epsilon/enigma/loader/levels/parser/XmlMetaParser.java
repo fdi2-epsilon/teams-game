@@ -8,9 +8,12 @@ import eu.unipv.epsilon.enigma.quest.QuestCollection;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
+import org.xml.sax.SAXException;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
+import java.io.IOException;
 import java.io.InputStream;
 
 public class XmlMetaParser implements MetadataParser {
@@ -29,13 +32,12 @@ public class XmlMetaParser implements MetadataParser {
     }
 
     @Override
-    public QuestCollection loadCollectionMetadata(InputStream in) {
+    public QuestCollection loadCollectionMetadata(InputStream in) throws IOException {
         try {
             DocumentBuilder db = DocumentBuilderFactory.newInstance().newDocumentBuilder();
             return generateCollection(db.parse(in).getDocumentElement());
-        } catch (Exception e) {
-            e.printStackTrace();
-            throw new RuntimeException("Cannot parse XML metadata from \"" + collectionId + "\".", e);
+        } catch (ParserConfigurationException | SAXException e) {
+            throw new IOException("Cannot parse XML metadata from \"" + collectionId + "\".", e);
         }
     }
 
