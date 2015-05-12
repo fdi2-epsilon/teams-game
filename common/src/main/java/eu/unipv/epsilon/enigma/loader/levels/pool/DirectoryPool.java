@@ -23,7 +23,8 @@ public class DirectoryPool extends CachedCollectionsPool {
      * @param baseDirectory The directory serving as a pool of {@link CollectionContainer}s
      */
     public DirectoryPool(File baseDirectory) {
-        if (!baseDirectory.isDirectory())
+        // Throw the exception only if the file EXISTS and is not a directory
+        if (baseDirectory.exists() && !baseDirectory.isDirectory())
             throw new IllegalArgumentException(baseDirectory.getPath() + "is not a directory.");
 
         this.baseDirectory = baseDirectory;

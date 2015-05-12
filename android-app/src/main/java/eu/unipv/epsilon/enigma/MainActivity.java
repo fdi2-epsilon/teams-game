@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Environment;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.RecyclerView;
@@ -39,9 +40,26 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);   // Title assigned by manifest
 
-        // Create a new data source to load collections
+        // Create a new local data source to load any built-in collections
         File collectionsDir = new File(getFilesDir(), "collections");
-        assetsSystem = new GameAssetsSystem(new DirectoryPool(collectionsDir));
+        Log.i(getClass().getName(), "Internal collections path: " + collectionsDir.getPath());
+
+        // Do the same for external storage so users can add new collections on-the-go
+        String state = Environment.getExternalStorageState();
+        if (Environment.MEDIA_MOUNTED.equals(state) || Environment.MEDIA_MOUNTED_READ_ONLY.equals(state)) {
+            // External storage is readable
+            File extDocsDir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOCUMENTS);
+            File extCollectionsDir = new File(extDocsDir, getString(R.string.app_name) + '/' + "Collections");
+
+            Log.i(getClass().getName(), "External collections path: " + extCollectionsDir.getPath());
+            if (!extCollectionsDir.mkdirs())
+                Log.e(getClass().getName(), "Directory not created");
+
+            assetsSystem = new GameAssetsSystem(new DirectoryPool(collectionsDir), new DirectoryPool(extCollectionsDir));
+        } else {
+            Log.i(getClass().getName(), "External storage is not accessible");
+            assetsSystem = new GameAssetsSystem(new DirectoryPool(collectionsDir));
+        }
 
         // Register Stream handler
         URLHandlerFactory.register(assetsSystem);
