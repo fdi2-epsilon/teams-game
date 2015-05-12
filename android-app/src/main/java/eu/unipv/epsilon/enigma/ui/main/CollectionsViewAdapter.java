@@ -2,6 +2,7 @@ package eu.unipv.epsilon.enigma.ui.main;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
@@ -16,11 +17,21 @@ import java.util.List;
 
 public class CollectionsViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
+    public static final String FIRST_START = "firstStart";
     private List<QuestCollection> elements;
+    private SharedPreferences sharedPreferences;
+
+    private boolean firstStart;
 
     // Provide a suitable constructor (depends on the kind of dataset)
-    public CollectionsViewAdapter(List<QuestCollection> elements) {
+    public CollectionsViewAdapter(List<QuestCollection> elements, SharedPreferences sharedPreferences) {
         this.elements = elements;
+        this.sharedPreferences = sharedPreferences;
+
+        firstStart = sharedPreferences.getBoolean(FIRST_START, true);
+
+        // Animated view
+        setHasStableIds(true);
     }
 
     // Create new views (invoked by the Layout Manager)
@@ -42,6 +53,8 @@ public class CollectionsViewAdapter extends RecyclerView.Adapter<RecyclerView.Vi
 
         if (viewHolder instanceof CollectionCardHolder)
             viewHolder.getItemView().setOnClickListener(new CardClickListener());
+        else if (viewHolder instanceof FirstStartCard)
+            viewHolder.getItemView().setOnClickListener(new FirstCardClickListener());
         return viewHolder;
     }
 
@@ -54,31 +67,34 @@ public class CollectionsViewAdapter extends RecyclerView.Adapter<RecyclerView.Vi
 
         // If it is a card describing dynamic content like a Quest Collection, needs to be recycled with new parameters.
         if (holder instanceof CollectionCardHolder)
-            ((CollectionCardHolder) holder).updateViewFromData(elements.get(position - 1));
+            ((CollectionCardHolder) holder).updateViewFromData(elements.get(position - (firstStart ? 1 : 0)));
 
         // Static views like CardType.FIRST_START do not need to be recycled, cause they don't have data.
     }
 
     @Override
     public int getItemCount() {
-        return elements.size() + 1;
+        return elements.size() + (firstStart ? 1 : 0);
     }
 
     @Override
     public int getItemViewType(int position) {
-        if (position == 0) return CardType.FIRST_START.ordinal();
-        position--;
+        if (firstStart) {
+            if (position == 0) return CardType.FIRST_START.ordinal();
+            position--;
+        }
         // Temporary algorithm to get card size
         if (position == 0) return CardType.LARGE.ordinal();
         CardType[] types = { CardType.MEDIUM, CardType.SMALL, CardType.TINY};
-        return types[(position - 1) % types.length].ordinal();
+
+        return types[(position - (firstStart ? 1 : 0)) % types.length].ordinal();
     }
 
     private class CardClickListener implements View.OnClickListener {
 
         @Override
         public void onClick(View v) {
-            int index = ((RecyclerView) v.getParent()).getChildAdapterPosition(v) - 1;
+            int index = ((RecyclerView) v.getParent()).getChildAdapterPosition(v) - (firstStart ? 1 : 0);
             Log.i(getClass().getName(), "Clicked #" + index);
 
             QuestCollection qc = elements.get(index);
@@ -93,6 +109,18 @@ public class CollectionsViewAdapter extends RecyclerView.Adapter<RecyclerView.Vi
             }
         }
 
+    }
+
+    private class FirstCardClickListener implements View.OnClickListener {
+
+        @Override
+        public void onClick(View v) {
+            Log.i(getClass().getName(), "ClickedFirstStart");
+            firstStart = false;
+            sharedPreferences.edit().putBoolean(FIRST_START, false).apply();
+
+            notifyDataSetChanged();
+        }
     }
 
 }

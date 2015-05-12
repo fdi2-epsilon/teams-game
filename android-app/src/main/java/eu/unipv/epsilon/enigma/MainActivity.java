@@ -1,8 +1,11 @@
 package eu.unipv.epsilon.enigma;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.support.v7.widget.Toolbar;
@@ -89,11 +92,13 @@ public class MainActivity extends AppCompatActivity {
         // Use a staggered layout manager
         collectionsView.setLayoutManager(new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL));
 
+        collectionsView.setItemAnimator(new DefaultItemAnimator());
+
         // Populate with data
-        populateMainView(assetsSystem, collectionsView);
+        populateMainView(assetsSystem, collectionsView, getPreferences(Context.MODE_PRIVATE));
     }
 
-    public static void populateMainView(GameAssetsSystem assetsSystem, RecyclerView list) {
+    public static void populateMainView(GameAssetsSystem assetsSystem, RecyclerView list, SharedPreferences sharedPreferences) {
         List<QuestCollection> collections = new ArrayList<>();
 
         for (String collectionId : assetsSystem.getAvailableCollectionIDs()) {
@@ -108,7 +113,7 @@ public class MainActivity extends AppCompatActivity {
             }
         }
 
-        list.setAdapter(new CollectionsViewAdapter(collections));
+        list.setAdapter(new CollectionsViewAdapter(collections, sharedPreferences));
     }
 
 }
