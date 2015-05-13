@@ -11,8 +11,8 @@ import java.util.Set;
 public class TemplateRegistry {
 
     private CandidateClassSource classSource;
-    private HashMap<String, Class<?>> localTemplates = new HashMap<>();
-    private HashMap<String, Class<?>> collectionTemplates = new HashMap<>();
+    private HashMap<String, TemplateProcessor> localTemplates = new HashMap<>();
+    private HashMap<String, TemplateProcessor> collectionTemplates = new HashMap<>();
 
     public TemplateRegistry(CandidateClassSource classSource) {
         this.classSource = classSource;
@@ -26,18 +26,19 @@ public class TemplateRegistry {
         registerAnnotatedClasses(classSource.getCollectionCandidateClasses(collectionId), collectionTemplates);
     }
 
-    public Set<String> getLocalTemplateIDs() {
-        return localTemplates.keySet();
+    public TemplateProcessor getTemplateById(String id) {
+        if (localTemplates.containsKey(id)) return localTemplates.get(id);
+        else return collectionTemplates.get(id); // It is ok that we return null
     }
 
-    private void registerAnnotatedClasses(Iterator<Class<?>> classes, HashMap<String, Class<?>> registry) {
+    private void registerAnnotatedClasses(Iterator<Class<?>> classes, HashMap<String, TemplateProcessor> registry) {
         Iterator<Class<?>> templateClasses = new FilteredIterator<>(
                 classes, new AnnotationFilter(Template.class));
 
         while (templateClasses.hasNext()) {
             Class<?> templateClass = templateClasses.next();
             Template meta = templateClass.getAnnotation(Template.class);
-            registry.put(meta.id(), templateClass);
+            registry.put(meta.id(), new TemplateProcessor(templateClass));
         }
     }
 

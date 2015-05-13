@@ -5,17 +5,28 @@ import eu.unipv.epsilon.enigma.loader.levels.pool.CollectionsPool;
 import eu.unipv.epsilon.enigma.loader.levels.protocol.LevelAssetsURLStreamHandler;
 
 import java.net.URLStreamHandler;
+import java.util.Arrays;
+import java.util.LinkedList;
 import java.util.TreeSet;
 
 public class GameAssetsSystem {
 
-    CollectionsPool[] sources;
+    // Linked list is a better than ArrayList in this case
+    LinkedList<CollectionsPool> sources;
+
+    public GameAssetsSystem() {
+        sources = new LinkedList<>();
+    }
 
     public GameAssetsSystem(CollectionsPool... sources) {
         for (CollectionsPool source : sources)
             if (source == null) throw new IllegalArgumentException("Source may not be null");
 
-        this.sources = sources;
+        this.sources = new LinkedList<>(Arrays.asList(sources));
+    }
+
+    public void addCollectionsPool(CollectionsPool pool) {
+        sources.add(pool);
     }
 
     public URLStreamHandler getURLStreamHandler() {
