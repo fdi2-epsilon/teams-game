@@ -8,11 +8,15 @@ import java.util.Iterator;
 public class DalvikCandidateClassSource extends CandidateClassSource {
 
     private final Context context;
-    private final GameAssetsSystem assetsSystem;
+
+    public DalvikCandidateClassSource(Context context) {
+        /* implicit super call */
+        this.context = context;
+    }
 
     public DalvikCandidateClassSource(Context context, GameAssetsSystem assetsSystem) {
+        super(assetsSystem);
         this.context = context;
-        this.assetsSystem = assetsSystem;
     }
 
     @Override

@@ -8,10 +8,10 @@ import java.util.Iterator;
 
 public class JvmCandidateClassSource extends CandidateClassSource {
 
-    private final GameAssetsSystem assetsSystem;
+    public JvmCandidateClassSource() { /* implicit super call */ }
 
     public JvmCandidateClassSource(GameAssetsSystem assetsSystem) {
-        this.assetsSystem = assetsSystem;
+        super(assetsSystem);
     }
 
     @Override
