@@ -6,7 +6,6 @@ import eu.unipv.epsilon.enigma.template.util.FilteredIterator;
 
 import java.util.HashMap;
 import java.util.Iterator;
-import java.util.Set;
 
 public class TemplateRegistry {
 
@@ -26,6 +25,12 @@ public class TemplateRegistry {
         registerAnnotatedClasses(classSource.getCollectionCandidateClasses(collectionId), collectionTemplates);
     }
 
+    /**
+     * Gets a {@link TemplateProcessor} registered with the passed in ID.
+     * If the class is not found in the system registry, a search in the collection registry is performed.
+     * @param id the ID if the desired {@link TemplateProcessor}
+     * @return the corresponding {@link TemplateProcessor} or {@code null} if not found
+     */
     public TemplateProcessor getTemplateById(String id) {
         if (localTemplates.containsKey(id)) return localTemplates.get(id);
         else return collectionTemplates.get(id); // It is ok that we return null
