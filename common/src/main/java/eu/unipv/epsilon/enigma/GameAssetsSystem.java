@@ -3,16 +3,18 @@ package eu.unipv.epsilon.enigma;
 import eu.unipv.epsilon.enigma.loader.levels.CollectionContainer;
 import eu.unipv.epsilon.enigma.loader.levels.pool.CollectionsPool;
 import eu.unipv.epsilon.enigma.loader.levels.protocol.LevelAssetsURLStreamHandler;
+import eu.unipv.epsilon.enigma.template.CandidateClassSource;
+import eu.unipv.epsilon.enigma.template.TemplateRegistry;
+import eu.unipv.epsilon.enigma.template.TemplateServer;
 
-import java.net.URLStreamHandler;
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.TreeSet;
 
 public class GameAssetsSystem {
 
-    // Linked list is a better than ArrayList in this case
-    LinkedList<CollectionsPool> sources;
+    TemplateServer templateServer = null;
+    LinkedList<CollectionsPool> sources; // Linked list is a better than ArrayList in this case
 
     public GameAssetsSystem() {
         sources = new LinkedList<>();
@@ -25,11 +27,19 @@ public class GameAssetsSystem {
         this.sources = new LinkedList<>(Arrays.asList(sources));
     }
 
+    public void createTemplateServer(CandidateClassSource classSource) {
+        this.templateServer = new TemplateServer(new TemplateRegistry(classSource));
+    }
+
+    public TemplateServer getTemplateServer() {
+        return templateServer;
+    }
+
     public void addCollectionsPool(CollectionsPool pool) {
         sources.add(pool);
     }
 
-    public URLStreamHandler getURLStreamHandler() {
+    public LevelAssetsURLStreamHandler getURLStreamHandler() {
         return new LevelAssetsURLStreamHandler(this);
     }
 

@@ -11,6 +11,7 @@ public class TemplateRegistry {
 
     private CandidateClassSource classSource;
     private HashMap<String, TemplateProcessor> localTemplates = new HashMap<>();
+    private String currentlyRegisteredCollectionID = "";
     private HashMap<String, TemplateProcessor> collectionTemplates = new HashMap<>();
 
     public TemplateRegistry(CandidateClassSource classSource) {
@@ -21,8 +22,11 @@ public class TemplateRegistry {
     }
 
     public void registerCollectionTemplates(String collectionId) {
-        collectionTemplates.clear();
-        registerAnnotatedClasses(classSource.getCollectionCandidateClasses(collectionId), collectionTemplates);
+        if (!collectionId.equalsIgnoreCase(currentlyRegisteredCollectionID)) {
+            collectionTemplates.clear();
+            registerAnnotatedClasses(classSource.getCollectionCandidateClasses(collectionId), collectionTemplates);
+            currentlyRegisteredCollectionID = collectionId;
+        }
     }
 
     /**

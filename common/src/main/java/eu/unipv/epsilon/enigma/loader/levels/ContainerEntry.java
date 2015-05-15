@@ -21,4 +21,18 @@ public interface ContainerEntry {
      */
     InputStream getStream() throws IOException;
 
+    /**
+     * Checks if this entry exists and is a directory.
+     *
+     * @return {@code true} if this entry is a directory
+     */
+    boolean isDirectory();
+
+    /**
+     * Gets the path of this entry inside the container.
+     *
+     * @return the path of the entry in the container
+     */
+    String getPath();
+
 }
