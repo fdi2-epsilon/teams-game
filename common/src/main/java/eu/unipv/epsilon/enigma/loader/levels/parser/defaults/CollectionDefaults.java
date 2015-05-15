@@ -21,7 +21,7 @@ public class CollectionDefaults implements FieldProvider {
             case KEY_QUESTCOLLECTION_PATH_ICON:
                 if (context.containsEntry("pack.png")) return "pack.png";
                 if (context.containsEntry("pack.jpg")) return "pack.jpg";
-                return null;
+                return "";
         }
         return null;
     }
