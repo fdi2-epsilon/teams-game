@@ -19,6 +19,11 @@ import static org.junit.Assert.*;
 @RunWith(Parameterized.class)
 public class GameAssetsSystemTest {
 
+    /*
+     * This performs only generic metadata loading tests,
+     * for templates, take a look at TemplateServerTest
+     */
+
     public static final String PROTO_HEAD = LevelAssetsURLStreamHandler.PROTOCOL_NAME + "://";
 
     private final File baseDir = new File(getClass().getResource("/collections_pool").getPath());

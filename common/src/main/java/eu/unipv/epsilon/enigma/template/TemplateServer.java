@@ -44,7 +44,8 @@ public class TemplateServer {
      * Depending on the used {@link ErrorHandler}, the returned document may be an styled error message.
      *
      * @param argsDocumentStream an {@link InputStream} to an XML arguments document ({@code document.xml} in EQC)
-     * @param docURL an optional document URL that can be used by the template processor for relative resource access
+     * @param docURL an optional document URL that can be used by the template processor for relative resource access,
+     *               the template processor can check if this information is available
      * @return the processed view data stream, usually an HTML page
      */
     public InputStream getDynamicContentStream(InputStream argsDocumentStream, URL docURL) {

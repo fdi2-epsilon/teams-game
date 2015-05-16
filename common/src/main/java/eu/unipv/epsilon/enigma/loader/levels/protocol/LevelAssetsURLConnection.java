@@ -84,7 +84,7 @@ public class LevelAssetsURLConnection extends URLConnection {
                 return entry;
         }
 
-        // No file found in directory
+        // No default document found in directory
         throw new IOException(String.format(
                 "No default document in directory \"%s\" inside collection \"%s\".", urlPath, url.getHost()));
     }

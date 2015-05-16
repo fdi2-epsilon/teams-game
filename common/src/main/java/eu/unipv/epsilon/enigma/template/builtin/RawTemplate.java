@@ -13,6 +13,9 @@ public class RawTemplate {
     public void generate(DocumentGenerationEvent e) throws IOException {
         Element args = e.getArguments();
 
+        if (!e.hasPathData())
+            throw new UnsupportedOperationException("The \"raw\" template cannot work without path data.");
+
         Element documentElement = (Element) args.getElementsByTagName("document").item(0);
         String docPath = documentElement.getAttribute("src");
 

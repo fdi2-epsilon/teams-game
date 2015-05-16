@@ -2,7 +2,7 @@ package eu.unipv.epsilon.enigma;
 
 import eu.unipv.epsilon.enigma.loader.levels.CollectionContainer;
 import eu.unipv.epsilon.enigma.loader.levels.pool.CollectionsPool;
-import eu.unipv.epsilon.enigma.loader.levels.protocol.ClasspathUrlStreamHandler;
+import eu.unipv.epsilon.enigma.loader.levels.protocol.ClasspathURLStreamHandler;
 import eu.unipv.epsilon.enigma.loader.levels.protocol.LevelAssetsURLStreamHandler;
 import eu.unipv.epsilon.enigma.template.CandidateClassSource;
 import eu.unipv.epsilon.enigma.template.TemplateRegistry;
@@ -89,8 +89,8 @@ public class GameAssetsSystem {
                 public URLStreamHandler createURLStreamHandler(String protocol) {
                     if (protocol.equalsIgnoreCase(LevelAssetsURLStreamHandler.PROTOCOL_NAME))
                         return new LevelAssetsURLStreamHandler(sys);
-                    if (protocol.equalsIgnoreCase(ClasspathUrlStreamHandler.PROTOCOL_NAME))
-                        return new ClasspathUrlStreamHandler();
+                    if (protocol.equalsIgnoreCase(ClasspathURLStreamHandler.PROTOCOL_NAME))
+                        return new ClasspathURLStreamHandler();
                     return null;
                 }
             });

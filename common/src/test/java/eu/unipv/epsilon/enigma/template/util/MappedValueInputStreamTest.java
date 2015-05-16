@@ -33,7 +33,7 @@ public class MappedValueInputStreamTest {
         BufferedReader br = new BufferedReader(new InputStreamReader(is));
 
         assertEquals(expected, br.readLine());
-        assertNull(br.readLine());
+        assertNull("Stream should have been exhausted", br.readLine());
 
         br.close();
     }

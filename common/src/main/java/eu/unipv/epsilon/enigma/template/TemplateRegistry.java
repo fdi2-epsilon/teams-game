@@ -3,11 +3,15 @@ package eu.unipv.epsilon.enigma.template;
 import eu.unipv.epsilon.enigma.template.api.Template;
 import eu.unipv.epsilon.enigma.template.util.AnnotationFilter;
 import eu.unipv.epsilon.enigma.template.util.FilteredIterator;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.HashMap;
 import java.util.Iterator;
 
 public class TemplateRegistry {
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(TemplateRegistry.class);
 
     private CandidateClassSource classSource;
     private HashMap<String, TemplateProcessor> localTemplates = new HashMap<>();
@@ -47,6 +51,7 @@ public class TemplateRegistry {
         while (templateClasses.hasNext()) {
             Class<?> templateClass = templateClasses.next();
             Template meta = templateClass.getAnnotation(Template.class);
+            LOGGER.info("Registered template \"{}\" ({})", meta.id(), templateClass.getName());
             registry.put(meta.id(), new TemplateProcessor(templateClass));
         }
     }

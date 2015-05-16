@@ -8,17 +8,17 @@ import java.net.URLStreamHandler;
 /**
  * A {@link URLStreamHandler} that handles resources on the classpath.
  */
-public class ClasspathUrlStreamHandler extends URLStreamHandler {
+public class ClasspathURLStreamHandler extends URLStreamHandler {
 
     public static final String PROTOCOL_NAME = "assets";
 
     private final ClassLoader classLoader;
 
-    public ClasspathUrlStreamHandler() {
+    public ClasspathURLStreamHandler() {
         this.classLoader = getClass().getClassLoader();
     }
 
-    public ClasspathUrlStreamHandler(ClassLoader classLoader) {
+    public ClasspathURLStreamHandler(ClassLoader classLoader) {
         this.classLoader = classLoader;
     }
 
