@@ -1,0 +1,60 @@
+<!doctype html>
+<html>
+    <head>
+        <title>${PAGE_TITLE}</title>
+        <meta charset="utf-8">
+        <style>
+            body {
+                background-color: #b20;
+                font-family: "Trebuchet MS", Helvetica, sans-serif;
+                color: white;
+            }
+
+            header { text-align: center; }
+            h1, h2 { margin: 8pt; }
+            h2 { font-style: italic; }
+
+            details {
+                background-color: rgba(0, 0, 0, .4);
+                border-radius: 5px;
+                padding: 5px 10px;
+            }
+
+            .cnt {
+                width: 100%;
+                display: flex;
+                flex-flow: row nowrap;
+                align-items: flex-start;
+            }
+
+            .cnt pre {
+                background-color: rgba(0, 0, 0, .5);
+                font-size: 7pt;
+                flex: 1 1 auto;
+                border-radius: 5px;
+                overflow: auto;
+            }
+
+            .cnt img {
+                width: 300px;
+                flex: 0 1 auto;
+            }
+
+        </style>
+    </head>
+    <body>
+        <header>
+            <h1>${PAGE_TITLE}</h1>
+            <h2>${DESCRIPTION}</h2>
+            <pre>${CAUSE}</pre>
+        </header>
+        <details open>
+            <div class="cnt">
+                <pre>
+${MESSAGE}
+                </pre>
+                <img src="${IMAGE_URL}">
+            </div>
+        </details>
+    </body>
+</html>

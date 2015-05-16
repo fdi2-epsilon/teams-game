@@ -11,9 +11,9 @@ public interface ErrorHandler {
     /**
      * Called in the case that an exception was thrown during Template Processor arguments parsing.
      *
-     * @param e the thrown exception
+     * @param exception the thrown exception
      * @return an {@link InputStream} containing an error document for the view or {@code null}
      */
-    InputStream handleArgumentsParseException(Throwable e);
+    InputStream handleArgumentsParseException(Throwable exception);
 
 }
