@@ -90,7 +90,7 @@ public class GameAssetsSystemTest {
         Quest q2 = questCollection.get(1);
         assertEquals("Another one!", q2.getName());                                                     // Configured
         assertTrue(q2.getDescription().endsWith("\n- Stronzo\n"));                                      // Configured
-        assertEquals(PROTO_HEAD + cid + "/quests/02/index.html", q2.getMainDocumentUrl().toString());   // Default
+        assertEquals(PROTO_HEAD + cid + "/quests/02/", q2.getMainDocumentUrl().toString());   // Default
         assertEquals(PROTO_HEAD + cid + "/quests/02/story.html", q2.getInfoDocumentUrl().toString());   // Default
         assertEquals(PROTO_HEAD + cid + "/quests/02/icon.png", q2.getIconUrl().toString());             // Default
 
@@ -113,9 +113,9 @@ public class GameAssetsSystemTest {
         URL url = qc.get(1).getMainDocumentUrl();
 
         assertEquals("URL should be equal to the spec.",
-                url, new URL(PROTO_HEAD + cid + "/quests/02/index.html"));
+                url, new URL(PROTO_HEAD + cid + "/quests/02/"));
         assertEquals("URL should be equal to one created with createURL()",
-                url, LevelAssetsURLStreamHandler.createURL(cid, "quests/02/index.html"));
+                url, LevelAssetsURLStreamHandler.createURL(cid, "quests/02/"));
 
         // If container is invalidated before this, it will be reopened
         InputStream in = url.openStream();

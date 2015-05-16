@@ -80,9 +80,9 @@ public class GameAssetsSystem {
 
         factory.setAccessible(true);
 
-        // Do nothing if already registered
+        // Clear if already registered with another AssetsSystem / URLStreamHandler
         try {
-            if (factory.get(null) != null) return;
+            factory.set(null, null);
 
             URL.setURLStreamHandlerFactory(new URLStreamHandlerFactory() {
                 @Override

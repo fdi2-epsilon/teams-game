@@ -15,8 +15,10 @@ dependencies {
     testCompile 'org.slf4j:slf4j-simple:1.7.12'
 }
 
-compileJava {
-    // Suppress Sun internal proprietary API warnings because it's
-    // not my fault if Java gives me classes implementing that...
-    options.compilerArgs << '-XDignore.symbol.file'
+gradle.projectsEvaluated {
+    tasks.withType(JavaCompile) {
+        // Suppress Sun internal proprietary API warnings because it's
+        // not my fault if Java gives me classes implementing that...
+        options.compilerArgs << '-XDignore.symbol.file'
+    }
 }
