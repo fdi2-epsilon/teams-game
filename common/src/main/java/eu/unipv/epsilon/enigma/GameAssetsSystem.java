@@ -64,12 +64,24 @@ public class GameAssetsSystem {
 
     private void registerURLStreamHandlers() {
         final GameAssetsSystem sys = this;
+        Field factory;
 
         try {
-            Field factory = URL.class.getDeclaredField("factory");
-            factory.setAccessible(true);
+            factory = URL.class.getDeclaredField("factory");
+        } catch (NoSuchFieldException e) {
+            try {
+                factory = URL.class.getDeclaredField("streamHandlerFactory");
+            } catch (NoSuchFieldException e1) {
+                e.printStackTrace();
+                e1.printStackTrace();
+                throw new RuntimeException("Cannot find stream handler factory field.", e1);
+            }
+        }
 
-            // Do nothing if already registered
+        factory.setAccessible(true);
+
+        // Do nothing if already registered
+        try {
             if (factory.get(null) != null) return;
 
             URL.setURLStreamHandlerFactory(new URLStreamHandlerFactory() {
@@ -82,7 +94,7 @@ public class GameAssetsSystem {
                     return null;
                 }
             });
-        } catch (NoSuchFieldException | IllegalAccessException e) {
+        } catch (IllegalAccessException e) {
             e.printStackTrace();
         }
     }

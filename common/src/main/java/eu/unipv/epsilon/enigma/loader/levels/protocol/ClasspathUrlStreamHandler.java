@@ -24,7 +24,8 @@ public class ClasspathUrlStreamHandler extends URLStreamHandler {
 
     @Override
     protected URLConnection openConnection(URL u) throws IOException {
-        String path = "assets/" + u.getPath();
+        // The following "assets" is the folder, not the protocol name!
+        String path = "assets" + u.getPath();
 
         final URL resourceUrl = classLoader.getResource(path);
         if (resourceUrl == null)

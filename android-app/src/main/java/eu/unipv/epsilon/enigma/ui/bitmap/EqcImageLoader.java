@@ -17,7 +17,7 @@ public class EqcImageLoader extends InputStreamImageLoader {
 
     // TODO: Transfer BufferedInputStream code to InputStream class and allow changing mark
 
-    public EqcImageLoader(URL url) {
+    public EqcImageLoader(URL url) throws IOException {
         super(openStream(url));
         // With this, up to 50KB can be read while decoding bounds, avoiding to read them again when decoding image.
         // So we don't need to reopen the URL stream.
@@ -58,13 +58,8 @@ public class EqcImageLoader extends InputStreamImageLoader {
     }
 
     // This is only to handle exception in constructor
-    private static InputStream openStream(URL url) {
-        try {
-            return new BufferedInputStream(url.openStream());
-        } catch (IOException e) {
-            e.printStackTrace();
-            return null;
-        }
+    private static InputStream openStream(URL url) throws IOException {
+        return new BufferedInputStream(url.openStream());
     }
 
 }

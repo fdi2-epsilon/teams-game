@@ -26,7 +26,7 @@ public class DalvikCandidateClassSource extends CandidateClassSource {
 
     @Override
     public Iterator<Class<?>> findCollectionCandidateClasses(String collectionId) throws ClassNotFoundException {
-        return DalvikPackageScanner.getClassesinZipPkg("", assetsSystem, collectionId).iterator();
+        return DalvikPackageScanner.getClassesinZipPkg(context, "", assetsSystem, collectionId).iterator();
     }
 
 }

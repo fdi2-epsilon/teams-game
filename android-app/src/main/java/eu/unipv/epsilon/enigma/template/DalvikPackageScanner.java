@@ -21,13 +21,12 @@ public class DalvikPackageScanner {
     /** Load from the local application dex using the context class loader */
     public static LinkedList<Class<?>> getClassesInPackage(
             Context context, String packageName) throws ClassNotFoundException {
-        ClassLoader cl = Thread.currentThread().getContextClassLoader();
-        return loadClasses(packageName, cl, context.getPackageCodePath());
+        return loadClasses(packageName, context.getClassLoader(), context.getPackageCodePath());
     }
 
     /** Load from an eqc collection container using a PathClassLoader */
     public static LinkedList<Class<?>> getClassesinZipPkg(
-            String packageName, GameAssetsSystem assetsSystem, String collectionId) throws ClassNotFoundException {
+            Context context, String packageName, GameAssetsSystem assetsSystem, String collectionId) throws ClassNotFoundException {
 
         // Currently we haven't found a way yet to dynamically load "classes.dex" without passing in the a zipFile instance
         CollectionContainer cc = assetsSystem.getCollectionContainer(collectionId);
@@ -35,13 +34,13 @@ public class DalvikPackageScanner {
             throw new ClassNotFoundException("Currently only EQC collections are supported");
 
         ZipFile eqcZip = ((EqcFile) cc).getZipFile();
-        ClassLoader cl = new PathClassLoader(eqcZip.getName(), Thread.currentThread().getContextClassLoader());
+        ClassLoader cl = new PathClassLoader(eqcZip.getName(), context.getClassLoader());
 
         return loadClasses(packageName, cl, eqcZip.getName());
     }
 
     /** Quick n' dirty implementation to load classes from a dex file with the passed in class loader **/
-    public static LinkedList<Class<?>> loadClasses(
+    private static LinkedList<Class<?>> loadClasses(
             String packageName, ClassLoader classLoader, String dexPath) throws ClassNotFoundException {
         try {
             DexFile dex = new DexFile(dexPath);
