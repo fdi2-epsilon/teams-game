@@ -1,5 +1,6 @@
 package eu.unipv.epsilon.enigma.template.api;
 
+import eu.unipv.epsilon.enigma.loader.levels.protocol.LevelAssetsURLStreamHandler;
 import org.w3c.dom.Element;
 
 import java.io.InputStream;
@@ -51,6 +52,10 @@ public class DocumentGenerationEvent {
         String path = argsDocumentURL.getPath();
         // Remove initial '/' and keep only directory
         return path.substring(1, path.lastIndexOf('/') + 1);
+    }
+
+    public URL createRelativePath(String path) {
+        return LevelAssetsURLStreamHandler.createURL(getCollectionID(), getBaseDir() + path);
     }
 
 }

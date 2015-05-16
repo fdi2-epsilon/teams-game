@@ -2,27 +2,21 @@ package eu.unipv.epsilon.enigma.template.builtin;
 
 import eu.unipv.epsilon.enigma.template.api.DocumentGenerationEvent;
 import eu.unipv.epsilon.enigma.template.api.Template;
+import org.w3c.dom.Element;
 
-import java.io.ByteArrayInputStream;
+import java.io.IOException;
 
 @Template(id = "raw")
 public class RawTemplate {
 
     @Template.EventHandler
-    public void blablabla(DocumentGenerationEvent e) {
-        String inText = e.getArguments().getAttribute("text");
+    public void generate(DocumentGenerationEvent e) throws IOException {
+        Element args = e.getArguments();
 
-        if (e.hasPathData()) {
-            System.out.println(String.format(
-                    "Path data:\n\tID:  %s\n\tDir: %s", e.getCollectionID(), e.getBaseDir()));
-        } else {
-            System.out.println("Probably loaded from pure stream");
-        }
+        Element documentElement = (Element) args.getElementsByTagName("document").item(0);
+        String docPath = documentElement.getAttribute("src");
 
-        DummyClass d = new DummyClass();
-
-        String out = "<html>" + inText + d.f() + "</html>";
-        e.setResponseStream(new ByteArrayInputStream(out.getBytes()));
+        e.setResponseStream(e.createRelativePath(docPath).openStream());
     }
 
 }
