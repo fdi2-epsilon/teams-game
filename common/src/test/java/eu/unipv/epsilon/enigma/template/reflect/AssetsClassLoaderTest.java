@@ -2,17 +2,11 @@ package eu.unipv.epsilon.enigma.template.reflect;
 
 import eu.unipv.epsilon.enigma.GameAssetsSystem;
 import eu.unipv.epsilon.enigma.loader.levels.pool.DirectoryPool;
-import eu.unipv.epsilon.enigma.loader.levels.protocol.LevelAssetsURLStreamHandler;
 import eu.unipv.epsilon.enigma.template.reflect.classfinder.PackageScanner;
-import org.junit.Before;
 import org.junit.Test;
 
 import java.io.File;
 import java.lang.reflect.Method;
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.net.URLStreamHandler;
-import java.net.URLStreamHandlerFactory;
 import java.util.List;
 
 public class AssetsClassLoaderTest {
@@ -20,23 +14,6 @@ public class AssetsClassLoaderTest {
 
     private final File baseDir = new File(getClass().getResource("/collections_pool").getPath());
     private final GameAssetsSystem system = new GameAssetsSystem(new DirectoryPool(baseDir));
-
-    @Before
-    public void setUp() {
-        try {
-            new URL(LevelAssetsURLStreamHandler.PROTOCOL_NAME, "", -1, "");
-        } catch (MalformedURLException e) {
-            // URL Stream Handler not registered, register it now
-            URL.setURLStreamHandlerFactory(new URLStreamHandlerFactory() {
-                @Override
-                public URLStreamHandler createURLStreamHandler(String protocol) {
-                    if (protocol.equalsIgnoreCase(LevelAssetsURLStreamHandler.PROTOCOL_NAME))
-                        return system.getURLStreamHandler();
-                    return null;
-                }
-            });
-        }
-    }
 
     @Test
     public void testClassLoading() throws Exception {

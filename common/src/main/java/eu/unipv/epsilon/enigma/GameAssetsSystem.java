@@ -2,11 +2,16 @@ package eu.unipv.epsilon.enigma;
 
 import eu.unipv.epsilon.enigma.loader.levels.CollectionContainer;
 import eu.unipv.epsilon.enigma.loader.levels.pool.CollectionsPool;
+import eu.unipv.epsilon.enigma.loader.levels.protocol.ClasspathUrlStreamHandler;
 import eu.unipv.epsilon.enigma.loader.levels.protocol.LevelAssetsURLStreamHandler;
 import eu.unipv.epsilon.enigma.template.CandidateClassSource;
 import eu.unipv.epsilon.enigma.template.TemplateRegistry;
 import eu.unipv.epsilon.enigma.template.TemplateServer;
 
+import java.lang.reflect.Field;
+import java.net.URL;
+import java.net.URLStreamHandler;
+import java.net.URLStreamHandlerFactory;
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.TreeSet;
@@ -25,6 +30,7 @@ public class GameAssetsSystem {
             if (source == null) throw new IllegalArgumentException("Source may not be null");
 
         this.sources = new LinkedList<>(Arrays.asList(sources));
+        registerURLStreamHandlers();
     }
 
     public void createTemplateServer(CandidateClassSource classSource) {
@@ -37,10 +43,6 @@ public class GameAssetsSystem {
 
     public void addCollectionsPool(CollectionsPool pool) {
         sources.add(pool);
-    }
-
-    public LevelAssetsURLStreamHandler getURLStreamHandler() {
-        return new LevelAssetsURLStreamHandler(this);
     }
 
     public TreeSet<String> getAvailableCollectionIDs() {
@@ -58,6 +60,31 @@ public class GameAssetsSystem {
         for (CollectionsPool source : sources)
             if (source.containsCollection(id)) return source.getCollectionContainer(id);
         return null;
+    }
+
+    private void registerURLStreamHandlers() {
+        final GameAssetsSystem sys = this;
+
+        try {
+            Field factory = URL.class.getDeclaredField("factory");
+            factory.setAccessible(true);
+
+            // Do nothing if already registered
+            if (factory.get(null) != null) return;
+
+            URL.setURLStreamHandlerFactory(new URLStreamHandlerFactory() {
+                @Override
+                public URLStreamHandler createURLStreamHandler(String protocol) {
+                    if (protocol.equalsIgnoreCase(LevelAssetsURLStreamHandler.PROTOCOL_NAME))
+                        return new LevelAssetsURLStreamHandler(sys);
+                    if (protocol.equalsIgnoreCase(ClasspathUrlStreamHandler.PROTOCOL_NAME))
+                        return new ClasspathUrlStreamHandler();
+                    return null;
+                }
+            });
+        } catch (NoSuchFieldException | IllegalAccessException e) {
+            e.printStackTrace();
+        }
     }
 
 }

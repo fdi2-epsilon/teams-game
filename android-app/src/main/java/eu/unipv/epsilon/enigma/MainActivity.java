@@ -40,9 +40,6 @@ public class MainActivity extends AppCompatActivity {
         File collectionsDir = new File(getFilesDir(), "collections");
         assetsSystem = new GameAssetsSystem(new DirectoryPool(collectionsDir));
 
-        // Register Stream handler
-        URLHandlerFactory.register(assetsSystem);
-
         // Initialize view
         initializeElementsView();
 

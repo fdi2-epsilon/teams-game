@@ -5,16 +5,12 @@ import eu.unipv.epsilon.enigma.loader.levels.pool.DirectoryPool;
 import eu.unipv.epsilon.enigma.loader.levels.protocol.LevelAssetsURLStreamHandler;
 import eu.unipv.epsilon.enigma.quest.Quest;
 import eu.unipv.epsilon.enigma.quest.QuestCollection;
-import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 
 import java.io.*;
-import java.net.MalformedURLException;
 import java.net.URL;
-import java.net.URLStreamHandler;
-import java.net.URLStreamHandlerFactory;
 import java.util.Arrays;
 import java.util.Collection;
 
@@ -37,23 +33,6 @@ public class GameAssetsSystemTest {
 
     public GameAssetsSystemTest(String collectionId) {
         this.cid = collectionId;
-    }
-
-    @Before
-    public void setUp() {
-        try {
-            new URL(LevelAssetsURLStreamHandler.PROTOCOL_NAME, "", -1, "");
-        } catch (MalformedURLException e) {
-            // URL Stream Handler not registered, register it now
-            URL.setURLStreamHandlerFactory(new URLStreamHandlerFactory() {
-                @Override
-                public URLStreamHandler createURLStreamHandler(String protocol) {
-                    if (protocol.equalsIgnoreCase(LevelAssetsURLStreamHandler.PROTOCOL_NAME))
-                        return system.getURLStreamHandler();
-                    return null;
-                }
-            });
-        }
     }
 
     @Test
