@@ -14,6 +14,7 @@ import eu.unipv.epsilon.enigma.quest.QuestCollection;
 import eu.unipv.epsilon.enigma.ui.main.card.*;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 
 public class CollectionsViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
@@ -48,7 +49,7 @@ public class CollectionsViewAdapter extends RecyclerView.Adapter<RecyclerView.Vi
             case MEDIUM:        viewHolder = new MediumCollectionCard(parent); break;
             case SMALL:         viewHolder = new SmallCollectionCard(parent); break;
             case TINY:          viewHolder = new TinyCollectionCard(parent); break;
-            default:            throw new RuntimeException("Unhandled view type in main view");
+            default:            throw new NoSuchElementException("Unknown view type in main view");
         }
 
         if (viewHolder instanceof CollectionCardHolder)
@@ -102,7 +103,7 @@ public class CollectionsViewAdapter extends RecyclerView.Adapter<RecyclerView.Vi
             QuestCollection qc = elements.get(index);
             Context context = v.getContext();
 
-            if (qc.size() > 0) {
+            if (!qc.isEmpty()) {
                 Intent intent = new Intent(context, QuizActivity.class);
                 intent.putExtra(QuizActivity.PARAM_QUESTCOLLECTION, qc);
                 context.startActivity(intent);

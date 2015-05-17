@@ -10,6 +10,7 @@ import eu.unipv.epsilon.enigma.template.util.IterableEnumeration;
 
 import java.io.IOException;
 import java.util.LinkedList;
+import java.util.List;
 import java.util.zip.ZipFile;
 
 /**
@@ -18,14 +19,16 @@ import java.util.zip.ZipFile;
  */
 public class DalvikPackageScanner {
 
+    private DalvikPackageScanner() { }
+
     /** Load from the local application dex using the context class loader */
-    public static LinkedList<Class<?>> getClassesInPackage(
+    public static List<Class<?>> getClassesInPackage(
             Context context, String packageName) throws ClassNotFoundException {
         return loadClasses(packageName, context.getClassLoader(), context.getPackageCodePath());
     }
 
     /** Load from an eqc collection container using a PathClassLoader */
-    public static LinkedList<Class<?>> getClassesinZipPkg(
+    public static List<Class<?>> getClassesinZipPkg(
             Context context, String packageName, GameAssetsSystem assetsSystem, String collectionId) throws ClassNotFoundException {
 
         // Currently we haven't found a way yet to dynamically load "classes.dex" without passing in the a zipFile instance
@@ -40,12 +43,12 @@ public class DalvikPackageScanner {
     }
 
     /** Quick n' dirty implementation to load classes from a dex file with the passed in class loader **/
-    private static LinkedList<Class<?>> loadClasses(
+    private static List<Class<?>> loadClasses(
             String packageName, ClassLoader classLoader, String dexPath) throws ClassNotFoundException {
         try {
             DexFile dex = new DexFile(dexPath);
 
-            LinkedList<Class<?>> classes = new LinkedList<>();
+            List<Class<?>> classes = new LinkedList<>();
             for (String name : IterableEnumeration.make(dex.entries()))
                 if (name.startsWith(packageName)) classes.add(classLoader.loadClass(name));
             return classes;

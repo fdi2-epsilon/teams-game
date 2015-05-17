@@ -16,7 +16,7 @@ import java.util.zip.ZipFile;
 
 public class EqcFile extends CollectionContainer {
 
-    private static final Logger logger = LoggerFactory.getLogger(EqcFile.class);
+    private static final Logger LOG = LoggerFactory.getLogger(EqcFile.class);
     public static final String CONTAINER_FILE_EXTENSION = "eqc";
     public static final String CONFIG_YAML_FILENAME = "metadata.yaml";
     public static final String CONFIG_XML_FILENAME = "metadata.xml";
@@ -27,7 +27,7 @@ public class EqcFile extends CollectionContainer {
     public EqcFile(String id, File file) throws IOException {
         this.id = id;
         this.zipFile = new ZipFile(file);
-        logger.info("Opened container \"{}\"", zipFile.getName());
+        LOG.info("Opened container \"{}\"", zipFile.getName());
     }
 
     @Override
@@ -64,11 +64,11 @@ public class EqcFile extends CollectionContainer {
     @Override
     public void invalidate() {
         super.invalidate();
-        logger.info("Closing container (invalidated) \"{}\"", zipFile.getName());
+        LOG.info("Closing container (invalidated) \"{}\"", zipFile.getName());
         try {
             zipFile.close();
         } catch (IOException e) {
-            logger.error("Cannot close zip file!", e);
+            LOG.error("Cannot close zip file!", e);
         }
     }
 

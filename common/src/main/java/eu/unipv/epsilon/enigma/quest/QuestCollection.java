@@ -3,7 +3,6 @@ package eu.unipv.epsilon.enigma.quest;
 import java.io.Serializable;
 import java.net.URL;
 import java.util.LinkedList;
-import java.util.List;
 
 public class QuestCollection implements Serializable {
 
@@ -14,7 +13,17 @@ public class QuestCollection implements Serializable {
     private String subtitle;
     private String description;
     private URL iconUrl;
-    private LinkedList<Quest> quests = new LinkedList<>();
+
+    // LinkedList<> maintains this fully serializable
+    private LinkedList<Quest> quests = new LinkedList<>(); //NOSONAR
+
+    public int size() {
+        return quests.size();
+    }
+
+    public boolean isEmpty() {
+        return quests.isEmpty();
+    }
 
     public String getId() {
         return id;
@@ -64,8 +73,6 @@ public class QuestCollection implements Serializable {
         return quests.get(index);
     }
 
-    public int size() {
-        return quests.size();
-    }
+
 
 }

@@ -43,7 +43,7 @@ public class YamlMetaParser implements MetadataParser {
 
         List quests = (List) meta.get(KEY_QUESTCOLLECTION_ELEMENTS);
         if (quests != null)
-            for (int i = 0; i < quests.size(); i++) qc.addQuest((generateQuest(i, (Map) quests.get(i))));
+            for (int i = 0; i < quests.size(); i++) qc.addQuest(generateQuest(i, (Map) quests.get(i)));
 
         return qc;
     }
@@ -75,7 +75,6 @@ public class YamlMetaParser implements MetadataParser {
             // Because Scala collections have 'getOrElse' and Java's 'Optional is the poor man's 'Option[T]'...
             @SuppressWarnings("unchecked")
             String val = collection.get(key);
-            // Java 8's ugly way: return Optional.ofNullable(val).orElseGet(def);
             return val != null ? val : def.getPropertyValue(key);
         }
         else return def.getPropertyValue(key);

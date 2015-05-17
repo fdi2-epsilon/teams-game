@@ -32,14 +32,11 @@ project(':android-app') {
 
             property 'sonar.sources', android.sourceSets.main.java.srcDirs
             //property 'sonar.tests', android.sourceSets.test.java.srcDirs
+
+            // This is not my code
+            property "sonar.exclusions", "**/com/google/**"
         }
     }
-}
-
-version = getCheckedOutCommitHash()
-
-task printGitHash << {
-    println(getCheckedOutCommitHash())
 }
 
 def getCheckedOutCommitHash() {
@@ -56,3 +53,5 @@ def getCheckedOutCommitHash() {
         refHead.text.trim().take shortHashSz
     }
 }
+
+version = getCheckedOutCommitHash()

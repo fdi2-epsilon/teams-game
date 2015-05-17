@@ -8,15 +8,16 @@ import org.slf4j.LoggerFactory;
 
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.Map;
 
 public class TemplateRegistry {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(TemplateRegistry.class);
 
     private CandidateClassSource classSource;
-    private HashMap<String, TemplateProcessor> localTemplates = new HashMap<>();
+    private Map<String, TemplateProcessor> localTemplates = new HashMap<>();
     private String currentlyRegisteredCollectionID = "";
-    private HashMap<String, TemplateProcessor> collectionTemplates = new HashMap<>();
+    private Map<String, TemplateProcessor> collectionTemplates = new HashMap<>();
 
     public TemplateRegistry(CandidateClassSource classSource) {
         this.classSource = classSource;
@@ -44,7 +45,7 @@ public class TemplateRegistry {
         else return collectionTemplates.get(id); // It is ok that we return null
     }
 
-    private void registerAnnotatedClasses(Iterator<Class<?>> classes, HashMap<String, TemplateProcessor> registry) {
+    private void registerAnnotatedClasses(Iterator<Class<?>> classes, Map<String, TemplateProcessor> registry) {
         Iterator<Class<?>> templateClasses = new FilteredIterator<>(
                 classes, new AnnotationFilter(Template.class));
 

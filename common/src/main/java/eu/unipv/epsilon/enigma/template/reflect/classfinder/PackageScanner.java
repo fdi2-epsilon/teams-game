@@ -4,11 +4,14 @@ import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URL;
 import java.util.LinkedList;
+import java.util.List;
 
 /**
  * Utility facade to class retrieval algorithm given its containing package.
  */
 public class PackageScanner {
+
+    private PackageScanner() { }
 
     /**
      * Attempts to list all the classes in the specified package as determined by the context class loader.
@@ -17,7 +20,7 @@ public class PackageScanner {
      * @return a list of classes found within the given package
      * @throws ClassNotFoundException
      */
-    public static LinkedList<Class<?>> getClassesInPackage(String packageName) throws ClassNotFoundException {
+    public static List<Class<?>> getClassesInPackage(String packageName) throws ClassNotFoundException {
         ClassLoader contextClassLoader = Thread.currentThread().getContextClassLoader();
         if (contextClassLoader == null) throw new ClassNotFoundException("Cannot get the context class loader");
 
@@ -36,7 +39,7 @@ public class PackageScanner {
      * @return a list of classes found within the given package
      * @throws ClassNotFoundException if there was a problem while searching for classes
      */
-    public static LinkedList<Class<?>> getClassesInPackage(
+    public static List<Class<?>> getClassesInPackage(
             String packageName, ClassLoader classLoader, boolean local) throws ClassNotFoundException {
 
         if (classLoader == null)
@@ -46,7 +49,7 @@ public class PackageScanner {
         String packagePath = packageName.replace('.', '/');
 
         try {
-            final LinkedList<Class<?>> classes = new LinkedList<>();
+            final List<Class<?>> classes = new LinkedList<>();
             for (URL url : scanTools.getResources(packagePath))
                 classes.addAll(scanTools.getUrlScanner(url).scan(packageName));
             return classes;

@@ -82,7 +82,7 @@ public class XmlMetaParser implements MetadataParser {
         return qc;
     }
 
-    private Quest generateQuest(int index, Element meta) {
+    private Quest generateQuest(int index, Element meta) throws InvalidPropertiesFormatException {
         Quest q = new Quest();
         FieldProvider defaults = defaultsFactory.getQuestDefaults(index);
 
@@ -105,11 +105,11 @@ public class XmlMetaParser implements MetadataParser {
         return q;
     }
 
-    private Element getSingleContainerElement(Element parentNode, String key) {
+    private Element getSingleContainerElement(Element parentNode, String key) throws InvalidPropertiesFormatException {
         NodeList elements = parentNode.getElementsByTagName(key);
 
         if (elements.getLength() > 1)
-            throw new RuntimeException("Collection should have only one \"<" + key + ">\" node.");
+            throw new InvalidPropertiesFormatException("Collection should have only one \"<" + key + ">\" node.");
 
         // Node type check should be short-circuited if empty check fails, so it should not throw.
         if (elements.getLength() == 0 || elements.item(0).getNodeType() != Node.ELEMENT_NODE) {
@@ -120,7 +120,7 @@ public class XmlMetaParser implements MetadataParser {
         return (Element) elements.item(0);
     }
 
-    private String valueOrDefault(Element parentNode, String key, FieldProvider def) {
+    private String valueOrDefault(Element parentNode, String key, FieldProvider def) throws InvalidPropertiesFormatException {
         // Handle parent undefined:
         if (parentNode == null) return def.getPropertyValue(key);
 
@@ -128,7 +128,7 @@ public class XmlMetaParser implements MetadataParser {
 
         // Handle multiple nodes
         if (nodes.getLength() > 1)
-            throw new RuntimeException(String.format(
+            throw new InvalidPropertiesFormatException(String.format(
                     "\"<%s>\" should contain only one \"<%s>\" element.", parentNode.getNodeName(), key));
         // No nodes
         if (nodes.getLength() == 0) return def.getPropertyValue(key);

@@ -2,6 +2,7 @@ package eu.unipv.epsilon.enigma.template.util;
 
 import java.util.Enumeration;
 import java.util.Iterator;
+import java.util.NoSuchElementException;
 
 public class IterableEnumeration<T> implements Iterable<T> {
 
@@ -11,6 +12,7 @@ public class IterableEnumeration<T> implements Iterable<T> {
         this.enumeration = enumeration;
     }
 
+    @Override
     public Iterator<T> iterator() {
         return new Iterator<T>() {
 
@@ -21,6 +23,7 @@ public class IterableEnumeration<T> implements Iterable<T> {
 
             @Override
             public T next() {
+                if (!hasNext()) throw new NoSuchElementException();
                 return enumeration.nextElement();
             }
 

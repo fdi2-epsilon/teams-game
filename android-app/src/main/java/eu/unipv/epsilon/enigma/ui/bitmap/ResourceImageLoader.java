@@ -9,7 +9,9 @@ import android.support.annotation.DrawableRes;
 public class ResourceImageLoader extends ImageLoader {
 
     private Resources resources;
-    private @DrawableRes int resourceId;
+
+    @DrawableRes
+    private int resourceId;
 
     public ResourceImageLoader(Resources resources, @DrawableRes int resourceId) {
         this.resources = resources;
@@ -20,4 +22,5 @@ public class ResourceImageLoader extends ImageLoader {
     protected Bitmap decodeBitmapWithOptions(BitmapFactory.Options options) {
         return BitmapFactory.decodeResource(resources, resourceId, options);
     }
+
 }

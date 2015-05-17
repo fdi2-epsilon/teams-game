@@ -4,10 +4,13 @@ import eu.unipv.epsilon.enigma.template.api.DocumentGenerationEvent;
 import eu.unipv.epsilon.enigma.template.error.DefaultErrorHandler;
 import eu.unipv.epsilon.enigma.template.error.ErrorHandler;
 import org.w3c.dom.Element;
+import org.xml.sax.SAXException;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
 import java.io.ByteArrayInputStream;
+import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
 
@@ -75,7 +78,8 @@ public class TemplateServer {
         }
     }
 
-    private Element getArgumentsDocument(InputStream argsDocumentStream) throws Exception {
+    private Element getArgumentsDocument(InputStream argsDocumentStream)
+            throws ParserConfigurationException, SAXException, IOException {
         DocumentBuilder db = DocumentBuilderFactory.newInstance().newDocumentBuilder();
         Element document = db.parse(argsDocumentStream).getDocumentElement();
         argsDocumentStream.close();

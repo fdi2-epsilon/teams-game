@@ -8,7 +8,6 @@ import org.slf4j.LoggerFactory;
 
 import java.io.BufferedInputStream;
 import java.io.IOException;
-import java.io.InputStream;
 import java.net.URL;
 
 /**
@@ -22,7 +21,7 @@ public class EqcImageLoader extends InputStreamImageLoader {
     // TODO: Transfer BufferedInputStream code to InputStream class and allow changing mark
 
     public EqcImageLoader(URL url) throws IOException {
-        super(openStream(url));
+        super(new BufferedInputStream(url.openStream()));
         // With this, up to 50KB can be read while decoding bounds, avoiding to read them again when decoding image.
         // So we don't need to reopen the URL stream.
         inputStream.mark(50 * 1024);
@@ -39,8 +38,7 @@ public class EqcImageLoader extends InputStreamImageLoader {
     @Override
     protected Bitmap decodeBitmapWithOptions(BitmapFactory.Options options) {
         try {
-            //inputStream = url.openStream();
-            //Log.i("", inputStream.markSupported() ? "Mark supported" : "Fail");
+            // Without a BufferedInputStream: inputStream = url.openStream();
             inputStream.reset();
             return super.decodeBitmapWithOptions(options);
         } catch (IOException e) {
@@ -59,11 +57,6 @@ public class EqcImageLoader extends InputStreamImageLoader {
         } catch (IOException e) {
             LOG.error("Cannot close the input stream", e);
         }
-    }
-
-    // This is only to handle exception in constructor
-    private static InputStream openStream(URL url) throws IOException {
-        return new BufferedInputStream(url.openStream());
     }
 
 }

@@ -28,7 +28,7 @@ public class LevelAssetsURLStreamHandler extends URLStreamHandler {
         try {
             return new URL(PROTOCOL_NAME, collectionId, -1, entryPath);
         } catch (MalformedURLException e) {
-            throw new RuntimeException("Failed to create an \"" + PROTOCOL_NAME +
+            throw new IllegalStateException("Failed to create an \"" + PROTOCOL_NAME +
                     "\" url, have you correctly registered an URLStreamHandlerFactory?");
         }
     }

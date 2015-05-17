@@ -5,6 +5,7 @@ import eu.unipv.epsilon.enigma.loader.levels.EqcFile;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.SortedSet;
 import java.util.TreeSet;
 
 /**
@@ -41,11 +42,11 @@ public class DirectoryPool extends CachedCollectionsPool {
     }
 
     @Override
-    public TreeSet<String> getStoredCollectionIDs() {
+    public SortedSet<String> getStoredCollectionIDs() {
         File[] files = baseDirectory.listFiles();
         if (files == null) return new TreeSet<>();
 
-        TreeSet<String> names = new TreeSet<>();
+        SortedSet<String> names = new TreeSet<>();
         for (File file : files) {
             // Add a file to the set only if it is not a directory and has the proper extension
             if (file.isFile() && file.getName().endsWith("." + EqcFile.CONTAINER_FILE_EXTENSION))

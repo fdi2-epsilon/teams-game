@@ -12,6 +12,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
 import java.util.Enumeration;
+import java.util.Map;
 import java.util.NoSuchElementException;
 import java.util.WeakHashMap;
 
@@ -20,10 +21,10 @@ import java.util.WeakHashMap;
  */
 public class AssetsClassLoader extends ClassLoader {
 
-    private static final Logger logger = LoggerFactory.getLogger(AssetsClassLoader.class);
+    private static final Logger LOG = LoggerFactory.getLogger(AssetsClassLoader.class);
     public static final String EQC_CLASSES_PATH = "classes/";
 
-    private WeakHashMap<String, Class> cache = new WeakHashMap<>();
+    private Map<String, Class> cache = new WeakHashMap<>();
     private GameAssetsSystem assetsSystem;
     private String collectionId;
 
@@ -38,7 +39,7 @@ public class AssetsClassLoader extends ClassLoader {
 
     @Override
     public Class<?> findClass(String className) throws ClassNotFoundException {
-        logger.info("Trying to lookup class \"{}\" in collection \"{}\"", className, collectionId);
+        LOG.info("Trying to lookup class \"{}\" in collection \"{}\"", className, collectionId);
 
         // Return a cached class if exists
         if (cache.containsKey(className)) return cache.get(className);
@@ -83,7 +84,13 @@ public class AssetsClassLoader extends ClassLoader {
         // Return an enumeration of only one element
         return new Enumeration<URL>() {
             private boolean done = false;
-            public boolean hasMoreElements() { return !done; }
+
+            @Override
+            public boolean hasMoreElements() {
+                return !done;
+            }
+
+            @Override
             public URL nextElement() {
                 if (!hasMoreElements()) throw new NoSuchElementException();
                 done = true;

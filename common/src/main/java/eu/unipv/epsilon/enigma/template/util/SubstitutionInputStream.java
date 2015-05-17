@@ -11,7 +11,8 @@ import java.util.LinkedList;
  */
 public abstract class SubstitutionInputStream extends FilterInputStream {
 
-    private final LinkedList<Character> buffer = new LinkedList<>();
+    // LinkedList<> allows removal without arguments
+    private final LinkedList<Character> buffer = new LinkedList<>(); //NOSONAR
 
     public SubstitutionInputStream(InputStream in) {
         super(in);

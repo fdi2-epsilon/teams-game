@@ -2,19 +2,20 @@ package eu.unipv.epsilon.enigma.template.util;
 
 import java.io.InputStream;
 import java.util.HashMap;
+import java.util.Map;
 
 /**
- * A {@link SubstitutionInputStream} that provides values from an {@link HashMap}.
+ * A {@link SubstitutionInputStream} that provides values from a {@link Map}.
  */
 public class MappedValueInputStream extends SubstitutionInputStream {
 
-    private HashMap<String, String> values;
+    private Map<String, String> values;
 
     public MappedValueInputStream(InputStream in) {
         this(in, new HashMap<String, String>());
     }
 
-    public MappedValueInputStream(InputStream in, HashMap<String, String> values) {
+    public MappedValueInputStream(InputStream in, Map<String, String> values) {
         super(in);
         this.values = values;
     }

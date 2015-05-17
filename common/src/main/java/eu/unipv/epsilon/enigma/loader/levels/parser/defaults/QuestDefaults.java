@@ -2,6 +2,8 @@ package eu.unipv.epsilon.enigma.loader.levels.parser.defaults;
 
 import eu.unipv.epsilon.enigma.loader.levels.CollectionContainer;
 
+import java.util.NoSuchElementException;
+
 import static eu.unipv.epsilon.enigma.loader.levels.parser.MetadataParser.*;
 
 public class QuestDefaults implements FieldProvider {
@@ -22,8 +24,9 @@ public class QuestDefaults implements FieldProvider {
             case KEY_QUEST_PATH_MAINDOCUMENT:   return String.format("quests/%02d/", nameIndex); // Using redirection
             case KEY_QUEST_PATH_INFODOCUMENT:   return String.format("quests/%02d/story.html", nameIndex);
             case KEY_QUEST_PATH_ICON:           return String.format("quests/%02d/icon.png", nameIndex);
+            default:
+                throw new NoSuchElementException("No default property value for \"" + property + '"');
         }
-        return null;
     }
 
 }

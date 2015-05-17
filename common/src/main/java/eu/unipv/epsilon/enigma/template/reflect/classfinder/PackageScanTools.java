@@ -2,6 +2,8 @@ package eu.unipv.epsilon.enigma.template.reflect.classfinder;
 
 import eu.unipv.epsilon.enigma.loader.levels.protocol.LevelAssetsURLConnection;
 import eu.unipv.epsilon.enigma.template.util.IterableEnumeration;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import sun.net.www.protocol.file.FileURLConnection;
 
 import java.io.File;
@@ -18,6 +20,7 @@ import java.util.Enumeration;
  */
 public class PackageScanTools {
 
+    private static final Logger LOG = LoggerFactory.getLogger(PackageScanTools.class);
     private final ClassLoader classLoader;
     private final boolean local;
 
@@ -73,7 +76,9 @@ public class PackageScanTools {
             return IterableEnumeration.make(resources);
 
         } catch (ReflectiveOperationException e) {
-            throw new RuntimeException("Cannot get resources in a not-recursively way.", e);
+            LOG.error("Cannot get resources in a not recursively way", e);
+            // Throw InvalidStateException because in this context, "local = true" is not allowed
+            throw new IllegalStateException("Local-only scan not allowed in this context");
         }
     }
 

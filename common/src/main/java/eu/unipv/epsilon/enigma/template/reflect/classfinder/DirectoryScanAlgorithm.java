@@ -28,7 +28,7 @@ public class DirectoryScanAlgorithm extends ScanAlgorithm {
 
     @Override
     public List<Class<?>> scan(String packageName) throws ClassNotFoundException {
-        LinkedList<Class<?>> classes = new LinkedList<>();
+        List<Class<?>> classes = new LinkedList<>();
         scanRecursive(directory, packageName, classes);
         return classes;
     }
@@ -40,7 +40,7 @@ public class DirectoryScanAlgorithm extends ScanAlgorithm {
         File innerDir;
 
         // If we scan the root we don't want inner package names to start with '.' like ".com.example"
-        if (!packageName.equals("")) packageName += '.';
+        if (!"".equals(packageName)) packageName += '.';
 
         for (String file : files) {
             if (file.endsWith(CLASS_FILE_EXT)) {

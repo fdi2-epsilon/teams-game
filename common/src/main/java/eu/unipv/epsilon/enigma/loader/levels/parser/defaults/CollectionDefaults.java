@@ -2,6 +2,8 @@ package eu.unipv.epsilon.enigma.loader.levels.parser.defaults;
 
 import eu.unipv.epsilon.enigma.loader.levels.CollectionContainer;
 
+import java.util.NoSuchElementException;
+
 import static eu.unipv.epsilon.enigma.loader.levels.parser.MetadataParser.*;
 
 public class CollectionDefaults implements FieldProvider {
@@ -22,8 +24,9 @@ public class CollectionDefaults implements FieldProvider {
                 if (context.containsEntry("pack.png")) return "pack.png";
                 if (context.containsEntry("pack.jpg")) return "pack.jpg";
                 return "";
+            default:
+                throw new NoSuchElementException("No default property value for \"" + property + '"');
         }
-        return null;
     }
 
 }

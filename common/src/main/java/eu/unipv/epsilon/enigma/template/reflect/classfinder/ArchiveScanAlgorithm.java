@@ -33,7 +33,7 @@ public class ArchiveScanAlgorithm extends ScanAlgorithm {
 
     // The real scan implementation accepting a subfolder inside the archive
     public List<Class<?>> scan(String packageName, String subDir) throws ClassNotFoundException {
-        LinkedList<Class<?>> classes = new LinkedList<>();
+        List<Class<?>> classes = new LinkedList<>();
 
         for (ZipEntry entry : IterableEnumeration.make(zipFile.entries())) {
             String name = entry.getName();
