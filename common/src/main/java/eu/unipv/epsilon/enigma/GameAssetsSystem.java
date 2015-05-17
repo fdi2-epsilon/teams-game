@@ -27,7 +27,9 @@ public class GameAssetsSystem {
 
     public GameAssetsSystem(CollectionsPool... sources) {
         for (CollectionsPool source : sources)
-            if (source == null) throw new IllegalArgumentException("Source may not be null");
+            if (source == null){
+                throw new IllegalArgumentException("Source may not be null");
+            }
 
         this.sources = new LinkedList<>(Arrays.asList(sources));
         registerURLStreamHandlers();
