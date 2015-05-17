@@ -15,6 +15,7 @@ import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.InvalidPropertiesFormatException;
 
 public class XmlMetaParser implements MetadataParser {
 
@@ -41,14 +42,14 @@ public class XmlMetaParser implements MetadataParser {
         }
     }
 
-    private QuestCollection generateCollection(Element document) {
+    private QuestCollection generateCollection(Element document) throws InvalidPropertiesFormatException {
         QuestCollection qc = new QuestCollection();
         FieldProvider defaults = defaultsFactory.getCollectionDefaults();
 
         // Check if root node is <document>...
         if (!document.getNodeName().equalsIgnoreCase(KEYXML_ROOT_NODE)) {
-            // We may want to handle this gracefully in UI code instead of crashing...
-            throw new RuntimeException("Document should start with \"<" + KEYXML_ROOT_NODE + ">\" root node.");
+            throw new InvalidPropertiesFormatException(
+                    "Document should start with \"<" + KEYXML_ROOT_NODE + ">\" root node.");
         }
 
         // ...it should contain only one <meta> tag
@@ -70,10 +71,11 @@ public class XmlMetaParser implements MetadataParser {
         }
 
         NodeList quests = content.getElementsByTagName(KEYXML_QUEST_NODE);
-        for (int i = 0; i < quests.getLength(); ) {
+        int questIndex = 0;
+        for (int i = 0; i < quests.getLength(); i++) {
             if (quests.item(i).getNodeType() == Node.ELEMENT_NODE) {
-                qc.addQuest(generateQuest(i, (Element) quests.item(i)));
-                ++i; // Increment only if correct node type
+                qc.addQuest(generateQuest(questIndex, (Element) quests.item(i)));
+                ++questIndex;
             }
         }
 
