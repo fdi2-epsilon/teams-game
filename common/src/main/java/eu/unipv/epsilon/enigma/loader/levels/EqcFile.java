@@ -52,7 +52,7 @@ public class EqcFile extends CollectionContainer {
 
     @Override
     public boolean containsEntry(String entryPath) {
-        return (zipFile.getEntry(entryPath) != null);
+        return zipFile.getEntry(entryPath) != null;
     }
 
     @Override

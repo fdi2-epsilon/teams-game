@@ -15,7 +15,7 @@ public class EqcFileEntry implements ContainerEntry {
         this.zipEntry = zip.getEntry(entryPath);
         if (zipEntry == null) {
             // This should already be checked by EqcFile for existence
-            throw new RuntimeException("Entry \"" + entryPath + "\" not found in \"" + zip.getName() + "\".");
+            throw new IllegalStateException("Entry \"" + entryPath + "\" not found in \"" + zip.getName() + "\".");
         }
     }
 

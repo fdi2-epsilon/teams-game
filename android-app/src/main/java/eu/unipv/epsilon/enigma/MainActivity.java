@@ -10,7 +10,6 @@ import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import eu.unipv.epsilon.enigma.loader.levels.exception.MetadataNotFoundException;
@@ -94,10 +93,6 @@ public class MainActivity extends AppCompatActivity {
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.temp_button) {
-            //Intent intent = new Intent(this, QuizActivity.class);
-            //startActivity(intent);
-            return true;
-        } else if (id == R.id.filetest_button) {
             // Implement here your test routines
             return true;
         }

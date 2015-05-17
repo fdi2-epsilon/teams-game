@@ -64,16 +64,16 @@ public class QuizActivity extends AppCompatActivity {
         viewPager.setAdapter(new QuizFragmentPageAdapter(getSupportFragmentManager(), collection));
 
         //Give the SlidingTabLayout the ViewPager
-        SlidingTabLayout slidingTabLayout = (SlidingTabLayout) findViewById(R.id.sliding_tabs);
+        SlidingTabLayout slidingTabs = (SlidingTabLayout) findViewById(R.id.sliding_tabs);
 
-        slidingTabLayout.setCustomTabView(R.layout.quiz_tab_element, R.id.text);
+        slidingTabs.setCustomTabView(R.layout.quiz_tab_element, R.id.text);
 
         //Center the tabs in the layout
-        slidingTabLayout.setDistributeEvenly(false);
-        slidingTabLayout.setViewPager(viewPager);
+        slidingTabs.setDistributeEvenly(false);
+        slidingTabs.setViewPager(viewPager);
 
         //customize tab color
-        slidingTabLayout.setCustomTabColorizer(new SlidingTabLayout.TabColorizer() {
+        slidingTabs.setCustomTabColorizer(new SlidingTabLayout.TabColorizer() {
             @Override
             public int getIndicatorColor(int position) {
                 return Color.WHITE;

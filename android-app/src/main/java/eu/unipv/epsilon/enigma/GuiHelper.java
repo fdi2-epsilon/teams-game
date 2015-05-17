@@ -9,21 +9,22 @@ import android.widget.RelativeLayout;
 
 public class GuiHelper {
 
+    // Private constructor since this is an utility class
+    private GuiHelper() { }
+
     static int getDefaultStatusBarHeight(Resources resources) {
         // Get in XML from the private attribute: @*android:dimen/status_bar_height
         int resourceId = resources.getIdentifier("status_bar_height", "dimen", "android");
-        if (resourceId > 0){
+        if (resourceId > 0)
             return resources.getDimensionPixelSize(resourceId);
-        }
         return 0;
     }
 
     static int getDefaultNavigationBarHeight(Resources resources) {
         // Get in XML from the private attribute: @*android:dimen/navigation_bar_height
         int resourceId = resources.getIdentifier("navigation_bar_height", "dimen", "android");
-        if (resourceId > 0){
+        if (resourceId > 0)
             return resources.getDimensionPixelSize(resourceId);
-        }
         return 0;
     }
 

@@ -14,18 +14,17 @@ import java.lang.reflect.Field;
 import java.net.URL;
 import java.net.URLStreamHandler;
 import java.net.URLStreamHandlerFactory;
-import java.util.Arrays;
-import java.util.LinkedList;
-import java.util.TreeSet;
+import java.util.*;
 
 public class GameAssetsSystem {
 
     private static final Logger LOG = LoggerFactory.getLogger(GameAssetsSystem.class);
 
     private TemplateServer templateServer = null;
-    private LinkedList<CollectionsPool> sources; // Linked list is a better than ArrayList in this case
+    private List<CollectionsPool> sources;
 
     public GameAssetsSystem() {
+        // Linked list is a better than ArrayList in this case
         sources = new LinkedList<>();
     }
 
@@ -50,28 +49,28 @@ public class GameAssetsSystem {
         sources.add(pool);
     }
 
-    public TreeSet<String> getAvailableCollectionIDs() {
-        TreeSet<String> ids = new TreeSet<>();
-        for (CollectionsPool source : sources){
+    public SortedSet<String> getAvailableCollectionIDs() {
+        SortedSet<String> ids = new TreeSet<>();
+        for (CollectionsPool source : sources)
             ids.addAll(source.getStoredCollectionIDs());
-        }
+
         return ids;
     }
 
     public boolean containsCollection(String id) {
-        for (CollectionsPool source : sources){
-            if (source.containsCollection(id)){
+        for (CollectionsPool source : sources) {
+            if (source.containsCollection(id))
                 return true;
-            }
         }
+
         return false;
     }
 
     public CollectionContainer getCollectionContainer(String id) {
         for (CollectionsPool source : sources)
-            if (source.containsCollection(id)){
+            if (source.containsCollection(id))
                 return source.getCollectionContainer(id);
-            }
+
         return null;
     }
 
@@ -83,12 +82,15 @@ public class GameAssetsSystem {
         try {
             factory = URL.class.getDeclaredField("factory");
         } catch (NoSuchFieldException e) {
+            LOG.info("Cannot find \"factory\" field while registering URLStreamHandler," +
+                    "maybe we have a different implementation, trying with \"streamHandlerFactory\"", e);
             try {
                 factory = URL.class.getDeclaredField("streamHandlerFactory");
             } catch (NoSuchFieldException e1) {
-                LOG.info("Cannot find \"factory\" field while registering URLStreamHandler," +
-                        "maybe we have a different implementation, trying with \"streamHandlerFactory\"", e);
-                throw new RuntimeException("Cannot find stream handler factory field.", e1);
+                LOG.error("\"streamHandlerFactory\" field not found", e1);
+
+                // Critical
+                throw new NoSuchFieldError("Cannot find stream handler factory field");
             }
         }
 
