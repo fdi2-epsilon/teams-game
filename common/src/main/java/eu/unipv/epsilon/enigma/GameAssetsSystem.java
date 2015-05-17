@@ -49,18 +49,26 @@ public class GameAssetsSystem {
 
     public TreeSet<String> getAvailableCollectionIDs() {
         TreeSet<String> ids = new TreeSet<>();
-        for (CollectionsPool source : sources) ids.addAll(source.getStoredCollectionIDs());
+        for (CollectionsPool source : sources){
+            ids.addAll(source.getStoredCollectionIDs());
+        }
         return ids;
     }
 
     public boolean containsCollection(String id) {
-        for (CollectionsPool source : sources) if (source.containsCollection(id)) return true;
+        for (CollectionsPool source : sources){
+            if (source.containsCollection(id)){
+                return true;
+            }
+        }
         return false;
     }
 
     public CollectionContainer getCollectionContainer(String id) {
         for (CollectionsPool source : sources)
-            if (source.containsCollection(id)) return source.getCollectionContainer(id);
+            if (source.containsCollection(id)){
+                return source.getCollectionContainer(id);
+            }
         return null;
     }
 
