@@ -1,42 +1,12 @@
 repositories.jcenter();
 
 apply plugin: 'sonar-runner';
-if (!project.hasProperty('sonarHost')) ext.sonarHost = '197.0.0.1'
-if (!project.hasProperty('sonarPortHttp')) ext.sonarPortHttp = '9000'
-if (!project.hasProperty('sonarPortJdbc')) ext.sonarPortJdbc = '9092'
-
-sonarRunner {
-    sonarProperties {
-        // Put server path in ~/.gradle/gradle.properties or -PsonarHost=[...]
-        property 'sonar.host.url', "http://$sonarHost:$sonarPortHttp"
-        property "sonar.jdbc.url", "jdbc:h2:tcp://$sonarHost:$sonarPortJdbc/sonar"
-        if (project.hasProperty('sonarUser') && project.hasProperty('sonarPass')) {
-            property "sonar.jdbc.username", sonarUser
-            property "sonar.jdbc.password", sonarPass
-        }
-    }
-}
 
 allprojects {
     apply plugin: 'eclipse'
     apply plugin: 'idea'
 
     //buildDir = "$rootProject.projectDir/build"
-}
-
-project(':android-app') {
-    sonarRunner {
-        sonarProperties {
-            // For directory tangle index, binaries should be analyzed too,
-            // but we have dex... - http://stackoverflow.com/a/20348653
-
-            property 'sonar.sources', android.sourceSets.main.java.srcDirs
-            //property 'sonar.tests', android.sourceSets.test.java.srcDirs
-
-            // This is not my code
-            property "sonar.exclusions", "**/com/google/**"
-        }
-    }
 }
 
 def getCheckedOutCommitHash() {
@@ -55,3 +25,58 @@ def getCheckedOutCommitHash() {
 }
 
 version = getCheckedOutCommitHash()
+
+
+
+
+
+// ----- SonarQube configuration ----- //
+
+if (!project.hasProperty('sonarHost'))
+    ext.sonarHost = '197.0.0.1'
+
+if (!project.hasProperty('sonarPortHttp'))
+    ext.sonarPortHttp = '9000'
+
+if (!project.hasProperty('sonarPortJdbc'))
+    ext.sonarPortJdbc = '9092'
+
+sonarRunner {
+    sonarProperties {
+        // Put server path in ~/.gradle/gradle.properties or -PsonarHost=[...]
+        property 'sonar.host.url', "http://$sonarHost:$sonarPortHttp"
+        property "sonar.jdbc.url", "jdbc:h2:tcp://$sonarHost:$sonarPortJdbc/sonar"
+        if (project.hasProperty('sonarUser') && project.hasProperty('sonarPass')) {
+            property "sonar.jdbc.username", sonarUser
+            property "sonar.jdbc.password", sonarPass
+        }
+    }
+}
+
+project(':common') {
+    apply plugin: 'jacoco'
+    sonarRunner {
+        sonarProperties {
+            property 'sonar.junit.reportsPath', "$buildDir/test-results"
+            property 'sonar.java.coveragePlugin', 'jacoco'
+            property 'sonar.jacoco.reportPath', "$buildDir/jacoco/test.exec"
+        }
+    }
+    tasks.getByPath(':sonarRunner').dependsOn ':common:jacocoTestReport'
+}
+
+
+project(':android-app') {
+    sonarRunner {
+        sonarProperties {
+            // For directory tangle index, binaries should be analyzed too,
+            // but we have dex... - http://stackoverflow.com/a/20348653
+
+            property 'sonar.sources', android.sourceSets.main.java.srcDirs
+            //property 'sonar.tests', android.sourceSets.test.java.srcDirs
+
+            // This is not my code
+            property "sonar.exclusions", "**/com/google/**"
+        }
+    }
+}
