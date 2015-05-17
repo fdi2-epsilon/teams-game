@@ -11,6 +11,9 @@ apply plugin: 'com.android.application'
 
 repositories.jcenter()
 
+sourceCompatibility = '1.7'
+targetCompatibility = '1.7'
+
 android {
     compileSdkVersion 22
     buildToolsVersion '22.0.1'
