@@ -14,7 +14,7 @@ public class QuestCollection implements Serializable {
     private String subtitle;
     private String description;
     private URL iconUrl;
-    private List<Quest> quests = new LinkedList<>();
+    private LinkedList<Quest> quests = new LinkedList<>();
 
     public String getId() {
         return id;

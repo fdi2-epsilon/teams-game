@@ -1,5 +1,8 @@
 package eu.unipv.epsilon.enigma.loader.levels.protocol;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
@@ -24,6 +27,8 @@ import java.net.URLStreamHandler;
  * @see <a href="http://www.java2s.com/Code/Java/Network-Protocol/ZipURLStreamHandler.htm">Original implementation</a>
  */
 public class ZipURLStreamHandler extends URLStreamHandler {
+
+    private static final Logger LOG = LoggerFactory.getLogger(ZipURLStreamHandler.class);
 
     /** Returns a {@link ZipURLConnection} for the specified URL. */
     @Override
@@ -82,7 +87,7 @@ public class ZipURLStreamHandler extends URLStreamHandler {
         try {
             return new URL(protocol, "", -1, fileName + '|' + entryName);
         } catch (MalformedURLException e) {
-            e.printStackTrace();
+            LOG.error("This protocol was not registered", e);
             return null;
         }
     }

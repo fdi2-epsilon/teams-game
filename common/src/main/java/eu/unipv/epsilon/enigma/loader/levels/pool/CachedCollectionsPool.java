@@ -1,6 +1,8 @@
 package eu.unipv.epsilon.enigma.loader.levels.pool;
 
 import eu.unipv.epsilon.enigma.loader.levels.CollectionContainer;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.util.WeakHashMap;
@@ -12,6 +14,8 @@ import java.util.WeakHashMap;
  * resource-allocating {@link CollectionContainer} by accessing it from your pool by ID.
  */
 public abstract class CachedCollectionsPool implements CollectionsPool {
+
+    private static final Logger LOG = LoggerFactory.getLogger(CachedCollectionsPool.class);
 
     private WeakHashMap<String, CollectionContainer> cache = new WeakHashMap<>();
 
@@ -25,7 +29,7 @@ public abstract class CachedCollectionsPool implements CollectionsPool {
             cache.put(id, val);
             return val;
         } catch (IOException e) {
-            e.printStackTrace();
+            LOG.warn("The collection container \"" + id + "\" was not found, returning null", e);
             return null;
         }
     }

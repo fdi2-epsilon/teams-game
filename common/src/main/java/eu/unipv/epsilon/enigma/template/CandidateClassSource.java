@@ -1,6 +1,8 @@
 package eu.unipv.epsilon.enigma.template;
 
 import eu.unipv.epsilon.enigma.GameAssetsSystem;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.Collections;
 import java.util.Iterator;
@@ -17,6 +19,8 @@ import java.util.Iterator;
  * is intended. Since we are here, we also manage exception handling by returning empty iterators on errors.
  */
 public abstract class CandidateClassSource {
+
+    private static final Logger LOG = LoggerFactory.getLogger(CandidateClassSource.class);
 
     protected static final String TEMPLATES_LOCATION_BUILTIN = "eu.unipv.epsilon.enigma.template.builtin";
 
@@ -39,8 +43,8 @@ public abstract class CandidateClassSource {
     public final Iterator<Class<?>> getLocalCandidateClasses() {
         try {
             return findLocalCandidateClasses();
-        } catch (ClassNotFoundException e) { // No local templates or error
-            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            LOG.warn("No classes found or error, returning empty iterator", e);
             return Collections.emptyIterator();
         }
     }
@@ -58,8 +62,8 @@ public abstract class CandidateClassSource {
                 throw new ClassNotFoundException("Assets system unknown");
 
             return findCollectionCandidateClasses(collectionId);
-        } catch (ClassNotFoundException e) { // No local templates or error
-            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            LOG.warn("No classes found or error, returning empty iterator", e);
             return Collections.emptyIterator();
         }
     }

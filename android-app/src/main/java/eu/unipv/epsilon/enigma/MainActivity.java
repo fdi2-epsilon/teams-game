@@ -18,6 +18,8 @@ import eu.unipv.epsilon.enigma.loader.levels.pool.DirectoryPool;
 import eu.unipv.epsilon.enigma.quest.QuestCollection;
 import eu.unipv.epsilon.enigma.template.DalvikCandidateClassSource;
 import eu.unipv.epsilon.enigma.ui.main.CollectionsViewAdapter;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.File;
 import java.io.IOException;
@@ -26,14 +28,16 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
+    private static final Logger LOG = LoggerFactory.getLogger(MainActivity.class);
+
     private RecyclerView collectionsView;
 
     private GameAssetsSystem assetsSystem;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        Log.i(getClass().getName(), String.format("Activity started, display density: %f, locale: %s",
-                getResources().getDisplayMetrics().density, getResources().getConfiguration().locale.getLanguage()));
+        LOG.info("Activity started, display density: {}, locale: {}",
+                getResources().getDisplayMetrics().density, getResources().getConfiguration().locale.getLanguage());
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
@@ -43,7 +47,7 @@ public class MainActivity extends AppCompatActivity {
 
         // Create a new local data source to load any built-in collections
         File collectionsDir = new File(getFilesDir(), "collections");
-        Log.i(getClass().getName(), "Internal collections path: " + collectionsDir.getPath());
+        LOG.info("Internal collections path: " + collectionsDir.getPath());
 
         // Do the same for external storage so users can add new collections on-the-go
         String state = Environment.getExternalStorageState();
@@ -52,13 +56,13 @@ public class MainActivity extends AppCompatActivity {
             File extDocsDir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOCUMENTS);
             File extCollectionsDir = new File(extDocsDir, getString(R.string.app_name) + '/' + "Collections");
 
-            Log.i(getClass().getName(), "External collections path: " + extCollectionsDir.getPath());
+            LOG.info("External collections path: " + extCollectionsDir.getPath());
             if (!extCollectionsDir.mkdirs())
-                Log.e(getClass().getName(), "Directory not created");
+                LOG.error("External collections directory not created");
 
             assetsSystem = new GameAssetsSystem(new DirectoryPool(collectionsDir), new DirectoryPool(extCollectionsDir));
         } else {
-            Log.i(getClass().getName(), "External storage is not accessible");
+            LOG.info("External storage is not accessible");
             assetsSystem = new GameAssetsSystem(new DirectoryPool(collectionsDir));
         }
 
@@ -124,11 +128,9 @@ public class MainActivity extends AppCompatActivity {
             try {
                 collections.add(assetsSystem.getCollectionContainer(collectionId).loadCollectionMeta());
             } catch (MetadataNotFoundException e) {
-                // Handle metadata not found exception
-                e.printStackTrace();
+                LOG.error("Collection metadata not found", e);
             } catch (IOException e) {
-                // There was an error opening the file
-                e.printStackTrace();
+                LOG.error("Error while opening collection metadata", e);
             }
         }
 

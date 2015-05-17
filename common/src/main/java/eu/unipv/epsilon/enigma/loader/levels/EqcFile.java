@@ -68,7 +68,7 @@ public class EqcFile extends CollectionContainer {
         try {
             zipFile.close();
         } catch (IOException e) {
-            e.printStackTrace();
+            logger.error("Cannot close zip file!", e);
         }
     }
 

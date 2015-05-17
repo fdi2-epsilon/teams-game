@@ -14,7 +14,12 @@ public class LevelAssetsURLConnection extends URLConnection {
 
     private static final String TEMPLATE_DOCUMENT = "document.xml";
     // Default documents to search if we have a link to a directory
-    public static final String[] DEFAULT_DOCUMENTS = { TEMPLATE_DOCUMENT, "index.html" };
+    private static final String[] DEFAULT_DOCUMENTS = { TEMPLATE_DOCUMENT, "index.html" };
+
+    // Hey! Why is the above array private?
+    //   Public arrays, even ones declared static final can have their contents edited by malicious programs.
+    //   The final keyword on an array declaration means that the array object itself may only be assigned once,
+    //   but its contents are still mutable. Therefore making arrays public is a security risk.
 
     GameAssetsSystem assetsSystem;
     ContainerEntry containerEntry = null;

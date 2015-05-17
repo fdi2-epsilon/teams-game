@@ -31,13 +31,6 @@ public abstract class CollectionContainer {
         return closed;
     }
 
-    /** <b><i>Should</i></b> be called by the Garbage Collector on cleanup. */
-    @Override
-    protected void finalize() throws Throwable {
-        super.finalize();
-        invalidate();
-    }
-
     /**
      * Loads the collection metadata bundled within this container.
      *
