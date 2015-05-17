@@ -29,4 +29,14 @@ public class EqcFileEntry implements ContainerEntry {
         return zip.getInputStream(zipEntry);
     }
 
+    @Override
+    public boolean isDirectory() {
+        return zipEntry.isDirectory();
+    }
+
+    @Override
+    public String getPath() {
+        return zipEntry.getName();
+    }
+
 }

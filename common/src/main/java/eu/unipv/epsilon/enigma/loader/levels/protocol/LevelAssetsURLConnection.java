@@ -3,6 +3,7 @@ package eu.unipv.epsilon.enigma.loader.levels.protocol;
 import eu.unipv.epsilon.enigma.GameAssetsSystem;
 import eu.unipv.epsilon.enigma.loader.levels.CollectionContainer;
 import eu.unipv.epsilon.enigma.loader.levels.ContainerEntry;
+import eu.unipv.epsilon.enigma.template.TemplateServer;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -11,8 +12,11 @@ import java.net.URLConnection;
 
 public class LevelAssetsURLConnection extends URLConnection {
 
-    GameAssetsSystem assetsSystem;
+    private static final String TEMPLATE_DOCUMENT = "document.xml";
+    // Default documents to search if we have a link to a directory
+    public static final String[] DEFAULT_DOCUMENTS = { TEMPLATE_DOCUMENT, "index.html" };
 
+    GameAssetsSystem assetsSystem;
     ContainerEntry containerEntry = null;
 
     public LevelAssetsURLConnection(GameAssetsSystem assetsSystem, URL url) {
@@ -23,15 +27,12 @@ public class LevelAssetsURLConnection extends URLConnection {
     @Override
     public void connect() throws IOException {
         if (!connected) {
-            String urlPath = url.getPath().startsWith("/") ? url.getPath().substring(1) : url.getPath();
 
             CollectionContainer container = assetsSystem.getCollectionContainer(url.getHost());
             if (container == null)
                 throw new IOException("Collection \"" + url.getHost() + "\" not found.");
 
-            containerEntry = container.getEntry(urlPath);
-            if (containerEntry == null)
-                throw new IOException("Entry \"" + urlPath + "\" not found in \"" + url.getHost() + "\".");
+            containerEntry = findURLEntry(container, url.getPath());
 
             connected = true;
         }
@@ -40,13 +41,52 @@ public class LevelAssetsURLConnection extends URLConnection {
     @Override
     public InputStream getInputStream() throws IOException {
         connect();
-        return containerEntry.getStream();
+        TemplateServer templateServer = assetsSystem.getTemplateServer();
+
+        // Do not use templates if template server is not defined or we don't have a "document.xml"
+        if (templateServer == null || !containerEntry.getPath().endsWith(TEMPLATE_DOCUMENT))
+            return containerEntry.getStream();
+
+        return templateServer.getDynamicContentStream(containerEntry.getStream(),
+                    LevelAssetsURLStreamHandler.createURL(url.getHost(), containerEntry.getPath()));
     }
 
     @Override
     public long getContentLengthLong() {
         if (!connected) return -1;
         return containerEntry.getSize();
+    }
+
+    public CollectionContainer getContainer() {
+        // Get always-valid copy from the assets system
+        return assetsSystem.getCollectionContainer(url.getHost());
+    }
+
+    private ContainerEntry findURLEntry(CollectionContainer container, String urlPath) throws IOException {
+        // Probably out path starts with '/', remove it
+        if (urlPath.startsWith("/"))
+            urlPath = urlPath.substring(1);
+
+        ContainerEntry entry = container.getEntry(urlPath);
+        if (entry == null)
+            throw new IOException(String.format(
+                    "Entry \"%s\" not found in collection \"%s\".", urlPath, url.getHost()));
+
+        // If it is a file, return it now
+        if (!entry.isDirectory()) return entry;
+
+        // We have a directory, add a trailing slash if not present
+        if (!urlPath.endsWith("/")) urlPath += '/';
+
+        for (String fileName : DEFAULT_DOCUMENTS) {
+            entry = container.getEntry(urlPath + fileName);
+            if (entry != null && !entry.isDirectory())
+                return entry;
+        }
+
+        // No default document found in directory
+        throw new IOException(String.format(
+                "No default document in directory \"%s\" inside collection \"%s\".", urlPath, url.getHost()));
     }
 
 }

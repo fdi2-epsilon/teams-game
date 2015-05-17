@@ -5,16 +5,12 @@ import eu.unipv.epsilon.enigma.loader.levels.pool.DirectoryPool;
 import eu.unipv.epsilon.enigma.loader.levels.protocol.LevelAssetsURLStreamHandler;
 import eu.unipv.epsilon.enigma.quest.Quest;
 import eu.unipv.epsilon.enigma.quest.QuestCollection;
-import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 
 import java.io.*;
-import java.net.MalformedURLException;
 import java.net.URL;
-import java.net.URLStreamHandler;
-import java.net.URLStreamHandlerFactory;
 import java.util.Arrays;
 import java.util.Collection;
 
@@ -22,6 +18,11 @@ import static org.junit.Assert.*;
 
 @RunWith(Parameterized.class)
 public class GameAssetsSystemTest {
+
+    /*
+     * This performs only generic metadata loading tests,
+     * for templates, take a look at TemplateServerTest
+     */
 
     public static final String PROTO_HEAD = LevelAssetsURLStreamHandler.PROTOCOL_NAME + "://";
 
@@ -37,23 +38,6 @@ public class GameAssetsSystemTest {
 
     public GameAssetsSystemTest(String collectionId) {
         this.cid = collectionId;
-    }
-
-    @Before
-    public void setUp() {
-        try {
-            new URL(LevelAssetsURLStreamHandler.PROTOCOL_NAME, "", -1, "");
-        } catch (MalformedURLException e) {
-            // URL Stream Handler not registered, register it now
-            URL.setURLStreamHandlerFactory(new URLStreamHandlerFactory() {
-                @Override
-                public URLStreamHandler createURLStreamHandler(String protocol) {
-                    if (protocol.equalsIgnoreCase(LevelAssetsURLStreamHandler.PROTOCOL_NAME))
-                        return system.getURLStreamHandler();
-                    return null;
-                }
-            });
-        }
     }
 
     @Test
@@ -105,8 +89,8 @@ public class GameAssetsSystemTest {
         /*   Q2 has defined main meta and undefined 'paths'.   */
         Quest q2 = questCollection.get(1);
         assertEquals("Another one!", q2.getName());                                                     // Configured
-        //assertTrue(q2.getDescription().endsWith("\n- Stronzo\n"));                                      // Configured
-        assertEquals(PROTO_HEAD + cid + "/quests/02/index.html", q2.getMainDocumentUrl().toString());   // Default
+        //assertTrue(q2.getDescription().endsWith("\n- Stronzo\n"));                                    // Configured
+        assertEquals(PROTO_HEAD + cid + "/quests/02/", q2.getMainDocumentUrl().toString());             // Default
         assertEquals(PROTO_HEAD + cid + "/quests/02/story.html", q2.getInfoDocumentUrl().toString());   // Default
         assertEquals(PROTO_HEAD + cid + "/quests/02/icon.png", q2.getIconUrl().toString());             // Default
 
@@ -129,9 +113,9 @@ public class GameAssetsSystemTest {
         URL url = qc.get(1).getMainDocumentUrl();
 
         assertEquals("URL should be equal to the spec.",
-                url, new URL(PROTO_HEAD + cid + "/quests/02/index.html"));
+                url, new URL(PROTO_HEAD + cid + "/quests/02/"));
         assertEquals("URL should be equal to one created with createURL()",
-                url, LevelAssetsURLStreamHandler.createURL(cid, "quests/02/index.html"));
+                url, LevelAssetsURLStreamHandler.createURL(cid, "quests/02/"));
 
         // If container is invalidated before this, it will be reopened
         InputStream in = url.openStream();

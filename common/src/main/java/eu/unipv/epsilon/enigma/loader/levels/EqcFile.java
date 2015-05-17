@@ -72,4 +72,8 @@ public class EqcFile extends CollectionContainer {
         }
     }
 
+    public ZipFile getZipFile() {
+        return zipFile;
+    }
+
 }

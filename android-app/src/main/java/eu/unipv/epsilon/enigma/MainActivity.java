@@ -16,6 +16,7 @@ import android.view.MenuItem;
 import eu.unipv.epsilon.enigma.loader.levels.exception.MetadataNotFoundException;
 import eu.unipv.epsilon.enigma.loader.levels.pool.DirectoryPool;
 import eu.unipv.epsilon.enigma.quest.QuestCollection;
+import eu.unipv.epsilon.enigma.template.DalvikCandidateClassSource;
 import eu.unipv.epsilon.enigma.ui.main.CollectionsViewAdapter;
 
 import java.io.File;
@@ -61,8 +62,8 @@ public class MainActivity extends AppCompatActivity {
             assetsSystem = new GameAssetsSystem(new DirectoryPool(collectionsDir));
         }
 
-        // Register Stream handler
-        URLHandlerFactory.register(assetsSystem);
+        // Initialize Templating system
+        assetsSystem.createTemplateServer(new DalvikCandidateClassSource(this, assetsSystem));
 
         // Initialize view
         initializeElementsView();
