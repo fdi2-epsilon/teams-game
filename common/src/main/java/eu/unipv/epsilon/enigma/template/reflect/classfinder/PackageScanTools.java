@@ -73,7 +73,7 @@ public class PackageScanTools {
             return IterableEnumeration.make(resources);
 
         } catch (ReflectiveOperationException e) {
-            throw new RuntimeException("Cannot get resources in a not-recursively way.");
+            throw new RuntimeException("Cannot get resources in a not-recursively way.", e);
         }
     }
 

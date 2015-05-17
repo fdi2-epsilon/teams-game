@@ -1,5 +1,8 @@
 package eu.unipv.epsilon.enigma.template.reflect.classfinder;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.io.File;
 import java.util.LinkedList;
 import java.util.List;
@@ -9,6 +12,7 @@ import java.util.List;
  */
 public class DirectoryScanAlgorithm extends ScanAlgorithm {
 
+    private static final Logger LOG = LoggerFactory.getLogger(DirectoryScanAlgorithm.class);
     private final File directory;
 
     /**
@@ -44,7 +48,7 @@ public class DirectoryScanAlgorithm extends ScanAlgorithm {
                 try {
                     classes.add(classLoader.loadClass(packageName + stripClassExtension(file)));
                 } catch (NoClassDefFoundError e) {
-                    // Do nothing, this class hasn't been found by the loader, and we don't care.
+                    LOG.trace("A class hasn't been found by the class loader during scan, skipping", e);
                 }
             } else if ((innerDir = new File(directory, file)).isDirectory()) {
                 // We have found an inner directory, perform another scan recursively

@@ -7,6 +7,8 @@ import eu.unipv.epsilon.enigma.loader.levels.protocol.LevelAssetsURLStreamHandle
 import eu.unipv.epsilon.enigma.template.CandidateClassSource;
 import eu.unipv.epsilon.enigma.template.TemplateRegistry;
 import eu.unipv.epsilon.enigma.template.TemplateServer;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.lang.reflect.Field;
 import java.net.URL;
@@ -18,8 +20,10 @@ import java.util.TreeSet;
 
 public class GameAssetsSystem {
 
-    TemplateServer templateServer = null;
-    LinkedList<CollectionsPool> sources; // Linked list is a better than ArrayList in this case
+    private static final Logger LOG = LoggerFactory.getLogger(GameAssetsSystem.class);
+
+    private TemplateServer templateServer = null;
+    private LinkedList<CollectionsPool> sources; // Linked list is a better than ArrayList in this case
 
     public GameAssetsSystem() {
         sources = new LinkedList<>();
@@ -27,9 +31,8 @@ public class GameAssetsSystem {
 
     public GameAssetsSystem(CollectionsPool... sources) {
         for (CollectionsPool source : sources)
-            if (source == null){
+            if (source == null)
                 throw new IllegalArgumentException("Source may not be null");
-            }
 
         this.sources = new LinkedList<>(Arrays.asList(sources));
         registerURLStreamHandlers();
@@ -72,6 +75,7 @@ public class GameAssetsSystem {
         return null;
     }
 
+    // We may want to move this somewhere else
     private void registerURLStreamHandlers() {
         final GameAssetsSystem sys = this;
         Field factory;
@@ -82,8 +86,8 @@ public class GameAssetsSystem {
             try {
                 factory = URL.class.getDeclaredField("streamHandlerFactory");
             } catch (NoSuchFieldException e1) {
-                e.printStackTrace();
-                e1.printStackTrace();
+                LOG.info("Cannot find \"factory\" field while registering URLStreamHandler," +
+                        "maybe we have a different implementation, trying with \"streamHandlerFactory\"", e);
                 throw new RuntimeException("Cannot find stream handler factory field.", e1);
             }
         }
@@ -105,7 +109,7 @@ public class GameAssetsSystem {
                 }
             });
         } catch (IllegalAccessException e) {
-            e.printStackTrace();
+            LOG.error("Unable to cleanup URLStreamHandlerFactory before registering", e);
         }
     }
 

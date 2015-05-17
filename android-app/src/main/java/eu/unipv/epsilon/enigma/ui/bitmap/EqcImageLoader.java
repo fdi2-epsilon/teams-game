@@ -3,6 +3,8 @@ package eu.unipv.epsilon.enigma.ui.bitmap;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.util.DisplayMetrics;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.BufferedInputStream;
 import java.io.IOException;
@@ -14,6 +16,8 @@ import java.net.URL;
  * This should also be able to load from any URL with a registered protocol handler.
  */
 public class EqcImageLoader extends InputStreamImageLoader {
+
+    private static final Logger LOG = LoggerFactory.getLogger(EqcImageLoader.class);
 
     // TODO: Transfer BufferedInputStream code to InputStream class and allow changing mark
 
@@ -40,7 +44,7 @@ public class EqcImageLoader extends InputStreamImageLoader {
             inputStream.reset();
             return super.decodeBitmapWithOptions(options);
         } catch (IOException e) {
-            e.printStackTrace();
+            LOG.error("Cannot reset stream for decoding", e);
             return null;
         }
     }
@@ -53,7 +57,7 @@ public class EqcImageLoader extends InputStreamImageLoader {
             // Close the stream at the end
             inputStream.close();
         } catch (IOException e) {
-            e.printStackTrace();
+            LOG.error("Cannot close the input stream", e);
         }
     }
 

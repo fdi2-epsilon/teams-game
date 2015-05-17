@@ -9,11 +9,15 @@ import eu.unipv.epsilon.enigma.R;
 import eu.unipv.epsilon.enigma.quest.QuestCollection;
 import eu.unipv.epsilon.enigma.ui.bitmap.EqcImageLoader;
 import eu.unipv.epsilon.enigma.ui.bitmap.ImageLoader;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.net.URL;
 
 public abstract class CollectionCardHolder extends CardHolder {
+
+    private static final Logger LOG = LoggerFactory.getLogger(CollectionCardHolder.class);
 
     protected TextView titleRef;
     protected ImageView imageRef;
@@ -35,7 +39,7 @@ public abstract class CollectionCardHolder extends CardHolder {
         loadImage(dataElement.getIconUrl());
     }
 
-    // TEMPORARY METHOD
+    // Temporary hook to get effective ImageView size for sampled image loading
     protected void loadImage(final URL path) {
         imageRef.getViewTreeObserver().addOnPreDrawListener(new ViewTreeObserver.OnPreDrawListener() {
             @Override
@@ -45,8 +49,7 @@ public abstract class CollectionCardHolder extends CardHolder {
                     ImageLoader loader = new EqcImageLoader(path);
                     imageRef.setImageBitmap(loader.decodeSampledBitmap(imageRef.getMeasuredWidth(), imageRef.getMeasuredHeight()));
                 } catch (IOException e) {
-                    // The image was not found
-                    e.printStackTrace();
+                    LOG.warn("The image was not found", e);
                 }
                 return true;
             }

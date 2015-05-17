@@ -10,6 +10,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.*;
 import android.widget.FrameLayout;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.net.URL;
 
@@ -18,6 +20,8 @@ import java.net.URL;
  * {@link PageFragment#newInstance(int, URL)}.
  */
 public class PageFragment extends Fragment {
+
+    private static final Logger LOG = LoggerFactory.getLogger(PageFragment.class);
 
     public static final String ARG_PAGE = "ARG_PAGE";
     public static final String ARG_DOCURL = "ARG_DOCURL";
@@ -80,7 +84,7 @@ public class PageFragment extends Fragment {
                         }
                         return new WebResourceResponse(mime, "UTF-8", new URL(url).openStream());
                     } catch (Exception e) {
-                        e.printStackTrace();
+                        LOG.error("Cannot load custom protocol resource", e);
                         // Return super
                     }
                 }
