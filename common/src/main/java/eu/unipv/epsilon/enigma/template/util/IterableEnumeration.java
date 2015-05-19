@@ -23,7 +23,8 @@ public class IterableEnumeration<T> implements Iterable<T> {
 
             @Override
             public T next() {
-                if (!hasNext()) throw new NoSuchElementException();
+                if (!hasNext())
+                    throw new NoSuchElementException();
                 return enumeration.nextElement();
             }
 

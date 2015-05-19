@@ -22,7 +22,8 @@ public class PackageScanner {
      */
     public static List<Class<?>> getClassesInPackage(String packageName) throws ClassNotFoundException {
         ClassLoader contextClassLoader = Thread.currentThread().getContextClassLoader();
-        if (contextClassLoader == null) throw new ClassNotFoundException("Cannot get the context class loader");
+        if (contextClassLoader == null)
+            throw new ClassNotFoundException("Cannot get the context class loader");
 
         return getClassesInPackage(packageName, contextClassLoader, false);
     }

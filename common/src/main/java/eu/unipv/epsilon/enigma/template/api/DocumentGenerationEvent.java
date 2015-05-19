@@ -48,7 +48,8 @@ public class DocumentGenerationEvent {
 
     // TODO: JavaDoc
     public String getBaseDir() {
-        if (argsDocumentURL == null) return null;
+        if (argsDocumentURL == null)
+            return null;
 
         String path = argsDocumentURL.getPath();
         // Remove initial '/' and keep only directory

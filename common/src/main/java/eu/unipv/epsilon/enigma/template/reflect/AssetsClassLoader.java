@@ -42,7 +42,8 @@ public class AssetsClassLoader extends ClassLoader {
         LOG.info("Trying to lookup class \"{}\" in collection \"{}\"", className, collectionId);
 
         // Return a cached class if exists
-        if (cache.containsKey(className)) return cache.get(className);
+        if (cache.containsKey(className))
+            return cache.get(className);
 
         try {
             // Get an input stream for the class resource inside the collection
@@ -92,7 +93,8 @@ public class AssetsClassLoader extends ClassLoader {
 
             @Override
             public URL nextElement() {
-                if (!hasMoreElements()) throw new NoSuchElementException();
+                if (!hasMoreElements())
+                    throw new NoSuchElementException();
                 done = true;
                 return url;
             }

@@ -35,12 +35,14 @@ public class DirectoryScanAlgorithm extends ScanAlgorithm {
 
     // Internal recursive scan algorithm
     private void scanRecursive(File directory, String packageName, List<Class<?>> classes) throws ClassNotFoundException {
-        if (!directory.isDirectory()) return;
+        if (!directory.isDirectory())
+            return;
         final String[] files = directory.list();
         File innerDir;
 
         // If we scan the root we don't want inner package names to start with '.' like ".com.example"
-        if (!"".equals(packageName)) packageName += '.';
+        if (!"".equals(packageName))
+            packageName += '.';
 
         for (String file : files) {
             if (file.endsWith(CLASS_FILE_EXT)) {

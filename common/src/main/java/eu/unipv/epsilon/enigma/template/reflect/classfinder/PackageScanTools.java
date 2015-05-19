@@ -64,7 +64,8 @@ public class PackageScanTools {
     public Iterable<URL> getResources(String packagePath) throws IOException {
 
         // If not "local", use standard behavior with "getResources", walking up to parent class loaders
-        if (!local) return IterableEnumeration.make(classLoader.getResources(packagePath));
+        if (!local)
+            return IterableEnumeration.make(classLoader.getResources(packagePath));
 
         // Else, we need to call the internal method "findResources", which is protected
         try {

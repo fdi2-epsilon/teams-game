@@ -40,7 +40,8 @@ public class ArchiveScanAlgorithm extends ScanAlgorithm {
             if (name.endsWith(CLASS_FILE_EXT) && name.startsWith(subDir)) {
                 name = name.substring(subDir.length());
                 name = stripClassExtension(name).replace('/', '.');
-                if (name.startsWith(packageName)) classes.add(classLoader.loadClass(name));
+                if (name.startsWith(packageName))
+                    classes.add(classLoader.loadClass(name));
             }
         }
 

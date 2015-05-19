@@ -41,7 +41,8 @@ public class TemplateRegistry {
      * @return the corresponding {@link TemplateProcessor} or {@code null} if not found
      */
     public TemplateProcessor getTemplateById(String id) {
-        if (localTemplates.containsKey(id)) return localTemplates.get(id);
+        if (localTemplates.containsKey(id))
+            return localTemplates.get(id);
         else return collectionTemplates.get(id); // It is ok that we return null
     }
 

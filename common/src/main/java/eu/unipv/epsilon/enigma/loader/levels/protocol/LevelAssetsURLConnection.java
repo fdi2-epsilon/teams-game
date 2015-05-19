@@ -83,7 +83,8 @@ public class LevelAssetsURLConnection extends URLConnection {
             return entry;
 
         // We have a directory, add a trailing slash if not present
-        if (!urlPath.endsWith("/")) urlPath += '/';
+        if (!urlPath.endsWith("/"))
+            urlPath += '/';
 
         for (String fileName : DEFAULT_DOCUMENTS) {
             entry = container.getEntry(urlPath + fileName);

@@ -26,7 +26,8 @@ public class MappedValueInputStream extends SubstitutionInputStream {
 
     @Override
     protected String expandKey(String key) {
-        if (values.containsKey(key)) return values.get(key);
+        if (values.containsKey(key))
+            return values.get(key);
         return String.format("${%s}", key);
     }
 
