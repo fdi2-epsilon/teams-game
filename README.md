@@ -10,15 +10,17 @@ Codename `Enigma` is a framework for quiz collections produced at the teams soft
 We have plans for an Android and a Desktop application, including also multiplayer support in the next releases.  
 Check out [the docs](https://github.com/fdi2-epsilon/teams-game/wiki) if you want learn more and contribute.
 
-## I want to try it!
+## Check it out!
 Let the built-in Gradle wrapper do everything for you:
 ```shell
 # This will compile the project, assemble game levels and upload the app to your device
 > ./gradlew build installDebug
 
-# Upload game levels to your Android thingy using ADB, only tested with the SDK emulator
+# Upload some sample game levels to your Android emulator, see below if you use a real thingy
 > ./gradlew uploadLevels
 ```
+If you are using a real device, use `./gradlew collectLevels` and put the generated collections from `teams-game/android-app/build/adb-push/collections` in `Documents/Enigma/Collections` on your device.
+
 If you have problems in running these simple commands, this may be because your environment isn't setup correctly, (i.e. you don't have the latest version of the Android SDK installed), so please continue reading to fix things up.
 
 ## Inside the box...
@@ -46,7 +48,7 @@ If you have problems in running these simple commands, this may be because your 
   5. Find and fire up the Android SDK manager and take note of the path to where it is installed like here:  
      ![C:\dev\android-sdk-windows](/../gh-pages/images/guide_sdkpath.png?raw=true "SDK Path")
 
-  6. Find the Git installation path, usually in `C:\Program Files\Git\bin` and take note;ù
+  6. Find the Git installation path, usually in `C:\Program Files\Git\bin` and take note;
 
   7. Run the following commands in a prompt to let the system know the tools location:
      ```shell
@@ -54,6 +56,8 @@ If you have problems in running these simple commands, this may be because your 
      setx ANDROID_HOME "{{the path you have found in step 5}}"
      setx PATH "%PATH%;{{path found in step 6}}"
      ```
+     
+     > If you also want to generate and upload game levels to an emulator, add also `%ANDROID_HOME%/tools;%ANDROID_HOME%/platform-tools;%ANDROID_HOME%/build-tools/{{version}}` to your `PATH` (version e.g. `22.0.1`).
   
   8. Link Git with your GitHub account, like this:
      ```shell
@@ -80,6 +84,6 @@ please let me know if you are struck on something and I will consider to add a s
 This project is actually mantained by
 [donmarcolino](https://github.com/donmarcolino),
 [franckneymar](https://github.com/franckneymar),
-[lucad93](https://github.com/lucad93),
-[lczx](https://github.com/lczx) and
+[lczx](https://github.com/lczx),
+[lucad93](https://github.com/lucad93) and
 [Vik28](https://github.com/Vik28).
