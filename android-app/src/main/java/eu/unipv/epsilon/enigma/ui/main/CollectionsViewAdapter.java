@@ -40,28 +40,7 @@ public class CollectionsViewAdapter extends RecyclerView.Adapter<RecyclerView.Vi
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         Log.i(getClass().getName(), "Created new ViewHolder");
 
-        CardHolder viewHolder;
-
-        // New card holder instances inflate their views and set layout manager params
-        switch (CardType.values()[viewType]) {
-            case FIRST_START:
-                viewHolder = new FirstStartCard(parent);
-                break;
-            case LARGE:
-                viewHolder = new LargeCollectionCard(parent);
-                break;
-            case MEDIUM:
-                viewHolder = new MediumCollectionCard(parent);
-                break;
-            case SMALL:
-                viewHolder = new SmallCollectionCard(parent);
-                break;
-            case TINY:
-                viewHolder = new TinyCollectionCard(parent);
-                break;
-            default:
-                throw new NoSuchElementException("Unknown view type in main view");
-        }
+        CardHolder viewHolder = makeCardHolder(parent, CardType.values()[viewType]);
 
         if (viewHolder instanceof CollectionCardHolder)
             viewHolder.getItemView().setOnClickListener(new CardClickListener());
@@ -70,6 +49,24 @@ public class CollectionsViewAdapter extends RecyclerView.Adapter<RecyclerView.Vi
             fsc.setOkButtonClickListener(new FirstCardClickListener());
         }
         return viewHolder;
+    }
+
+    private CardHolder makeCardHolder(ViewGroup parent, CardType cardType) {
+        // New card holder instances inflate their views and set layout manager params
+        switch (cardType) {
+            case FIRST_START:
+                return new FirstStartCard(parent);
+            case LARGE:
+                return new LargeCollectionCard(parent);
+            case MEDIUM:
+                return new MediumCollectionCard(parent);
+            case SMALL:
+                return new SmallCollectionCard(parent);
+            case TINY:
+                return new TinyCollectionCard(parent);
+            default:
+                throw new NoSuchElementException("Unknown view type in main view");
+        }
     }
 
     // Replace the contents of a view (invoked by the Layout Manager)
