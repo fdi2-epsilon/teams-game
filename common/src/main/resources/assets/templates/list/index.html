@@ -1,0 +1,113 @@
+<html>
+<head>
+    <!-- Page title, we don't need it since our pages
+         are rendered inside a WebView but whatever... -->
+    <title>Enigma Quest</title>
+
+    <!-- Pages always need a charset -->
+    <meta charset="UTF-8">
+
+    <!-- Pragmatic Media Lab! Add some metadata if you want... -->
+    <meta name="author" content="Luca Defilippi, Luca Zanussi">
+    <meta name="keywords" content="quiz, cinema, South Park">
+    <meta name="description" content="First epic quiz in project Enigma">
+
+    <!-- CSS Style: Fancy things go in here, a lot, but don't be scared,
+         I suggest you to skip reading this and go directly to the <body>. -->
+    <style>
+		
+		@-webkit-keyframes inOut {
+			0%{
+			transform: scale(1)
+			}
+			50%{
+			transform: scale(0.8)
+			}
+			100%{
+			transform: scale(1)
+			}
+		}
+		
+        body {
+            text-align: center;
+            font-family: 'Open Sans', sans-serif;
+            background: linear-gradient(#eee, #ccc);
+        }
+
+        h1 {
+            font-size: 1.5em;
+            font-weight: 300;
+            margin: 50pt 20pt 20pt 20pt;
+            color: royalblue;
+        }
+
+        ul {
+            list-style-type: none;
+            padding: 0;
+            text-align: center;
+        }
+
+        li {
+            width: 50%;
+            margin: 10pt auto;
+            padding: 4pt 0;
+            font-size: 9pt;
+            letter-spacing: 1.5pt;
+            text-transform: uppercase;
+            transition: background-color .3s;
+            background-color: rgba(0, 0, 0, .05);
+            cursor: pointer;
+        }
+
+        li:hover { background-color: rgba(0, 0, 0, .12); }
+        li.success, li.success:hover { background-color: greenyellow;}
+        li.failure, li.failure:hover { background-color: red; }
+		
+		li.success {-webkit-animation: inOut .5s ease-in-out;}
+
+    </style>
+
+    <!-- JavaScript here, don't worry: it's only text, random text -->
+    <script>
+        'use strict';
+
+        // The function called on page load, will be registered later at the end of the script.
+        function loadProc() {
+
+            var elements = document.getElementById("answers").getElementsByTagName("li");
+            for (var i = 0; i < elements.length; i++) {
+                if (elements[i].hasAttribute("correct"))
+                    elements[i].onclick = cbSuccess;
+                else
+                    elements[i].onclick = cbFailure;
+            }
+        }
+
+        // Function called on exact answer
+        function cbSuccess() {
+            this.classList.add('success');
+        }
+
+        // Epic fail handling (opposite as previous function)
+        function cbFailure() {
+		this.classList.add('failure');
+        }
+
+        // Exec 'loadProc' only when the document is fully loaded,
+        // so it can find its elements (e.g. #1st-elem, etc.).
+        window.addEventListener('load', loadProc)
+
+    </script>
+</head>
+<body>
+
+    <!-- This page is very clean now, keep in mind that the JavaScript and CSS above can
+         be moved to an external file so that this HTML file can be less than 40 lines. -->
+
+
+    <h1>${QUIZ_TITLE}</h1>
+
+    <ul id="answers">${QUIZ_ANSWERS}</ul>
+
+</body>
+</html>
