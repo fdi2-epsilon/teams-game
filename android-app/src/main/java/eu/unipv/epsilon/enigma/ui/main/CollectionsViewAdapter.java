@@ -44,12 +44,23 @@ public class CollectionsViewAdapter extends RecyclerView.Adapter<RecyclerView.Vi
 
         // New card holder instances inflate their views and set layout manager params
         switch (CardType.values()[viewType]) {
-            case FIRST_START:   viewHolder = new FirstStartCard(parent); break;
-            case LARGE:         viewHolder = new LargeCollectionCard(parent); break;
-            case MEDIUM:        viewHolder = new MediumCollectionCard(parent); break;
-            case SMALL:         viewHolder = new SmallCollectionCard(parent); break;
-            case TINY:          viewHolder = new TinyCollectionCard(parent); break;
-            default:            throw new NoSuchElementException("Unknown view type in main view");
+            case FIRST_START:
+                viewHolder = new FirstStartCard(parent);
+                break;
+            case LARGE:
+                viewHolder = new LargeCollectionCard(parent);
+                break;
+            case MEDIUM:
+                viewHolder = new MediumCollectionCard(parent);
+                break;
+            case SMALL:
+                viewHolder = new SmallCollectionCard(parent);
+                break;
+            case TINY:
+                viewHolder = new TinyCollectionCard(parent);
+                break;
+            default:
+                throw new NoSuchElementException("Unknown view type in main view");
         }
 
         if (viewHolder instanceof CollectionCardHolder)
@@ -83,11 +94,13 @@ public class CollectionsViewAdapter extends RecyclerView.Adapter<RecyclerView.Vi
     @Override
     public int getItemViewType(int position) {
         if (firstStart) {
-            if (position == 0) return CardType.FIRST_START.ordinal();
+            if (position == 0)
+                return CardType.FIRST_START.ordinal();
             position--;
         }
         // Temporary algorithm to get card size
-        if (position == 0) return CardType.LARGE.ordinal();
+        if (position == 0)
+            return CardType.LARGE.ordinal();
         CardType[] types = { CardType.MEDIUM, CardType.SMALL, CardType.TINY};
 
         return types[(position - 1) % types.length].ordinal();

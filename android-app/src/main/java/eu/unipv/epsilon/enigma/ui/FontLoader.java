@@ -30,12 +30,14 @@ public class FontLoader {
     }
 
     public Typeface loadFont(String fontFamily) {
-        if (fontFamily == null) return loadFont();
+        if (fontFamily == null)
+            return loadFont();
         return genTypefaceFromName(fontFamily);
     }
 
     public Typeface loadFont(String fontFamily, String fontFamilyExtra) {
-        if (fontFamilyExtra == null) return loadFont(fontFamily);
+        if (fontFamilyExtra == null)
+            return loadFont(fontFamily);
         return genTypefaceFromName(fontFamily + '-' + fontFamilyExtra);
     }
 

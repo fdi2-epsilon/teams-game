@@ -29,11 +29,13 @@ public abstract class SubstitutionInputStream extends FilterInputStream {
     @Override
     public int read() throws IOException {
         // If we have something in the local buffer, return it
-        if (!buffer.isEmpty()) return buffer.remove();
+        if (!buffer.isEmpty())
+            return buffer.remove();
 
         // Read a new char and return it, if it is not a macro start
         int c = super.read();
-        if (c != '$') return c;
+        if (c != '$')
+            return c;
 
         // It is potentially a macro start, check if the next is '{'
         int c2 = super.read();
@@ -68,7 +70,8 @@ public abstract class SubstitutionInputStream extends FilterInputStream {
                     return i == 0 ? -1 : i;
                 }
             } catch (IOException e) {
-                if (i != 0) return i;
+                if (i != 0)
+                    return i;
                 throw e;
             }
             b[off + i] = (byte) c;
