@@ -57,7 +57,8 @@ public class EqcFile extends CollectionContainer {
 
     @Override
     public ContainerEntry getEntry(String entryPath) {
-        if (containsEntry(entryPath)) return new EqcFileEntry(zipFile, entryPath);
+        if (containsEntry(entryPath))
+            return new EqcFileEntry(zipFile, entryPath);
         return null;
     }
 

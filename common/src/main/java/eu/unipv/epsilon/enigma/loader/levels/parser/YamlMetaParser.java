@@ -43,7 +43,8 @@ public class YamlMetaParser implements MetadataParser {
 
         List quests = (List) meta.get(KEY_QUESTCOLLECTION_ELEMENTS);
         if (quests != null)
-            for (int i = 0; i < quests.size(); i++) qc.addQuest(generateQuest(i, (Map) quests.get(i)));
+            for (int i = 0; i < quests.size(); i++)
+                qc.addQuest(generateQuest(i, (Map) quests.get(i)));
 
         return qc;
     }

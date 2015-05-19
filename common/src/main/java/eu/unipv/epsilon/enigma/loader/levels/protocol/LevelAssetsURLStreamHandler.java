@@ -24,7 +24,8 @@ public class LevelAssetsURLStreamHandler extends URLStreamHandler {
     }
 
     public static URL createURL(String collectionId, String entryPath) {
-        if (!entryPath.startsWith("/")) entryPath = '/' + entryPath;
+        if (!entryPath.startsWith("/"))
+            entryPath = '/' + entryPath;
         try {
             return new URL(PROTOCOL_NAME, collectionId, -1, entryPath);
         } catch (MalformedURLException e) {

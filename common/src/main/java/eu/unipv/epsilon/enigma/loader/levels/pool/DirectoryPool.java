@@ -44,7 +44,8 @@ public class DirectoryPool extends CachedCollectionsPool {
     @Override
     public SortedSet<String> getStoredCollectionIDs() {
         File[] files = baseDirectory.listFiles();
-        if (files == null) return new TreeSet<>();
+        if (files == null)
+            return new TreeSet<>();
 
         SortedSet<String> names = new TreeSet<>();
         for (File file : files) {

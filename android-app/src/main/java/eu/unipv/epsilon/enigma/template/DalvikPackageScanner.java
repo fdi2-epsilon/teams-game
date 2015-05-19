@@ -50,7 +50,8 @@ public class DalvikPackageScanner {
 
             List<Class<?>> classes = new LinkedList<>();
             for (String name : IterableEnumeration.make(dex.entries()))
-                if (name.startsWith(packageName)) classes.add(classLoader.loadClass(name));
+                if (name.startsWith(packageName))
+                    classes.add(classLoader.loadClass(name));
             return classes;
 
         } catch (IOException e) {

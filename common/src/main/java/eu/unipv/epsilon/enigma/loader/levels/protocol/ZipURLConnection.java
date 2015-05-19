@@ -58,7 +58,8 @@ public class ZipURLConnection extends URLConnection {
     /** Returns the length of the uncompressed zip entry. */
     @Override
     public long getContentLengthLong() {
-        if (!connected) return -1;
+        if (!connected)
+            return -1;
         return zipEntry.getSize();
     }
 

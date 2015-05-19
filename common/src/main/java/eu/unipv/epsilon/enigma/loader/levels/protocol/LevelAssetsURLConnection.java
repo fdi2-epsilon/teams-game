@@ -58,7 +58,8 @@ public class LevelAssetsURLConnection extends URLConnection {
 
     @Override
     public long getContentLengthLong() {
-        if (!connected) return -1;
+        if (!connected)
+            return -1;
         return containerEntry.getSize();
     }
 
@@ -78,7 +79,8 @@ public class LevelAssetsURLConnection extends URLConnection {
                     "Entry \"%s\" not found in collection \"%s\".", urlPath, url.getHost()));
 
         // If it is a file, return it now
-        if (!entry.isDirectory()) return entry;
+        if (!entry.isDirectory())
+            return entry;
 
         // We have a directory, add a trailing slash if not present
         if (!urlPath.endsWith("/")) urlPath += '/';

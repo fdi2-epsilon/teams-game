@@ -21,8 +21,10 @@ public class CollectionDefaults implements FieldProvider {
             case KEY_QUESTCOLLECTION_SUBTITLE:      return "";
             case KEY_QUESTCOLLECTION_DESCRIPTION:   return "";
             case KEY_QUESTCOLLECTION_PATH_ICON:
-                if (context.containsEntry("pack.png")) return "pack.png";
-                if (context.containsEntry("pack.jpg")) return "pack.jpg";
+                if (context.containsEntry("pack.png"))
+                    return "pack.png";
+                if (context.containsEntry("pack.jpg"))
+                    return "pack.jpg";
                 return "";
             default:
                 throw new NoSuchElementException("No default property value for \"" + property + '"');

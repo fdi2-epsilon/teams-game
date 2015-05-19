@@ -122,7 +122,8 @@ public class XmlMetaParser implements MetadataParser {
 
     private String valueOrDefault(Element parentNode, String key, FieldProvider def) throws InvalidPropertiesFormatException {
         // Handle parent undefined:
-        if (parentNode == null) return def.getPropertyValue(key);
+        if (parentNode == null)
+            return def.getPropertyValue(key);
 
         NodeList nodes = parentNode.getElementsByTagName(key);
 
@@ -131,7 +132,8 @@ public class XmlMetaParser implements MetadataParser {
             throw new InvalidPropertiesFormatException(String.format(
                     "\"<%s>\" should contain only one \"<%s>\" element.", parentNode.getNodeName(), key));
         // No nodes
-        if (nodes.getLength() == 0) return def.getPropertyValue(key);
+        if (nodes.getLength() == 0)
+            return def.getPropertyValue(key);
 
         return nodes.item(0).getTextContent();
     }
