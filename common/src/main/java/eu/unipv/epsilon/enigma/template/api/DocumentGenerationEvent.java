@@ -41,7 +41,8 @@ public class DocumentGenerationEvent {
 
     // TODO: JavaDoc
     public String getCollectionID() {
-        if (argsDocumentURL == null) return null;
+        if (argsDocumentURL == null)
+            return null;
         return argsDocumentURL.getHost();
     }
 

@@ -73,7 +73,8 @@ public class TemplateServer {
         } catch (Exception e) {
             // Catch all and handle with ErrorHandler
             InputStream errorDocumentStream = errorHandler.handleArgumentsParseException(e);
-            if (errorDocumentStream == null) return EMPTY_STREAM;
+            if (errorDocumentStream == null)
+                return EMPTY_STREAM;
             return errorDocumentStream;
         }
     }
