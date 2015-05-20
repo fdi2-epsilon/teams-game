@@ -33,7 +33,7 @@ version = getCheckedOutCommitHash()
 // ----- SonarQube configuration ----- //
 
 if (!project.hasProperty('sonarHost'))
-    ext.sonarHost = '197.0.0.1'
+    ext.sonarHost = 'localhost'
 
 if (!project.hasProperty('sonarPortHttp'))
     ext.sonarPortHttp = '9000'
