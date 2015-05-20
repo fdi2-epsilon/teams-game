@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        html {
+            background: url(background.jpg) center center fixed no-repeat;
+            background-size: cover;
+        }
+
+        #puzzle-table img {
+            /* http://stackoverflow.com/a/17996191 */
+            top: 0; bottom: 0; left: 0; right: 0;
+            width: 50px; height: 50px;
+            margin: auto;
+        }
+
+    </style>
+    <script>
+        var i = 0;
+
+		var data = [${QUIZ_DATA}];
+
+        window.addEventListener('load', function () {
+			var elements = document.querySelectorAll("#puzzle-table img");
+
+			for (var i = 0; i < elements.length; i++) {
+				var img = elements[i];
+
+				img.src = data[i].img;
+
+				img.index = i;
+				img.pos = data[i].start;
+				img.style.transform = 'rotate(' + 90 * img.pos + 'deg)';
+
+
+				img.addEventListener('click', function () {
+					++this.pos;
+					this.style.transition = "transform .5s ease-in-out";
+					this.style.transform = 'rotate(' + 90 * this.pos + 'deg)';
+					if (this.pos % 4 == data[this.index].target) console.log("Correct " + this.pos);
+				});
+			}
+        });
+
+    </script>
+</head>
+<body>
+<h1>${QUIZ_TITLE}</h1>
+<table id="puzzle-table" width="200" border=".5" cellspacing="1" cellpadding="5" align="center" >
+    <tr>
+        <td align="center" valign="center"><img /></td>
+        <td align="center" valign="center"><img /></td>
+        <td align="center" valign="center"><img /></td>
+    </tr>
+    <tr>
+        <td align="center" valign="center"><img /></td>
+        <td align="center" valign="center"><img /></td>
+        <td align="center" valign="center"><img /></td>
+    </tr>
+    <tr>
+        <td align="center" valign="center"><img /></td>
+        <td align="center" valign="center"><img /></td>
+        <td align="center" valign="center"><img /></td>
+    </tr>
+</table>
+</body>
+</html>
