@@ -5,6 +5,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import eu.unipv.epsilon.enigma.R;
 import eu.unipv.epsilon.enigma.quest.QuestCollection;
+import eu.unipv.epsilon.enigma.status.QuestCollectionStatus;
 
 public class SmallCollectionCard extends CollectionCardHolder {
 
@@ -21,9 +22,9 @@ public class SmallCollectionCard extends CollectionCardHolder {
     }
 
     @Override
-    public void updateViewFromData(QuestCollection dataElement) {
-        super.updateViewFromData(dataElement);
-        subtitleRef.setText(dataElement.getSubtitle());
+    public void updateViewFromData(QuestCollection collection, QuestCollectionStatus collectionStatus) {
+        super.updateViewFromData(collection, collectionStatus);
+        subtitleRef.setText(collection.getSubtitle());
     }
 
 }

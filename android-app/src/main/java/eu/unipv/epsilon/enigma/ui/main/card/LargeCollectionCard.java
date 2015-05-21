@@ -7,6 +7,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import eu.unipv.epsilon.enigma.R;
 import eu.unipv.epsilon.enigma.quest.QuestCollection;
+import eu.unipv.epsilon.enigma.status.QuestCollectionStatus;
 
 public class LargeCollectionCard extends CollectionCardHolder {
 
@@ -27,11 +28,14 @@ public class LargeCollectionCard extends CollectionCardHolder {
     }
 
     @Override
-    public void updateViewFromData(QuestCollection dataElement) {
-        super.updateViewFromData(dataElement);
-        subtitleRef.setText(dataElement.getSubtitle());
-        descriptionRef.setText(Html.fromHtml(dataElement.getDescription()));
-        //progressRef
+    public void updateViewFromData(QuestCollection collection, QuestCollectionStatus collectionStatus) {
+        super.updateViewFromData(collection, collectionStatus);
+        subtitleRef.setText(collection.getSubtitle());
+        descriptionRef.setText(Html.fromHtml(collection.getDescription()));
+
+        double completionPercentage = (double) collectionStatus.getSolvedQuests().size() / collection.size() * 100;
+        progressRef.setProgress((int) completionPercentage);
+        progressRef.setSecondaryProgress(0);
     }
 
 }

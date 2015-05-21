@@ -48,8 +48,8 @@
                 a:layout_height="4dp"
                 a:progressDrawable="@drawable/main_card_progress_drawable"
                 a:max="100"
-                a:progress="50"
-                a:secondaryProgress="70"/>
+                tools:progress="50"
+                tools:secondaryProgress="70"/>
 
         <!-- Only temporary progress spec. -->
 

@@ -7,6 +7,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import eu.unipv.epsilon.enigma.R;
 import eu.unipv.epsilon.enigma.quest.QuestCollection;
+import eu.unipv.epsilon.enigma.status.QuestCollectionStatus;
 import eu.unipv.epsilon.enigma.ui.bitmap.EqcImageLoader;
 import eu.unipv.epsilon.enigma.ui.bitmap.ImageLoader;
 import org.slf4j.Logger;
@@ -34,9 +35,9 @@ public abstract class CollectionCardHolder extends CardHolder {
         imageRef = (ImageView) itemView.findViewById(R.id.card_image);
     }
 
-    public void updateViewFromData(QuestCollection dataElement) {
-        titleRef.setText(dataElement.getTitle());
-        loadImage(dataElement.getIconUrl());
+    public void updateViewFromData(QuestCollection collection, QuestCollectionStatus collectionStatus) {
+        titleRef.setText(collection.getTitle());
+        loadImage(collection.getIconUrl());
     }
 
     // Temporary hook to get effective ImageView size for sampled image loading

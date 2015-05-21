@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.*;
 import android.widget.FrameLayout;
+import eu.unipv.epsilon.enigma.status.AndroidQuestViewInterface;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -17,22 +18,26 @@ import java.net.URL;
 
 /**
  * This fragment displays the page number passed as an argument to
- * {@link PageFragment#newInstance(int, URL)}.
+ * {@link PageFragment#newInstance(int, URL, AndroidQuestViewInterface)}.
  */
 public class PageFragment extends Fragment {
 
     private static final Logger LOG = LoggerFactory.getLogger(PageFragment.class);
+    private static final String JAVASCRIPT_INTERFACE_MAPPED_NAME = "enigma";
 
     public static final String ARG_PAGE = "ARG_PAGE";
     public static final String ARG_DOCURL = "ARG_DOCURL";
+    public static final String ARG_VIEW_INTERFACE = "ARG_VIEW_INTERFACE";
 
     private int mPage;
     private URL mDocumentUrl;
+    private AndroidQuestViewInterface mViewInterface;
 
-    public static PageFragment newInstance(int page, URL documentUrl) {
+    public static PageFragment newInstance(int page, URL documentUrl, AndroidQuestViewInterface viewInterface) {
         Bundle args = new Bundle();
         args.putInt(ARG_PAGE, page);
         args.putSerializable(ARG_DOCURL, documentUrl);
+        args.putSerializable(ARG_VIEW_INTERFACE, viewInterface);
         PageFragment fragment = new PageFragment();
         fragment.setArguments(args);
         return fragment;
@@ -43,6 +48,16 @@ public class PageFragment extends Fragment {
         super.onCreate(savedInstanceState);
         mPage = getArguments().getInt(ARG_PAGE);
         mDocumentUrl = (URL) getArguments().getSerializable(ARG_DOCURL);
+        mViewInterface = (AndroidQuestViewInterface) getArguments().getSerializable(ARG_VIEW_INTERFACE);
+    }
+
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+
+        // We flush status when the fragment is no longer visible
+        if (!isVisibleToUser)
+            mViewInterface.flushData();
     }
 
     @Nullable
@@ -93,9 +108,10 @@ public class PageFragment extends Fragment {
             }
 
         };
-        view.setWebViewClient(wvc);
 
+        view.setWebViewClient(wvc);
         view.getSettings().setJavaScriptEnabled(true);
+        view.addJavascriptInterface(mViewInterface, JAVASCRIPT_INTERFACE_MAPPED_NAME);
 
         //view.clearCache(true);
         view.loadUrl(mDocumentUrl.toString());

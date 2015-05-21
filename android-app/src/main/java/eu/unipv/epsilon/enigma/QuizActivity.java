@@ -1,5 +1,6 @@
 package eu.unipv.epsilon.enigma;
 
+import android.content.Context;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
@@ -9,6 +10,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import com.google.samples.apps.iosched.ui.widget.SlidingTabLayout;
 import eu.unipv.epsilon.enigma.quest.QuestCollection;
+import eu.unipv.epsilon.enigma.status.QuestCollectionStatus;
 import eu.unipv.epsilon.enigma.ui.quiz.QuizFragmentPageAdapter;
 
 /** Shows the quiz that is currently played. */
@@ -32,7 +34,11 @@ public class QuizActivity extends AppCompatActivity {
         QuestCollection collection = (QuestCollection) getIntent().getSerializableExtra(PARAM_QUESTCOLLECTION);
         setTitle(collection.getTitle());
 
-        setupTabs(collection);
+        // Get collection saved progression data
+        QuestCollectionStatus collectionStatus =
+                new QuestCollectionStatus(getPreferences(Context.MODE_PRIVATE), collection.getId());
+
+        setupTabs(collection, collectionStatus);
     }
 
     @Override
@@ -57,11 +63,11 @@ public class QuizActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    private void setupTabs(QuestCollection collection) {
+    private void setupTabs(final QuestCollection collection, final QuestCollectionStatus collectionStatus) {
 
         //Get the ViewPager and set its PageAdapter so that it can display items
         ViewPager viewPager = (ViewPager) findViewById(R.id.viewpager);
-        viewPager.setAdapter(new QuizFragmentPageAdapter(getSupportFragmentManager(), collection));
+        viewPager.setAdapter(new QuizFragmentPageAdapter(getSupportFragmentManager(), collection, collectionStatus));
 
         //Give the SlidingTabLayout the ViewPager
         SlidingTabLayout slidingTabs = (SlidingTabLayout) findViewById(R.id.sliding_tabs);
@@ -76,9 +82,9 @@ public class QuizActivity extends AppCompatActivity {
         slidingTabs.setCustomTabColorizer(new SlidingTabLayout.TabColorizer() {
             @Override
             public int getIndicatorColor(int position) {
-                return Color.WHITE;
+                // slidingTabs.invalidate(); should be called to update the strip color in real time
+                return collectionStatus.isSolved(position + 1) ? Color.YELLOW : Color.WHITE;
             }
-
         });
     }
 

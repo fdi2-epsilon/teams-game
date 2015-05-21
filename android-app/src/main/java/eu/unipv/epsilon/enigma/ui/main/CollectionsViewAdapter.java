@@ -11,6 +11,7 @@ import android.widget.Toast;
 import eu.unipv.epsilon.enigma.QuizActivity;
 import eu.unipv.epsilon.enigma.R;
 import eu.unipv.epsilon.enigma.quest.QuestCollection;
+import eu.unipv.epsilon.enigma.status.QuestCollectionStatus;
 import eu.unipv.epsilon.enigma.ui.main.card.*;
 
 import java.util.List;
@@ -19,14 +20,14 @@ import java.util.NoSuchElementException;
 public class CollectionsViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     public static final String FIRST_START = "firstStart";
-    private List<QuestCollection> elements;
+    private List<QuestCollection> collections;
     private SharedPreferences sharedPreferences;
 
     private boolean firstStart;
 
     // Provide a suitable constructor (depends on the kind of dataset)
-    public CollectionsViewAdapter(List<QuestCollection> elements, SharedPreferences sharedPreferences) {
-        this.elements = elements;
+    public CollectionsViewAdapter(List<QuestCollection> collections, SharedPreferences sharedPreferences) {
+        this.collections = collections;
         this.sharedPreferences = sharedPreferences;
 
         firstStart = sharedPreferences.getBoolean(FIRST_START, true);
@@ -77,15 +78,20 @@ public class CollectionsViewAdapter extends RecyclerView.Adapter<RecyclerView.Vi
         Log.i(getClass().getName(), "Recycling an existing ViewHolder");
 
         // If it is a card describing dynamic content like a Quest Collection, needs to be recycled with new parameters.
+        QuestCollection collection = collections.get(position - (firstStart ? 1 : 0));
+
         if (holder instanceof CollectionCardHolder)
-            ((CollectionCardHolder) holder).updateViewFromData(elements.get(position - (firstStart ? 1 : 0)));
+            ((CollectionCardHolder) holder).updateViewFromData(
+                    collection, new QuestCollectionStatus(sharedPreferences, collection.getId()));
+
+        // TODO: We may want to store this QuestCollectionStatus into the view holder and pass it to the quiz activity
 
         // Static views like CardType.FIRST_START do not need to be recycled, cause they don't have data.
     }
 
     @Override
     public int getItemCount() {
-        return elements.size() + (firstStart ? 1 : 0);
+        return collections.size() + (firstStart ? 1 : 0);
     }
 
     @Override
@@ -110,7 +116,7 @@ public class CollectionsViewAdapter extends RecyclerView.Adapter<RecyclerView.Vi
             int index = ((RecyclerView) v.getParent()).getChildAdapterPosition(v) - (firstStart ? 1 : 0);
             Log.i(getClass().getName(), "Clicked #" + index);
 
-            QuestCollection qc = elements.get(index);
+            QuestCollection qc = collections.get(index);
             Context context = v.getContext();
 
             if (!qc.isEmpty()) {

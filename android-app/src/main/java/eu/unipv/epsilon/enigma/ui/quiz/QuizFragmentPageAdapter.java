@@ -4,17 +4,20 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import eu.unipv.epsilon.enigma.quest.QuestCollection;
+import eu.unipv.epsilon.enigma.status.QuestCollectionStatus;
 
 /**
  * Generates tab titles and pager fragments from {@link QuestCollection} data.
  */
 public class QuizFragmentPageAdapter extends FragmentPagerAdapter {
 
-    private QuestCollection questCollection;
+    private final QuestCollection questCollection;
+    private final QuestCollectionStatus collectionStatus;
 
-    public QuizFragmentPageAdapter(FragmentManager fm, QuestCollection qc) {
+    public QuizFragmentPageAdapter(FragmentManager fm, QuestCollection qc, QuestCollectionStatus collectionStatus) {
         super(fm);
         this.questCollection = qc;
+        this.collectionStatus = collectionStatus;
     }
 
     @Override
@@ -24,7 +27,10 @@ public class QuizFragmentPageAdapter extends FragmentPagerAdapter {
 
     @Override
     public Fragment getItem(int position) {
-        return PageFragment.newInstance(position + 1, questCollection.get(position).getMainDocumentUrl());
+        return PageFragment.newInstance(
+                position + 1,
+                questCollection.get(position).getMainDocumentUrl(),
+                collectionStatus.getQuestViewInterface(position + 1));
     }
 
     @Override
