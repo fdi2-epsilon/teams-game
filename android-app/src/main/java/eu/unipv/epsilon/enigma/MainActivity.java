@@ -1,7 +1,6 @@
 package eu.unipv.epsilon.enigma;
 
 import android.content.Context;
-import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
@@ -113,10 +112,10 @@ public class MainActivity extends AppCompatActivity {
         collectionsView.setItemAnimator(new DefaultItemAnimator());
 
         // Populate with data
-        populateMainView(assetsSystem, collectionsView, getPreferences(Context.MODE_PRIVATE));
+        populateMainView();
     }
 
-    public static void populateMainView(GameAssetsSystem assetsSystem, RecyclerView list, SharedPreferences sharedPreferences) {
+    private void populateMainView() {
         List<QuestCollection> collections = new ArrayList<>();
 
         for (String collectionId : assetsSystem.getAvailableCollectionIDs()) {
@@ -129,7 +128,8 @@ public class MainActivity extends AppCompatActivity {
             }
         }
 
-        list.setAdapter(new CollectionsViewAdapter(collections, sharedPreferences));
+        collectionsView.setAdapter(new CollectionsViewAdapter(collections,
+                getSharedPreferences(getString(R.string.app_name), Context.MODE_PRIVATE)));
     }
 
 }

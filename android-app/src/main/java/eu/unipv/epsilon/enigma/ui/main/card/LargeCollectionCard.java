@@ -33,8 +33,8 @@ public class LargeCollectionCard extends CollectionCardHolder {
         subtitleRef.setText(collection.getSubtitle());
         descriptionRef.setText(Html.fromHtml(collection.getDescription()));
 
-        double completionPercentage = (double) collectionStatus.getSolvedQuests().size() / collection.size() * 100;
-        progressRef.setProgress((int) completionPercentage);
+        progressRef.setMax(collection.size());
+        progressRef.setProgress(collectionStatus.getSolvedQuests().size());
         progressRef.setSecondaryProgress(0);
     }
 

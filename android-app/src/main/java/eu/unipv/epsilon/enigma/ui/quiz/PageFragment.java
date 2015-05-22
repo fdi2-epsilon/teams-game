@@ -56,7 +56,7 @@ public class PageFragment extends Fragment {
         super.setUserVisibleHint(isVisibleToUser);
 
         // We flush status when the fragment is no longer visible
-        if (!isVisibleToUser)
+        if (mViewInterface != null && !isVisibleToUser)
             mViewInterface.flushData();
     }
 

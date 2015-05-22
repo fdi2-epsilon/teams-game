@@ -35,8 +35,8 @@ public class QuizActivity extends AppCompatActivity {
         setTitle(collection.getTitle());
 
         // Get collection saved progression data
-        QuestCollectionStatus collectionStatus =
-                new QuestCollectionStatus(getPreferences(Context.MODE_PRIVATE), collection.getId());
+        QuestCollectionStatus collectionStatus = new QuestCollectionStatus(
+                getSharedPreferences(getString(R.string.app_name), Context.MODE_PRIVATE), collection.getId());
 
         setupTabs(collection, collectionStatus);
     }

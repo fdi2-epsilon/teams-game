@@ -78,11 +78,12 @@ public class CollectionsViewAdapter extends RecyclerView.Adapter<RecyclerView.Vi
         Log.i(getClass().getName(), "Recycling an existing ViewHolder");
 
         // If it is a card describing dynamic content like a Quest Collection, needs to be recycled with new parameters.
-        QuestCollection collection = collections.get(position - (firstStart ? 1 : 0));
+        if (holder instanceof CollectionCardHolder) {
+            QuestCollection collection = collections.get(position - (firstStart ? 1 : 0));
 
-        if (holder instanceof CollectionCardHolder)
             ((CollectionCardHolder) holder).updateViewFromData(
                     collection, new QuestCollectionStatus(sharedPreferences, collection.getId()));
+        }
 
         // TODO: We may want to store this QuestCollectionStatus into the view holder and pass it to the quiz activity
 
