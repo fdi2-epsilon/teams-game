@@ -6,7 +6,7 @@ import android.graphics.Typeface;
 import android.util.AttributeSet;
 import android.widget.TextView;
 import eu.unipv.epsilon.enigma.R;
-import eu.unipv.epsilon.enigma.ui.FontLoader;
+import eu.unipv.epsilon.enigma.ui.util.FontLoader;
 
 /** An extended {@link TextView} capable of loading fonts from application assets. */
 public class TextViewExt extends TextView {

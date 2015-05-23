@@ -1,4 +1,4 @@
-package eu.unipv.epsilon.enigma.ui;
+package eu.unipv.epsilon.enigma.ui.util;
 
 import android.content.res.AssetManager;
 import android.graphics.Typeface;

@@ -78,7 +78,7 @@ public abstract class CollectionCardHolder extends CardHolder {
 
             if (!boundCollection.isEmpty()) {
                 Intent intent = new Intent(context, QuizActivity.class);
-                intent.putExtra(QuizActivity.PARAM_QUESTCOLLECTION, boundCollection);
+                intent.putExtra(QuizActivity.PARAM_COLLECTION_ID, boundCollection.getId());
                 context.startActivity(intent);
             } else
                 Toast.makeText(context, R.string.main_toast_no_content, Toast.LENGTH_SHORT).show();

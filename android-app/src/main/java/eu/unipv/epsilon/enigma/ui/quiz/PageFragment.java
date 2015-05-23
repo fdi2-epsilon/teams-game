@@ -1,43 +1,37 @@
 package eu.unipv.epsilon.enigma.ui.quiz;
 
 import android.annotation.SuppressLint;
-import android.annotation.TargetApi;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.webkit.*;
+import android.webkit.WebView;
 import android.widget.FrameLayout;
+import eu.unipv.epsilon.enigma.EnigmaApplication;
 import eu.unipv.epsilon.enigma.status.AndroidQuestViewInterface;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import eu.unipv.epsilon.enigma.ui.util.InterceptingWebViewClient;
+import eu.unipv.epsilon.enigma.ui.util.SimpleCollectionDataRetriever;
 
 import java.net.URL;
 
 /**
- * This fragment displays the page number passed as an argument to
- * {@link PageFragment#newInstance(int, URL, AndroidQuestViewInterface)}.
+ * This fragment displays the page number passed as an argument to {@link PageFragment#newInstance(String, int)}.
  */
 public class PageFragment extends Fragment {
 
-    private static final Logger LOG = LoggerFactory.getLogger(PageFragment.class);
-    private static final String JAVASCRIPT_INTERFACE_MAPPED_NAME = "enigma";
-
+    public static final String ARG_COLLECTION_ID = "ARG_COLLECTION_ID";
     public static final String ARG_PAGE = "ARG_PAGE";
-    public static final String ARG_DOCURL = "ARG_DOCURL";
-    public static final String ARG_VIEW_INTERFACE = "ARG_VIEW_INTERFACE";
+    public static final String JAVASCRIPT_INTERFACE_MAPPED_NAME = "enigma";
 
-    private int mPage;
     private URL mDocumentUrl;
     private AndroidQuestViewInterface mViewInterface;
 
-    public static PageFragment newInstance(int page, URL documentUrl, AndroidQuestViewInterface viewInterface) {
+    public static PageFragment newInstance(String collectionId, int page) {
         Bundle args = new Bundle();
+        args.putString(ARG_COLLECTION_ID, collectionId);
         args.putInt(ARG_PAGE, page);
-        args.putSerializable(ARG_DOCURL, documentUrl);
-        args.putSerializable(ARG_VIEW_INTERFACE, viewInterface);
         PageFragment fragment = new PageFragment();
         fragment.setArguments(args);
         return fragment;
@@ -46,9 +40,15 @@ public class PageFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mPage = getArguments().getInt(ARG_PAGE);
-        mDocumentUrl = (URL) getArguments().getSerializable(ARG_DOCURL);
-        mViewInterface = (AndroidQuestViewInterface) getArguments().getSerializable(ARG_VIEW_INTERFACE);
+
+        int pageIndex = getArguments().getInt(ARG_PAGE);
+        String collectionId = getArguments().getString(ARG_COLLECTION_ID);
+
+        EnigmaApplication application = (EnigmaApplication) getActivity().getApplication();
+        SimpleCollectionDataRetriever cData = new SimpleCollectionDataRetriever(application, collectionId);
+
+        mDocumentUrl = cData.getCollection().get(pageIndex - 1).getMainDocumentUrl();
+        mViewInterface = new AndroidQuestViewInterface(cData.getCollectionStatus(), pageIndex);
     }
 
     @Override
@@ -64,52 +64,14 @@ public class PageFragment extends Fragment {
     @Override
     @SuppressLint("SetJavaScriptEnabled")
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        //View view = inflater.inflate(R.layout.myid, container, false);
+        // To display a view from layout, use:
+        //   View view = inflater.inflate(R.layout.my_id, container, false);
 
         WebView view = new WebView(container.getContext());
         view.setLayoutParams(new FrameLayout.LayoutParams(
                 ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
 
-        WebViewClient wvc = new WebViewClient() {
-
-            // http://stackoverflow.com/questions/8332474/android-webview-protocol-handler
-            // http://stackoverflow.com/questions/8273991/webview-shouldinterceptrequest-example
-
-            @Override
-            @TargetApi(21)
-            public WebResourceResponse shouldInterceptRequest(WebView view, WebResourceRequest request) {
-                // This causes a call to the pre-21 version 'shouldInterceptRequest(WebView, String)'
-                return super.shouldInterceptRequest(view, request);
-            }
-
-            // Android pre-21 calls this instead
-            @Override
-            @SuppressWarnings("deprecation")
-            public WebResourceResponse shouldInterceptRequest(WebView view, String url) {
-
-                if (url.startsWith("eqc:") || url.startsWith("assets:")) {
-                    try {
-                        String mime;
-                        if (url.lastIndexOf('.') > url.lastIndexOf('/')) {
-                            String ext = url.substring(url.lastIndexOf('.') + 1);
-                            mime = MimeTypeMap.getSingleton().getMimeTypeFromExtension(ext);
-                        } else {
-                            // With a directory link, we assume that we have 'text/html' default documents
-                            mime = "text/html";
-                        }
-                        return new WebResourceResponse(mime, "UTF-8", new URL(url).openStream());
-                    } catch (Exception e) {
-                        LOG.error("Cannot load custom protocol resource", e);
-                        // Return super
-                    }
-                }
-
-                return super.shouldInterceptRequest(view, url);
-            }
-
-        };
-
-        view.setWebViewClient(wvc);
+        view.setWebViewClient(new InterceptingWebViewClient());
         view.getSettings().setJavaScriptEnabled(true);
         view.addJavascriptInterface(mViewInterface, JAVASCRIPT_INTERFACE_MAPPED_NAME);
 

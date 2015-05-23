@@ -1,6 +1,5 @@
 package eu.unipv.epsilon.enigma;
 
-import android.content.Context;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
@@ -12,11 +11,14 @@ import com.google.samples.apps.iosched.ui.widget.SlidingTabLayout;
 import eu.unipv.epsilon.enigma.quest.QuestCollection;
 import eu.unipv.epsilon.enigma.status.QuestCollectionStatus;
 import eu.unipv.epsilon.enigma.ui.quiz.QuizFragmentPageAdapter;
+import eu.unipv.epsilon.enigma.ui.util.SimpleCollectionDataRetriever;
 
 /** Shows the quiz that is currently played. */
 public class QuizActivity extends AppCompatActivity {
 
-    public static final String PARAM_QUESTCOLLECTION = "param_questcollection";
+    public static final String PARAM_COLLECTION_ID = QuizActivity.class.getName() + ":param_collection_id";
+
+    private QuestCollectionStatus collectionStatus;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,14 +33,18 @@ public class QuizActivity extends AppCompatActivity {
         assert getSupportActionBar() != null;
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        QuestCollection collection = (QuestCollection) getIntent().getSerializableExtra(PARAM_QUESTCOLLECTION);
+        String collectionId = getIntent().getStringExtra(PARAM_COLLECTION_ID);
+        if (collectionId == null)
+            throw new IllegalArgumentException("PARAM_COLLECTION_ID not set");
+
+        SimpleCollectionDataRetriever cData =
+                new SimpleCollectionDataRetriever((EnigmaApplication) getApplication(), collectionId);
+
+        QuestCollection collection = cData.getCollection();
+        collectionStatus = cData.getCollectionStatus();
+
         setTitle(collection.getTitle());
-
-        // Get collection saved progression data
-        QuestCollectionStatus collectionStatus = new QuestCollectionStatus(
-                getSharedPreferences(getString(R.string.app_name), Context.MODE_PRIVATE), collection.getId());
-
-        setupTabs(collection, collectionStatus);
+        setupTabs(collection);
     }
 
     @Override
@@ -63,27 +69,24 @@ public class QuizActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    private void setupTabs(final QuestCollection collection, final QuestCollectionStatus collectionStatus) {
-
-        //Get the ViewPager and set its PageAdapter so that it can display items
+    private void setupTabs(QuestCollection collection) {
         ViewPager viewPager = (ViewPager) findViewById(R.id.viewpager);
-        viewPager.setAdapter(new QuizFragmentPageAdapter(getSupportFragmentManager(), collection, collectionStatus));
-
-        //Give the SlidingTabLayout the ViewPager
         SlidingTabLayout slidingTabs = (SlidingTabLayout) findViewById(R.id.sliding_tabs);
 
-        slidingTabs.setCustomTabView(R.layout.quiz_tab_element, R.id.text);
-
-        //Center the tabs in the layout
-        slidingTabs.setDistributeEvenly(false);
+        // Set adapters
+        viewPager.setAdapter(new QuizFragmentPageAdapter(getSupportFragmentManager(), collection));
         slidingTabs.setViewPager(viewPager);
 
-        //customize tab color
+        // Configure sliding tabs style
+        slidingTabs.setCustomTabView(R.layout.quiz_tab_element, R.id.text);
+        slidingTabs.setDistributeEvenly(false); // Keep same width for all tabs
+
+        // Customize tab color
         slidingTabs.setCustomTabColorizer(new SlidingTabLayout.TabColorizer() {
             @Override
             public int getIndicatorColor(int position) {
                 // slidingTabs.invalidate(); should be called to update the strip color in real time
-                return collectionStatus.isSolved(position + 1) ? Color.YELLOW : Color.WHITE;
+                return collectionStatus.isSolved(position + 1) ? Color.CYAN : Color.LTGRAY;
             }
         });
     }
