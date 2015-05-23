@@ -1,5 +1,6 @@
 package eu.unipv.epsilon.enigma.ui.main;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -8,6 +9,7 @@ import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
+import eu.unipv.epsilon.enigma.EnigmaApplication;
 import eu.unipv.epsilon.enigma.QuizActivity;
 import eu.unipv.epsilon.enigma.R;
 import eu.unipv.epsilon.enigma.quest.QuestCollection;
@@ -20,15 +22,23 @@ import java.util.NoSuchElementException;
 public class CollectionsViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     public static final String FIRST_START = "firstStart";
-    private List<QuestCollection> collections;
+
+    private EnigmaApplication application;
     private SharedPreferences sharedPreferences;
+    private List<QuestCollection> collections;
 
     private boolean firstStart;
 
-    // Provide a suitable constructor (depends on the kind of dataset)
-    public CollectionsViewAdapter(List<QuestCollection> collections, SharedPreferences sharedPreferences) {
+    /**
+     * Creates a collections view adapter using the passed in metadata elements
+     *
+     * @param parentActivity the activity to which store local preferences and get the application instance
+     * @param collections game quest collections to show in the view
+     */
+    public CollectionsViewAdapter(Activity parentActivity, List<QuestCollection> collections) {
+        application = (EnigmaApplication) parentActivity.getApplication();
+        sharedPreferences = parentActivity.getPreferences(Context.MODE_PRIVATE);
         this.collections = collections;
-        this.sharedPreferences = sharedPreferences;
 
         firstStart = sharedPreferences.getBoolean(FIRST_START, true);
 
@@ -81,8 +91,10 @@ public class CollectionsViewAdapter extends RecyclerView.Adapter<RecyclerView.Vi
         if (holder instanceof CollectionCardHolder) {
             QuestCollection collection = collections.get(position - (firstStart ? 1 : 0));
 
-            ((CollectionCardHolder) holder).updateViewFromData(
-                    collection, new QuestCollectionStatus(sharedPreferences, collection.getId()));
+            QuestCollectionStatus collectionStatus =
+                    application.getGameStatus().getCollectionStatus(collection.getId());
+
+            ((CollectionCardHolder) holder).updateViewFromData(collection, collectionStatus);
         }
 
         // TODO: We may want to store this QuestCollectionStatus into the view holder and pass it to the quiz activity
@@ -111,7 +123,6 @@ public class CollectionsViewAdapter extends RecyclerView.Adapter<RecyclerView.Vi
     }
 
     private class CardClickListener implements View.OnClickListener {
-
         @Override
         public void onClick(View v) {
             int index = ((RecyclerView) v.getParent()).getChildAdapterPosition(v) - (firstStart ? 1 : 0);
@@ -128,11 +139,9 @@ public class CollectionsViewAdapter extends RecyclerView.Adapter<RecyclerView.Vi
                 Toast.makeText(context, R.string.main_toast_no_content, Toast.LENGTH_SHORT).show();
             }
         }
-
     }
 
     private class FirstCardClickListener implements View.OnClickListener {
-
         @Override
         public void onClick(View v) {
             Log.i(getClass().getName(), "ClickedFirstStart");

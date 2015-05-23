@@ -1,6 +1,5 @@
 package eu.unipv.epsilon.enigma;
 
-import android.content.Context;
 import android.os.Bundle;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.StaggeredGridLayoutManager;
@@ -83,8 +82,7 @@ public class MainActivity extends TranslucentControlsActivity {
             }
         }
 
-        recyclerView.setAdapter(new CollectionsViewAdapter(collections,
-                getSharedPreferences(getString(R.string.app_name), Context.MODE_PRIVATE)));
+        recyclerView.setAdapter(new CollectionsViewAdapter(this, collections));
     }
 
 }

@@ -1,4 +1,4 @@
-package eu.unipv.epsilon.enigma;
+package eu.unipv.epsilon.enigma.data;
 
 import android.content.Context;
 import android.os.Environment;

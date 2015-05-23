@@ -1,8 +1,10 @@
 package eu.unipv.epsilon.enigma;
 
 import android.app.Application;
+import eu.unipv.epsilon.enigma.data.StorageLocator;
 import eu.unipv.epsilon.enigma.loader.levels.pool.CollectionsPool;
 import eu.unipv.epsilon.enigma.loader.levels.pool.DirectoryPool;
+import eu.unipv.epsilon.enigma.status.GameStatus;
 import eu.unipv.epsilon.enigma.template.DalvikCandidateClassSource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -17,15 +19,26 @@ public class EnigmaApplication extends Application {
 
     private static final Logger LOG = LoggerFactory.getLogger(EnigmaApplication.class);
     private GameAssetsSystem assetsSystem;
+    private GameStatus gameStatus;
 
     @Override
     public void onCreate() {
         super.onCreate();
 
-        initializeAssetsSystem();
+        // Keep initialization methods "side-effects free" and assign fields here
+        this.assetsSystem = initializeAssetsSystem();
+        this.gameStatus = initializeGameStatus();
     }
 
-    private void initializeAssetsSystem() {
+    public GameAssetsSystem getAssetsSystem() {
+        return assetsSystem;
+    }
+
+    public GameStatus getGameStatus() {
+        return gameStatus;
+    }
+
+    private GameAssetsSystem initializeAssetsSystem() {
         StorageLocator storageLocator = new StorageLocator(this);
         File intStore = storageLocator.getInternalCollectionsLocation();
         File extStore = storageLocator.getExternalCollectionsLocation();
@@ -42,14 +55,16 @@ public class EnigmaApplication extends Application {
 
         // Create assets system with available collection sources
         CollectionsPool[] poolsVarargs = pools.toArray(new CollectionsPool[pools.size()]);
-        assetsSystem = new GameAssetsSystem(poolsVarargs);
+        GameAssetsSystem assetsSystem = new GameAssetsSystem(poolsVarargs);
 
         // Initialize templates subsystem using Android-specific reflection algorithms
         assetsSystem.createTemplateServer(new DalvikCandidateClassSource(this, assetsSystem));
+
+        return assetsSystem;
     }
 
-    public GameAssetsSystem getAssetsSystem() {
-        return assetsSystem;
+    private GameStatus initializeGameStatus() {
+        return new GameStatus(getSharedPreferences(getString(R.string.app_name), MODE_PRIVATE));
     }
 
 }
