@@ -1,0 +1,8 @@
+<quiz template=list>
+	 <title>Qual'è il nome dell'ideatore della serie?</title>
+	 <answers>
+	 <item>Arnold Moss</item>
+	 <item>Marc Adams</item>
+	 <item correct="true">Gene Roddenberry</item>
+	 </answers>
+</quiz>
