@@ -1,10 +1,15 @@
 package eu.unipv.epsilon.enigma.ui.main.card;
 
+import android.content.Context;
+import android.content.Intent;
 import android.support.annotation.LayoutRes;
+import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
+import eu.unipv.epsilon.enigma.QuizActivity;
 import eu.unipv.epsilon.enigma.R;
 import eu.unipv.epsilon.enigma.quest.QuestCollection;
 import eu.unipv.epsilon.enigma.status.QuestCollectionStatus;
@@ -20,6 +25,8 @@ public abstract class CollectionCardHolder extends CardHolder {
 
     private static final Logger LOG = LoggerFactory.getLogger(CollectionCardHolder.class);
 
+    private QuestCollection boundCollection;
+
     protected TextView titleRef;
     protected ImageView imageRef;
 
@@ -33,9 +40,13 @@ public abstract class CollectionCardHolder extends CardHolder {
         // Store references to view elements to avoid potentially expensive lookups later.
         titleRef = (TextView) itemView.findViewById(R.id.card_title);
         imageRef = (ImageView) itemView.findViewById(R.id.card_image);
+
+        getItemView().setOnClickListener(new ClickListener());
     }
 
     public void updateViewFromData(QuestCollection collection, QuestCollectionStatus collectionStatus) {
+        boundCollection = collection;
+
         titleRef.setText(collection.getTitle());
         loadImage(collection.getIconUrl());
     }
@@ -55,6 +66,23 @@ public abstract class CollectionCardHolder extends CardHolder {
                 return true;
             }
         });
+    }
+
+    /**
+     * Creates a new QuizActivity displaying the content of the QuestCollection currently bound to this card.
+     */
+    private class ClickListener implements View.OnClickListener {
+        @Override
+        public void onClick(View v) {
+            Context context = v.getContext();
+
+            if (!boundCollection.isEmpty()) {
+                Intent intent = new Intent(context, QuizActivity.class);
+                intent.putExtra(QuizActivity.PARAM_QUESTCOLLECTION, boundCollection);
+                context.startActivity(intent);
+            } else
+                Toast.makeText(context, R.string.main_toast_no_content, Toast.LENGTH_SHORT).show();
+        }
     }
 
 }

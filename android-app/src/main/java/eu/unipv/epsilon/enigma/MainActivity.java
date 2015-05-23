@@ -1,5 +1,6 @@
 package eu.unipv.epsilon.enigma;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.StaggeredGridLayoutManager;
@@ -18,6 +19,9 @@ import java.util.List;
 public class MainActivity extends TranslucentControlsActivity {
 
     private static final Logger LOG = LoggerFactory.getLogger(MainActivity.class);
+    public static final String CONFIG_FIRST_START = "firstStart";
+
+    private CollectionsViewAdapter viewAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,7 +29,7 @@ public class MainActivity extends TranslucentControlsActivity {
         setContentView(R.layout.activity_main);
         locateViews(R.id.toolbar, R.id.main_collections_view);
 
-        LOG.info("Activity started, display density: {}, locale: {}",
+        LOG.info("Activity created, display density: {}, locale: {}",
                 getResources().getDisplayMetrics().density, getResources().getConfiguration().locale.getLanguage());
 
         // Initialize toolbar, its title gets assigned by activity name in manifest
@@ -34,6 +38,15 @@ public class MainActivity extends TranslucentControlsActivity {
         // Initialize and populate view
         initializeElementsView();
         populateMainView();
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        LOG.debug("Activity stopped, saving preferences...");
+        SharedPreferences.Editor prefs = getPreferences(MODE_PRIVATE).edit();
+        prefs.putBoolean(CONFIG_FIRST_START, viewAdapter.getFirstStartCardVisible());
+        prefs.apply();
     }
 
     @Override
@@ -68,7 +81,9 @@ public class MainActivity extends TranslucentControlsActivity {
     }
 
     private void populateMainView() {
-        GameAssetsSystem assetsSystem = ((EnigmaApplication) getApplication()).getAssetsSystem();
+        EnigmaApplication application = (EnigmaApplication) getApplication();
+        GameAssetsSystem assetsSystem = application.getAssetsSystem();
+
         List<QuestCollection> collections = new ArrayList<>();
 
         // Fill a list with all available collections info
@@ -82,7 +97,9 @@ public class MainActivity extends TranslucentControlsActivity {
             }
         }
 
-        recyclerView.setAdapter(new CollectionsViewAdapter(this, collections));
+        viewAdapter = new CollectionsViewAdapter(collections, application.getGameStatus());
+        viewAdapter.setFirstStartCardVisible(getPreferences(MODE_PRIVATE).getBoolean(CONFIG_FIRST_START, true));
+        recyclerView.setAdapter(viewAdapter);
     }
 
 }
