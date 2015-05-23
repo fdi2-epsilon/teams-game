@@ -13,7 +13,7 @@ import eu.unipv.epsilon.enigma.QuizActivity;
 import eu.unipv.epsilon.enigma.R;
 import eu.unipv.epsilon.enigma.quest.QuestCollection;
 import eu.unipv.epsilon.enigma.status.QuestCollectionStatus;
-import eu.unipv.epsilon.enigma.ui.bitmap.EqcImageLoader;
+import eu.unipv.epsilon.enigma.ui.bitmap.AssetsURLImageLoader;
 import eu.unipv.epsilon.enigma.ui.bitmap.ImageLoader;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -58,7 +58,7 @@ public abstract class CollectionCardHolder extends CardHolder {
             public boolean onPreDraw() {
                 imageRef.getViewTreeObserver().removeOnPreDrawListener(this);
                 try {
-                    ImageLoader loader = new EqcImageLoader(path);
+                    ImageLoader loader = new AssetsURLImageLoader(path);
                     imageRef.setImageBitmap(loader.decodeSampledBitmap(imageRef.getMeasuredWidth(), imageRef.getMeasuredHeight()));
                 } catch (IOException e) {
                     LOG.warn("The image was not found", e);

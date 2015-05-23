@@ -11,16 +11,16 @@ import java.io.IOException;
 import java.net.URL;
 
 /**
- * An image loader which loads from an URL stream, it also sets input image density to eqc standard.
+ * An image loader which loads from an URL stream, it also sets input image density to game assets spec.
  * This should also be able to load from any URL with a registered protocol handler.
  */
-public class EqcImageLoader extends InputStreamImageLoader {
+public class AssetsURLImageLoader extends InputStreamImageLoader {
 
-    private static final Logger LOG = LoggerFactory.getLogger(EqcImageLoader.class);
+    private static final Logger LOG = LoggerFactory.getLogger(AssetsURLImageLoader.class);
 
     // TODO: Transfer BufferedInputStream code to InputStream class and allow changing mark
 
-    public EqcImageLoader(URL url) throws IOException {
+    public AssetsURLImageLoader(URL url) throws IOException {
         super(new BufferedInputStream(url.openStream()));
         // With this, up to 50KB can be read while decoding bounds, avoiding to read them again when decoding image.
         // So we don't need to reopen the URL stream.
