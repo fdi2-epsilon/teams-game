@@ -1,6 +1,6 @@
 package eu.unipv.epsilon.enigma;
 
-import android.graphics.Color;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
@@ -11,14 +11,13 @@ import com.google.samples.apps.iosched.ui.widget.SlidingTabLayout;
 import eu.unipv.epsilon.enigma.quest.QuestCollection;
 import eu.unipv.epsilon.enigma.status.QuestCollectionStatus;
 import eu.unipv.epsilon.enigma.ui.quiz.QuizFragmentPageAdapter;
-import eu.unipv.epsilon.enigma.ui.util.SimpleCollectionDataRetriever;
+import eu.unipv.epsilon.enigma.ui.quiz.QuizStatusTabColorizer;
+import eu.unipv.epsilon.enigma.ui.util.CollectionDataBundle;
 
 /** Shows the quiz that is currently played. */
 public class QuizActivity extends AppCompatActivity {
 
     public static final String PARAM_COLLECTION_ID = QuizActivity.class.getName() + ":param_collection_id";
-
-    private QuestCollectionStatus collectionStatus;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,18 +32,11 @@ public class QuizActivity extends AppCompatActivity {
         assert getSupportActionBar() != null;
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        String collectionId = getIntent().getStringExtra(PARAM_COLLECTION_ID);
-        if (collectionId == null)
-            throw new IllegalArgumentException("PARAM_COLLECTION_ID not set");
+        // Get quest collection to display and its saved data from intent and update the view
+        CollectionDataBundle collectionBundle = getIntentData(getIntent());
+        setTitle(collectionBundle.getCollection().getTitle());
 
-        SimpleCollectionDataRetriever cData =
-                new SimpleCollectionDataRetriever((EnigmaApplication) getApplication(), collectionId);
-
-        QuestCollection collection = cData.getCollection();
-        collectionStatus = cData.getCollectionStatus();
-
-        setTitle(collection.getTitle());
-        setupTabs(collection);
+        setupTabs(collectionBundle.getCollection(), collectionBundle.getCollectionStatus());
     }
 
     @Override
@@ -69,7 +61,14 @@ public class QuizActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    private void setupTabs(QuestCollection collection) {
+    private CollectionDataBundle getIntentData(Intent intent) {
+        String collectionId = intent.getStringExtra(PARAM_COLLECTION_ID);
+        if (collectionId == null) throw new IllegalArgumentException("PARAM_COLLECTION_ID not set");
+
+        return CollectionDataBundle.fromId((EnigmaApplication) getApplication(), collectionId);
+    }
+
+    private void setupTabs(QuestCollection collection, QuestCollectionStatus collectionStatus) {
         ViewPager viewPager = (ViewPager) findViewById(R.id.viewpager);
         SlidingTabLayout slidingTabs = (SlidingTabLayout) findViewById(R.id.sliding_tabs);
 
@@ -80,15 +79,7 @@ public class QuizActivity extends AppCompatActivity {
         // Configure sliding tabs style
         slidingTabs.setCustomTabView(R.layout.quiz_tab_element, R.id.text);
         slidingTabs.setDistributeEvenly(false); // Keep same width for all tabs
-
-        // Customize tab color
-        slidingTabs.setCustomTabColorizer(new SlidingTabLayout.TabColorizer() {
-            @Override
-            public int getIndicatorColor(int position) {
-                // slidingTabs.invalidate(); should be called to update the strip color in real time
-                return collectionStatus.isSolved(position + 1) ? Color.CYAN : Color.LTGRAY;
-            }
-        });
+        slidingTabs.setCustomTabColorizer(new QuizStatusTabColorizer(collectionStatus));
     }
 
 }
