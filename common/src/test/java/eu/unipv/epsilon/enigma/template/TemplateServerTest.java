@@ -39,7 +39,7 @@ public class TemplateServerTest {
     @Test
     public void testCollectionContainerBuiltin() throws IOException {
         CollectionContainer container = assetsSystem.getCollectionContainer("testpkg03_templates");
-        QuestCollection qc = container.loadCollectionMeta();
+        QuestCollection qc = container.getCollectionMeta();
 
         InputStream is1a = qc.get(0).getMainDocumentUrl().openStream();
         InputStream is1b = container.getEntry("quests/01/blah.html").getStream();
@@ -58,7 +58,7 @@ public class TemplateServerTest {
 
     @Test
     public void testCollectionContainerCustom() throws IOException {
-        QuestCollection qc = assetsSystem.getCollectionContainer("testpkg04_tplremote").loadCollectionMeta();
+        QuestCollection qc = assetsSystem.getCollectionContainer("testpkg04_tplremote").getCollectionMeta();
 
         InputStream is = qc.get(0).getMainDocumentUrl().openStream();
         assertTrue("Custom template should be loaded from the collection and throw a JesusChristException",

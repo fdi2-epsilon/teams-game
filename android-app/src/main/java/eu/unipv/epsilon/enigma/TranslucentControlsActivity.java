@@ -41,18 +41,18 @@ public class TranslucentControlsActivity extends AppCompatActivity {
     }
 
     private void alterLayouts() {
-        RelativeLayout.LayoutParams toolbarLParams, recyclerLParams;
+        RelativeLayout.LayoutParams toolbarLayoutParams, recyclerLayoutParams;
 
         try {
-            toolbarLParams = (RelativeLayout.LayoutParams) toolbarView.getLayoutParams();
-            recyclerLParams = (RelativeLayout.LayoutParams) recyclerView.getLayoutParams();
+            toolbarLayoutParams = (RelativeLayout.LayoutParams) toolbarView.getLayoutParams();
+            recyclerLayoutParams = (RelativeLayout.LayoutParams) recyclerView.getLayoutParams();
         } catch (ClassCastException e) {
             throw new IllegalStateException(
                     "Activity view can only be extended while using Relative Layout as root", e);
         }
 
         // Remove 'android:layout_below' constraint from Recycler to let it flow behind the toolbar
-        recyclerLParams.removeRule(RelativeLayout.BELOW);
+        recyclerLayoutParams.removeRule(RelativeLayout.BELOW);
 
         // Enable fullscreen flags: http://stackoverflow.com/a/28041425 and others
         getWindow().getDecorView().setSystemUiVisibility(
@@ -63,7 +63,7 @@ public class TranslucentControlsActivity extends AppCompatActivity {
 
         // Add 'layout_marginTop=[status_bar_height]' to Toolbar, because these flags above set its
         // position relative to screen and it should not be behind the status bar but under it.
-        toolbarLParams.setMargins(0, getDefaultStatusBarHeight(), 0, 0);
+        toolbarLayoutParams.setMargins(0, getDefaultStatusBarHeight(), 0, 0);
     }
 
     private void setRecyclerPaddings() {

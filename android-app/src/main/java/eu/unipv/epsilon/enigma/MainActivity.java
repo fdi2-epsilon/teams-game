@@ -2,20 +2,16 @@ package eu.unipv.epsilon.enigma;
 
 import android.content.Context;
 import android.os.Bundle;
-import android.os.Environment;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.view.Menu;
 import android.view.MenuItem;
 import eu.unipv.epsilon.enigma.loader.levels.exception.MetadataNotFoundException;
-import eu.unipv.epsilon.enigma.loader.levels.pool.DirectoryPool;
 import eu.unipv.epsilon.enigma.quest.QuestCollection;
-import eu.unipv.epsilon.enigma.template.DalvikCandidateClassSource;
 import eu.unipv.epsilon.enigma.ui.main.CollectionsViewAdapter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -23,7 +19,6 @@ import java.util.List;
 public class MainActivity extends TranslucentControlsActivity {
 
     private static final Logger LOG = LoggerFactory.getLogger(MainActivity.class);
-    private GameAssetsSystem assetsSystem;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,38 +29,14 @@ public class MainActivity extends TranslucentControlsActivity {
         LOG.info("Activity started, display density: {}, locale: {}",
                 getResources().getDisplayMetrics().density, getResources().getConfiguration().locale.getLanguage());
 
-        // Initialize toolbar
-        setSupportActionBar(toolbarView);   // Title assigned by manifest
+        // Initialize toolbar, its title gets assigned by activity name in manifest
+        setSupportActionBar(toolbarView);
 
-        // Create a new local data source to load any built-in collections
-        File collectionsDir = new File(getFilesDir(), "collections");
-        LOG.info("Internal collections path: " + collectionsDir.getPath());
-
-        // Do the same for external storage so users can add new collections on-the-go
-        String state = Environment.getExternalStorageState();
-        if (Environment.MEDIA_MOUNTED.equals(state) || Environment.MEDIA_MOUNTED_READ_ONLY.equals(state)) {
-            // External storage is readable
-            File extDocsDir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOCUMENTS);
-            File extCollectionsDir = new File(extDocsDir, getString(R.string.app_name) + '/' + "Collections");
-
-            LOG.info("External collections path: " + extCollectionsDir.getPath());
-            if (!extCollectionsDir.mkdirs())
-                LOG.error("External collections directory not created");
-
-            assetsSystem = new GameAssetsSystem(new DirectoryPool(collectionsDir), new DirectoryPool(extCollectionsDir));
-        } else {
-            LOG.info("External storage is not accessible");
-            assetsSystem = new GameAssetsSystem(new DirectoryPool(collectionsDir));
-        }
-
-        // Initialize Templating system
-        assetsSystem.createTemplateServer(new DalvikCandidateClassSource(this, assetsSystem));
-
-        // Initialize view
+        // Initialize and populate view
         initializeElementsView();
+        populateMainView();
     }
 
-    /** Generate a popup menu to navigate toward the quiz activity. */
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -89,25 +60,22 @@ public class MainActivity extends TranslucentControlsActivity {
     }
 
     private void initializeElementsView() {
-        // Use this setting to improve performance if you know that changes
-        // in the content do not change the layout size of the RecyclerView.
+        // This improves performance if content changes do not alter the RecyclerView's layout size
         recyclerView.setHasFixedSize(true);
 
-        // Use a staggered layout manager
+        // Use a staggered layout manager and animate changes (i.e. removal of first start card)
         recyclerView.setLayoutManager(new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL));
-
         recyclerView.setItemAnimator(new DefaultItemAnimator());
-
-        // Populate with data
-        populateMainView();
     }
 
     private void populateMainView() {
+        GameAssetsSystem assetsSystem = ((EnigmaApplication) getApplication()).getAssetsSystem();
         List<QuestCollection> collections = new ArrayList<>();
 
+        // Fill a list with all available collections info
         for (String collectionId : assetsSystem.getAvailableCollectionIDs()) {
             try {
-                collections.add(assetsSystem.getCollectionContainer(collectionId).loadCollectionMeta());
+                collections.add(assetsSystem.getCollectionContainer(collectionId).getCollectionMeta());
             } catch (MetadataNotFoundException e) {
                 LOG.error("Collection metadata not found", e);
             } catch (IOException e) {
