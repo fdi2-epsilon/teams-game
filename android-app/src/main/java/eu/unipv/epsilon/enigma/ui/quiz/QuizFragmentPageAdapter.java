@@ -4,6 +4,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import eu.unipv.epsilon.enigma.quest.QuestCollection;
+import eu.unipv.epsilon.enigma.status.AndroidQuestViewInterface;
 import eu.unipv.epsilon.enigma.status.QuestCollectionStatus;
 
 /**
@@ -30,7 +31,7 @@ public class QuizFragmentPageAdapter extends FragmentPagerAdapter {
         return PageFragment.newInstance(
                 position + 1,
                 questCollection.get(position).getMainDocumentUrl(),
-                collectionStatus.getQuestViewInterface(position + 1));
+                new AndroidQuestViewInterface(collectionStatus, position + 1));
     }
 
     @Override
