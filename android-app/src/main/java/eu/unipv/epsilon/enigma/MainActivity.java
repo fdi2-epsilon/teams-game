@@ -1,14 +1,10 @@
 package eu.unipv.epsilon.enigma;
 
 import android.content.Context;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
-import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
-import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import eu.unipv.epsilon.enigma.loader.levels.exception.MetadataNotFoundException;
@@ -24,24 +20,22 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends TranslucentControlsActivity {
 
     private static final Logger LOG = LoggerFactory.getLogger(MainActivity.class);
-
-    private RecyclerView collectionsView;
-
     private GameAssetsSystem assetsSystem;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        LOG.info("Activity started, display density: {}, locale: {}",
-                getResources().getDisplayMetrics().density, getResources().getConfiguration().locale.getLanguage());
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        locateViews(R.id.toolbar, R.id.main_collections_view);
+
+        LOG.info("Activity started, display density: {}, locale: {}",
+                getResources().getDisplayMetrics().density, getResources().getConfiguration().locale.getLanguage());
 
         // Initialize toolbar
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);   // Title assigned by manifest
+        setSupportActionBar(toolbarView);   // Title assigned by manifest
 
         // Create a new local data source to load any built-in collections
         File collectionsDir = new File(getFilesDir(), "collections");
@@ -69,11 +63,6 @@ public class MainActivity extends AppCompatActivity {
 
         // Initialize view
         initializeElementsView();
-
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            // Semitransparent UI configuration, only on compatible devices
-            GuiHelper.extendMainActivityToSystemArea(this, toolbar, collectionsView);
-        }
     }
 
     /** Generate a popup menu to navigate toward the quiz activity. */
@@ -100,16 +89,14 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void initializeElementsView() {
-        collectionsView = (RecyclerView) findViewById(R.id.main_collections_view);
-
         // Use this setting to improve performance if you know that changes
         // in the content do not change the layout size of the RecyclerView.
-        collectionsView.setHasFixedSize(true);
+        recyclerView.setHasFixedSize(true);
 
         // Use a staggered layout manager
-        collectionsView.setLayoutManager(new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL));
+        recyclerView.setLayoutManager(new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL));
 
-        collectionsView.setItemAnimator(new DefaultItemAnimator());
+        recyclerView.setItemAnimator(new DefaultItemAnimator());
 
         // Populate with data
         populateMainView();
@@ -128,7 +115,7 @@ public class MainActivity extends AppCompatActivity {
             }
         }
 
-        collectionsView.setAdapter(new CollectionsViewAdapter(collections,
+        recyclerView.setAdapter(new CollectionsViewAdapter(collections,
                 getSharedPreferences(getString(R.string.app_name), Context.MODE_PRIVATE)));
     }
 
