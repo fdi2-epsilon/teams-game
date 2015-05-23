@@ -2,7 +2,8 @@ package eu.unipv.epsilon.enigma.ui.bitmap;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.util.Log;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import static android.graphics.BitmapFactory.Options;
 
@@ -11,6 +12,8 @@ import static android.graphics.BitmapFactory.Options;
  * {@link ImageLoader#decodeBitmapWithOptions(Options)} to effectively load the image.
  */
 public abstract class ImageLoader {
+
+    private static final Logger LOG = LoggerFactory.getLogger(ImageLoader.class);
 
     public Bitmap decodeSampledBitmap(int reqWidth, int reqHeight) {
 
@@ -29,8 +32,8 @@ public abstract class ImageLoader {
         // Decode bitmap with inSampleSize set
         Bitmap bitmap = decodeBitmapWithOptions(options);
 
-        Log.i(getClass().getName(), String.format("Loaded %dx%d image as %dx%d (requested %dx%d) with sample size = %d",
-                srcWidth, srcHeight, options.outWidth, options.outHeight, reqWidth, reqHeight, sampleSize));
+        LOG.info("Loaded {}x{} image as {}x{} (requested {}x{}) with sample size of {}",
+                srcWidth, srcHeight, options.outWidth, options.outHeight, reqWidth, reqHeight, sampleSize);
 
         // Post loading operations
         postLoad();

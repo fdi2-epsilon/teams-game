@@ -2,13 +2,16 @@ package eu.unipv.epsilon.enigma.ui;
 
 import android.content.res.AssetManager;
 import android.graphics.Typeface;
-import android.util.Log;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.HashMap;
 import java.util.Map;
 
 /** Provides a standard way to load fonts from application assets. */
 public class FontLoader {
+
+    private static final Logger LOG = LoggerFactory.getLogger(FontLoader.class);
 
     public static final String FONTS_PATH = "fonts/";
     public static final String FONTS_EXT = ".ttf";
@@ -25,7 +28,7 @@ public class FontLoader {
     }
 
     public Typeface loadFont() {
-        Log.i(getClass().getName(), "No font loaded (used default) because called with invalid parameters.");
+        LOG.info("No font loaded (used default) because called with invalid parameters.");
         return DEFAULT_FONT;
     }
 
@@ -43,12 +46,12 @@ public class FontLoader {
 
     private Typeface genTypefaceFromName(String name) {
         if (fontCache.containsKey(name)) {
-            Log.i(getClass().getName(), "Loaded font \"" + name + "\" from cache.");
+            LOG.info("Loaded font \"{}\" from cache.", name);
             return fontCache.get(name);
         }
 
         Typeface font = Typeface.createFromAsset(assetManager, FONTS_PATH + name + FONTS_EXT);
-        Log.i(getClass().getName(), "Loaded new font \"" + name + "\" from file.");
+        LOG.info("Loaded new font \"{}\" from file.", name);
         fontCache.put(name, font);
         return font;
     }
