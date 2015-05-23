@@ -72,13 +72,13 @@ public class QuizActivity extends AppCompatActivity {
         ViewPager viewPager = (ViewPager) findViewById(R.id.viewpager);
         SlidingTabLayout slidingTabs = (SlidingTabLayout) findViewById(R.id.sliding_tabs);
 
-        // Set adapters
-        viewPager.setAdapter(new QuizFragmentPageAdapter(getSupportFragmentManager(), collection));
-        slidingTabs.setViewPager(viewPager);
-
         // Configure sliding tabs style
         slidingTabs.setCustomTabView(R.layout.quiz_tab_element, R.id.text);
         slidingTabs.setDistributeEvenly(false); // Keep same width for all tabs
+
+        // Set adapters
+        viewPager.setAdapter(new QuizFragmentPageAdapter(getSupportFragmentManager(), collection));
+        slidingTabs.setViewPager(viewPager);
         slidingTabs.setCustomTabColorizer(new QuizStatusTabColorizer(collectionStatus));
     }
 
