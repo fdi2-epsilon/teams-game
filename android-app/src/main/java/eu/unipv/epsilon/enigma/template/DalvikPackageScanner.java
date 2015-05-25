@@ -6,6 +6,7 @@ import dalvik.system.PathClassLoader;
 import eu.unipv.epsilon.enigma.GameAssetsSystem;
 import eu.unipv.epsilon.enigma.loader.levels.CollectionContainer;
 import eu.unipv.epsilon.enigma.loader.levels.EqcFile;
+import eu.unipv.epsilon.enigma.template.reflect.classfinder.JvmPackageScanner;
 import eu.unipv.epsilon.enigma.template.util.IterableEnumeration;
 
 import java.io.IOException;
@@ -14,8 +15,8 @@ import java.util.List;
 import java.util.zip.ZipFile;
 
 /**
- * An alternative to {@link eu.unipv.epsilon.enigma.template.reflect.classfinder.PackageScanner PackageScanner} for
- * the Dalvik Virtual Machine (Android devices). This may be pluggable with the original PackageScanner in the future.
+ * An utility facade to find classes given a package in the Dalvik Virtual Machine.
+ * Android alternative to {@link JvmPackageScanner JvmPackageScanner}.
  */
 public class DalvikPackageScanner {
 
@@ -42,7 +43,7 @@ public class DalvikPackageScanner {
         return loadClasses(packageName, cl, eqcZip.getName());
     }
 
-    /** Quick n' dirty implementation to load classes from a dex file with the passed in class loader **/
+    // Quick n' dirty implementation to load classes from a dex file with the passed in class loader
     private static List<Class<?>> loadClasses(
             String packageName, ClassLoader classLoader, String dexPath) throws ClassNotFoundException {
         try {

@@ -5,6 +5,11 @@ import eu.unipv.epsilon.enigma.GameAssetsSystem;
 
 import java.util.Iterator;
 
+/**
+ * A {@link CandidateClassSource} using {@link DalvikPackageScanner} as a package scanning utility.
+ *
+ * @see CandidateClassSource CandidateClassSource for more info
+ */
 public class DalvikCandidateClassSource extends CandidateClassSource {
 
     private final Context context;

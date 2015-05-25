@@ -21,6 +21,6 @@ gradle.projectsEvaluated {
         // not my fault if Java gives me classes implementing that...
         options.fork = true
         options.forkOptions.executable = 'javac'
-        options.compilerArgs << '-XDignore.symbol.file'
+        options.compilerArgs << '-Xlint:unchecked' << '-XDignore.symbol.file'
     }
 }

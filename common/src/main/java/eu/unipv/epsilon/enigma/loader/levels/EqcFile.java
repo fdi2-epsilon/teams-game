@@ -35,6 +35,10 @@ public class EqcFile extends CollectionContainer {
         String fileName;
         MetadataParser parser;
 
+        // TODO: Consider removing dependency on parsers and instead pass this CollectionContainer to the parser.
+        //       A "generic" parser can choose the right implementation depending on XML or YAML metadata.
+        //       We can still get a method like this in a facade depending on that generic parser.
+
         if (containsEntry(CONFIG_YAML_FILENAME)) {
             fileName = CONFIG_YAML_FILENAME;
             parser = new YamlMetaParser(id, new DefaultsFactory(this));
