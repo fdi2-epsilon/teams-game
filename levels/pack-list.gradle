@@ -1,4 +1,5 @@
 include 'levels:test-a',
         'levels:test-b',
         'levels:test-c',
-        'levels:test-d'
+        'levels:test-d',
+        'levels:starTrek'

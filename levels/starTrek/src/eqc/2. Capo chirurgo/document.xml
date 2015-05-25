@@ -1,0 +1,8 @@
+<quiz template="list">
+    <title>Come si chiama il capo chirurgo dell'astronave federale Enterprise?</title>
+    <answers>
+        <item correct="true">Leonard McCoy</item>
+        <item>James Doohan</item>
+        <item>James T. Kirk</item>
+    </answers>
+</quiz>

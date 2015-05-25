@@ -1,8 +1,9 @@
-<quiz template=list>
-	 <title>Nell'episodio "L'inversione di rotta", la mente del capitano Kirk viene scambiata con quella di una sua vecchia fiamma. Come si chiamava?</title>
-	 <answers>
-	 <item>Miri</item>
-	 <item>Nichelle Nichols</item>
-	 <item correct="true">Janice Lester</item>
-	 </answers>
+<quiz template="list">
+    <title>Nell'episodio "L'inversione di rotta", la mente del capitano Kirk viene scambiata con quella di una sua vecchia fiamma. Come si chiamava?
+    </title>
+    <answers>
+        <item>Miri</item>
+        <item>Nichelle Nichols</item>
+        <item correct="true">Janice Lester</item>
+    </answers>
 </quiz>

@@ -1,8 +1,8 @@
-<quiz template=list>
-	 <title>Di quale pianeta è ambasciatore Sarek, padre di Spock?</title>
-	 <answers>
-	 <item>Organia</item>
-	 <item>Terra</item>
-	 <item correct="true">Vulcano</item>
-	 </answers>
+<quiz template="list">
+    <title>Di quale pianeta Ã¨ ambasciatore Sarek, padre di Spock?</title>
+    <answers>
+        <item>Organia</item>
+        <item>Terra</item>
+        <item correct="true">Vulcano</item>
+    </answers>
 </quiz>

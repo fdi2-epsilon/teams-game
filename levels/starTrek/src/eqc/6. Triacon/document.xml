@@ -1,8 +1,8 @@
-<quiz template=list>
-	 <title>Nell'episodio "Sul pianeta Triacon", sale sull'enterprise una serie di bambini che...</title>
-	 <answers>
-	 <item>Tentano di uccidere Scott</item>
-	 <item>Scatenano una rissa</item>
-	 <item correct="true">Tentano di prendere il controllo della nave</item>
-	 </answers>
+<quiz template="list">
+    <title>Nell'episodio "Sul pianeta Triacon", sale sull'enterprise una serie di bambini che...</title>
+    <answers>
+        <item>Tentano di uccidere Scott</item>
+        <item>Scatenano una rissa</item>
+        <item correct="true">Tentano di prendere il controllo della nave</item>
+    </answers>
 </quiz>

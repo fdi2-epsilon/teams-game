@@ -15,7 +15,8 @@ apply plugin: 'java'
 apply plugin: 'enigma-levels'
 
 questCollection {
+    // Author: Luca DeFilippi (@lucad93)
     name = 'Star Trek'
-    subtitle = 'The Original Serie'
-    description = 'Collezione di enigmi riguardo la serie classica di Star Trek'
+    subtitle = 'The Original Series'
+    description = 'Collezione di enigmi riguardo alla serie classica di Star Trek'
 }

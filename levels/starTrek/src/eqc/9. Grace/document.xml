@@ -1,8 +1,8 @@
-<quiz template=list>
-	 <title>Qual'è il nome dell'attrice che ha interpretato Janice Rand, l'assistente del capitano Kirk? </title>
-	 <answers>
-	 <item>Nichelle Nichols</item>
-	 <item correct="true">Grace Lee Whitney</item>
-	 <item>Marianna Hill</item>
-	 </answers>
+<quiz template="list">
+    <title>Qual'Ã¨ il nome dell'attrice che ha interpretato Janice Rand, l'assistente del capitano Kirk?</title>
+    <answers>
+        <item>Nichelle Nichols</item>
+        <item correct="true">Grace Lee Whitney</item>
+        <item>Marianna Hill</item>
+    </answers>
 </quiz>

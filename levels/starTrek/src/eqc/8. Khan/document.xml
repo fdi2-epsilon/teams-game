@@ -1,8 +1,9 @@
-<quiz template=list>
-	 <title>Nell'episodio "Spazio profondo", l'astronave Enterprise si imbatte nella nave SS Botany Bay, dalla quale sale a bordo un uomo. Come si chiama?</title>
-	 <answers>
-	 <item>José I. Mendez</item>
-	 <item>Rick Masters</item>
-	 <item correct="true">Khan Noonien Singh</item>
-	 </answers>
+<quiz template="list">
+    <title>Nell'episodio "Spazio profondo", l'astronave Enterprise si imbatte nella nave SS Botany Bay, dalla quale sale a bordo un uomo. Come si chiama?
+    </title>
+    <answers>
+        <item>José I. Mendez</item>
+        <item>Rick Masters</item>
+        <item correct="true">Khan Noonien Singh</item>
+    </answers>
 </quiz>
