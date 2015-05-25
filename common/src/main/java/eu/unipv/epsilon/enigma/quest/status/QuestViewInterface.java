@@ -11,6 +11,10 @@ package eu.unipv.epsilon.enigma.quest.status;
  */
 public interface QuestViewInterface {
 
+    // TODO: Allow storing key-value data and partial completion status for complex quests
+
+    // TODO: Allow getting the current locale (or handle in metadata)
+
     /** Allows a quiz to mark itself as completed. */
     void setComplete();
 
