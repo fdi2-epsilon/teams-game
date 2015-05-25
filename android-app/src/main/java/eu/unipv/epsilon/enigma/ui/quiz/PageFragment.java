@@ -55,6 +55,7 @@ public class PageFragment extends Fragment {
         // Get collection metadata and status from arguments
         CollectionDataBundle collectionBundle = CollectionDataBundle.fromId(
                 (EnigmaApplication) getActivity().getApplication(), collectionId);
+
         mDocumentUrl = collectionBundle.getCollection().get(pageIndex - 1).getMainDocumentUrl();
         mViewInterface = new AndroidQuestViewInterface(collectionBundle.getCollectionStatus(), pageIndex);
     }

@@ -1,6 +1,5 @@
 package eu.unipv.epsilon.enigma;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
@@ -24,19 +23,16 @@ public class QuizActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_quiz);
 
-        // Initialize toolbar
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-
-        // Enable "up" button
+        // Initialize toolbar and enable "up" navigation
+        setSupportActionBar((Toolbar) findViewById(R.id.toolbar));
         assert getSupportActionBar() != null;
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        // Get quest collection to display and its saved data from intent and update the view
-        CollectionDataBundle collectionBundle = getIntentData(getIntent());
-        setTitle(collectionBundle.getCollection().getTitle());
+        // Get quest collection from intent to display its saved data and update the view
+        CollectionDataBundle bundle = getCollectionArgument();
 
-        setupTabs(collectionBundle.getCollection(), collectionBundle.getCollectionStatus());
+        setTitle(bundle.getCollection().getTitle());
+        setupTabs(bundle.getCollection(), bundle.getCollectionStatus());
     }
 
     @Override
@@ -61,9 +57,10 @@ public class QuizActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    private CollectionDataBundle getIntentData(Intent intent) {
-        String collectionId = intent.getStringExtra(PARAM_COLLECTION_ID);
-        if (collectionId == null) throw new IllegalArgumentException("PARAM_COLLECTION_ID not set");
+    private CollectionDataBundle getCollectionArgument() {
+        String collectionId = getIntent().getStringExtra(PARAM_COLLECTION_ID);
+        if (collectionId == null)
+            throw new IllegalArgumentException("PARAM_COLLECTION_ID not set");
 
         return CollectionDataBundle.fromId((EnigmaApplication) getApplication(), collectionId);
     }
