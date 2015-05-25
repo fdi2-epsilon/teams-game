@@ -9,6 +9,26 @@ import org.w3c.dom.NodeList;
 import java.io.IOException;
 import java.net.URL;
 
+/**
+ * <i>The standard multiple-answers quiz type.</i>
+ *
+ * <p>
+ *     A question and a variable set of answers, multiple answers can be correct, the sky is the limit!
+ * </p>
+ * <p>
+ *     Usage sample (put this in your {@code document.xml}):
+ * </p>
+ * <pre>{@code
+ * <quiz template="list">
+ *     <title>Waz mah name?</title>
+ *     <answers>
+ *         <item>Homie</item>
+ *         <item correct="true">Never told ya</item>
+ *         <item>Buddy</item>
+ *     </answers>
+ * </quiz>
+ * }</pre>
+ */
 @Template(id = "list")
 public class ListTemplate {
 

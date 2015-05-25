@@ -29,6 +29,7 @@ public class YamlMetaParser implements MetadataParser {
         return generateCollection((Map) yamlReader.read());
     }
 
+    @SuppressWarnings("unchecked")
     private QuestCollection generateCollection(Map meta) {
         QuestCollection qc = new QuestCollection();
         FieldProvider defaults = defaultsFactory.getCollectionDefaults();
@@ -49,6 +50,7 @@ public class YamlMetaParser implements MetadataParser {
         return qc;
     }
 
+    @SuppressWarnings("unchecked")
     private Quest generateQuest(int index, Map meta) {
         Quest q = new Quest();
         FieldProvider defaults = defaultsFactory.getQuestDefaults(index);

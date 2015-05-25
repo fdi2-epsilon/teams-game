@@ -1,7 +1,5 @@
 package eu.unipv.epsilon.enigma;
 
-import android.content.Context;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
@@ -12,33 +10,29 @@ import com.google.samples.apps.iosched.ui.widget.SlidingTabLayout;
 import eu.unipv.epsilon.enigma.quest.QuestCollection;
 import eu.unipv.epsilon.enigma.status.QuestCollectionStatus;
 import eu.unipv.epsilon.enigma.ui.quiz.QuizFragmentPageAdapter;
+import eu.unipv.epsilon.enigma.ui.quiz.QuizStatusTabColorizer;
+import eu.unipv.epsilon.enigma.ui.util.CollectionDataBundle;
 
-/** Shows the quiz that is currently played. */
+/** Shows the quiz that is currently played in a fragment and allows navigation between quizzes using tabs. */
 public class QuizActivity extends AppCompatActivity {
 
-    public static final String PARAM_QUESTCOLLECTION = "param_questcollection";
+    public static final String PARAM_COLLECTION_ID = QuizActivity.class.getName() + ":param_collection_id";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_quiz);
 
-        // Initialize toolbar
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-
-        // Enable "up" button
+        // Initialize toolbar and enable "up" navigation
+        setSupportActionBar((Toolbar) findViewById(R.id.toolbar));
         assert getSupportActionBar() != null;
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        QuestCollection collection = (QuestCollection) getIntent().getSerializableExtra(PARAM_QUESTCOLLECTION);
-        setTitle(collection.getTitle());
+        // Get quest collection from intent to display its saved data and update the view
+        CollectionDataBundle bundle = getCollectionArgument();
 
-        // Get collection saved progression data
-        QuestCollectionStatus collectionStatus = new QuestCollectionStatus(
-                getSharedPreferences(getString(R.string.app_name), Context.MODE_PRIVATE), collection.getId());
-
-        setupTabs(collection, collectionStatus);
+        setTitle(bundle.getCollection().getTitle());
+        setupTabs(bundle.getCollection(), bundle.getCollectionStatus());
     }
 
     @Override
@@ -63,29 +57,26 @@ public class QuizActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    private void setupTabs(final QuestCollection collection, final QuestCollectionStatus collectionStatus) {
+    private CollectionDataBundle getCollectionArgument() {
+        String collectionId = getIntent().getStringExtra(PARAM_COLLECTION_ID);
+        if (collectionId == null)
+            throw new IllegalArgumentException("PARAM_COLLECTION_ID not set");
 
-        //Get the ViewPager and set its PageAdapter so that it can display items
+        return CollectionDataBundle.fromId((EnigmaApplication) getApplication(), collectionId);
+    }
+
+    private void setupTabs(QuestCollection collection, QuestCollectionStatus collectionStatus) {
         ViewPager viewPager = (ViewPager) findViewById(R.id.viewpager);
-        viewPager.setAdapter(new QuizFragmentPageAdapter(getSupportFragmentManager(), collection, collectionStatus));
-
-        //Give the SlidingTabLayout the ViewPager
         SlidingTabLayout slidingTabs = (SlidingTabLayout) findViewById(R.id.sliding_tabs);
 
+        // Configure sliding tabs style
         slidingTabs.setCustomTabView(R.layout.quiz_tab_element, R.id.text);
+        slidingTabs.setDistributeEvenly(false); // Keep same width for all tabs
 
-        //Center the tabs in the layout
-        slidingTabs.setDistributeEvenly(false);
+        // Set adapters
+        viewPager.setAdapter(new QuizFragmentPageAdapter(getSupportFragmentManager(), collection));
         slidingTabs.setViewPager(viewPager);
-
-        //customize tab color
-        slidingTabs.setCustomTabColorizer(new SlidingTabLayout.TabColorizer() {
-            @Override
-            public int getIndicatorColor(int position) {
-                // slidingTabs.invalidate(); should be called to update the strip color in real time
-                return collectionStatus.isSolved(position + 1) ? Color.YELLOW : Color.WHITE;
-            }
-        });
+        slidingTabs.setCustomTabColorizer(new QuizStatusTabColorizer(collectionStatus));
     }
 
 }

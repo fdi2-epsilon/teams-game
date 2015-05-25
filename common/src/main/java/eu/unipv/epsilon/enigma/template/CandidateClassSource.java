@@ -14,6 +14,23 @@ import java.util.Iterator;
  * The algorithm should return candidate classes which will then be annotation-filtered by
  * the {@link TemplateRegistry} itself.
  *
+ * <h2>Impotent rage!</h2>
+ * <p>
+ *   <b>TL;DR</b> - I do not want to spend more time with classpath scanning / class loading in Android
+ *   due to frustrations while debugging the device emulator.
+ * </p>
+ * <p>
+ *   The ONLY actual maintainer of this project does not have a real Android device and is waiting for
+ *   a legitimate successor of the Nexus 5 to get some hardware...
+ *   Until then I am struck with the emulator, and I REFUSE to wait 15 minutes to start a simple debug session
+ *   every single time only because my Desktop CPU is STILL a Core 2 QX9650.
+ * </p>
+ * <p>
+ *   <b><i>So, these classes can be structured better, package scanners can implement a single interface,
+ *   but this requires some time-expensive research using that almighty-quantum-emulator.</i></b> Especially
+ *   in a way to get 'classes.dex' back from a PathClassLoader.
+ * </p>
+ *
  * <h3>Implementation note</h3>
  * Any implementer establishes an "is-a" relationship with this interface, so the "abstract class" specifier
  * is intended. Since we are here, we also manage exception handling by returning empty iterators on errors.
@@ -31,6 +48,14 @@ public abstract class CandidateClassSource {
     }
 
     protected CandidateClassSource(GameAssetsSystem assetsSystem) {
+        this.assetsSystem = assetsSystem;
+    }
+
+    public GameAssetsSystem getAssetsSystem() {
+        return assetsSystem;
+    }
+
+    public void setAssetsSystem(GameAssetsSystem assetsSystem) {
         this.assetsSystem = assetsSystem;
     }
 
@@ -66,14 +91,6 @@ public abstract class CandidateClassSource {
             LOG.warn("No classes found or error, returning empty iterator", e);
             return Collections.emptyIterator();
         }
-    }
-
-    public GameAssetsSystem getAssetsSystem() {
-        return assetsSystem;
-    }
-
-    public void setAssetsSystem(GameAssetsSystem assetsSystem) {
-        this.assetsSystem = assetsSystem;
     }
 
     /** Called to find built-in candidate classes. */

@@ -64,7 +64,7 @@ public class GameAssetsSystemTest {
 
     @Test
     public void testMetadata() throws IOException {
-        QuestCollection questCollection = system.getCollectionContainer(cid).loadCollectionMeta();
+        QuestCollection questCollection = system.getCollectionContainer(cid).getCollectionMeta();
 
         // Size test
         assertEquals("Collection size must be 3",
@@ -108,7 +108,7 @@ public class GameAssetsSystemTest {
     @Test
     public void testURLStreams() throws IOException {
         CollectionContainer container = system.getCollectionContainer(cid);
-        QuestCollection qc = container.loadCollectionMeta();
+        QuestCollection qc = container.getCollectionMeta();
 
         URL url = qc.get(1).getMainDocumentUrl();
 

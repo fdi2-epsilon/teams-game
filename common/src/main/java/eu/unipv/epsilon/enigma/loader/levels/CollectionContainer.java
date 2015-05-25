@@ -12,6 +12,7 @@ import java.io.IOException;
 public abstract class CollectionContainer {
 
     private boolean closed = false;
+    private QuestCollection collectionMeta = null;
 
     /**
      * Releases any system resources associated with this collection container and marks it as closed.
@@ -38,7 +39,13 @@ public abstract class CollectionContainer {
      * @throws MetadataNotFoundException if the contained collection does not have any metadata (which it should)
      * @throws IOException if there was an error opening the file
      */
-    public abstract QuestCollection loadCollectionMeta() throws IOException;
+    public final QuestCollection getCollectionMeta() throws IOException {
+        if (collectionMeta == null)
+            collectionMeta = loadCollectionMeta();
+        return collectionMeta;
+    }
+
+    protected abstract QuestCollection loadCollectionMeta() throws IOException;
 
     /**
      * Checks if this container holds an asset identified by its absolute path.

@@ -16,7 +16,8 @@ import java.net.URLDecoder;
 import java.util.Enumeration;
 
 /**
- * Instrumentation used by {@link PackageScanner} to get appropriate scanning algorithms.
+ * Instrumentation used by {@link JvmPackageScanner} to get appropriate scanning algorithms
+ * depending on the class source (Jar, Directories, etc...).
  */
 public class PackageScanTools {
 

@@ -7,11 +7,12 @@ import java.util.LinkedList;
 import java.util.List;
 
 /**
- * Utility facade to class retrieval algorithm given its containing package.
+ * Utility facade to find classes filtering them by their containing package.
+ * Intended to run on the Java Virtual Machine (does not work on Android)
  */
-public class PackageScanner {
+public class JvmPackageScanner {
 
-    private PackageScanner() { }
+    private JvmPackageScanner() { }
 
     /**
      * Attempts to list all the classes in the specified package as determined by the context class loader.

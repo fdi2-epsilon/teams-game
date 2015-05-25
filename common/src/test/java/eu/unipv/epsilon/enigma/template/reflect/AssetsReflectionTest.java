@@ -6,7 +6,7 @@ import eu.unipv.epsilon.enigma.loader.levels.protocol.ClasspathURLStreamHandler;
 import eu.unipv.epsilon.enigma.loader.levels.protocol.LevelAssetsURLConnection;
 import eu.unipv.epsilon.enigma.loader.levels.protocol.LevelAssetsURLStreamHandler;
 import eu.unipv.epsilon.enigma.template.api.DocumentGenerationEvent;
-import eu.unipv.epsilon.enigma.template.reflect.classfinder.PackageScanner;
+import eu.unipv.epsilon.enigma.template.reflect.classfinder.JvmPackageScanner;
 import org.junit.Test;
 
 import java.io.File;
@@ -25,7 +25,7 @@ public class AssetsReflectionTest {
 
     @Test
     public void testLocalPackageScan() throws ClassNotFoundException {
-        List<Class<?>> elements = PackageScanner.getClassesInPackage("eu.unipv.epsilon.enigma.loader.levels.protocol");
+        List<Class<?>> elements = JvmPackageScanner.getClassesInPackage("eu.unipv.epsilon.enigma.loader.levels.protocol");
 
         assertTrue("The loaded package contain the right classes",
                 elements.contains(LevelAssetsURLStreamHandler.class));
@@ -38,8 +38,8 @@ public class AssetsReflectionTest {
     @Test
     public void testCollectionPackageScan() throws ClassNotFoundException {
         ClassLoader cl = new AssetsClassLoader(system, "testpkg04_tplremote");
-        List<Class<?>> elementsGlobal = PackageScanner.getClassesInPackage("", cl, false);
-        List<Class<?>> elementsLocal = PackageScanner.getClassesInPackage("", cl, true);
+        List<Class<?>> elementsGlobal = JvmPackageScanner.getClassesInPackage("", cl, false);
+        List<Class<?>> elementsLocal = JvmPackageScanner.getClassesInPackage("", cl, true);
 
         // elementsGlobal should contain both application and collection defined classes
         assertTrue(elementsGlobal.contains(GameAssetsSystem.class));

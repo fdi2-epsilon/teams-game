@@ -9,6 +9,11 @@ import org.junit.Test;
 import java.io.*;
 
 public class TemplateClassesTest {
+
+    //                TODO: WHAT THE HECK OF AUTOMATED TEST IS THIS? DO WE EVEN CHECK FOR OUTPUTS?
+    //       Only temporary, the grid template isn't even meant to stay here, we (I) may fix this after 26-05
+    // << we can perfectly see that part of this code is mine because I am the only one english-speaking guy here >>
+
     private final File baseDir = new File(getClass().getResource("/collections_pool").getPath());
     private final GameAssetsSystem assetsSystem = new GameAssetsSystem(new DirectoryPool(baseDir));
 

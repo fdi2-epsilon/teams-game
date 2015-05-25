@@ -16,7 +16,13 @@ import java.net.URLStreamHandler;
 import java.net.URLStreamHandlerFactory;
 import java.util.*;
 
+/**
+ * Organizes access to a stack of {@link CollectionsPool} layers and provides an URL scheme to access the content
+ * of containers held in them, registered on construction.
+ */
 public class GameAssetsSystem {
+
+    // TODO: 'templateServer' can be... safely moved out of this class
 
     private static final Logger LOG = LoggerFactory.getLogger(GameAssetsSystem.class);
 
@@ -24,7 +30,7 @@ public class GameAssetsSystem {
     private List<CollectionsPool> sources;
 
     public GameAssetsSystem() {
-        // Linked list is a better than ArrayList in this case
+        // Linked list is a better than ArrayList in this case, since we only do not-random traversals
         sources = new LinkedList<>();
     }
 

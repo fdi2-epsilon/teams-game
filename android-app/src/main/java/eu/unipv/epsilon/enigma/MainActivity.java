@@ -1,82 +1,54 @@
 package eu.unipv.epsilon.enigma;
 
-import android.content.Context;
-import android.os.Build;
+import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.os.Environment;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
-import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
-import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import eu.unipv.epsilon.enigma.loader.levels.exception.MetadataNotFoundException;
-import eu.unipv.epsilon.enigma.loader.levels.pool.DirectoryPool;
 import eu.unipv.epsilon.enigma.quest.QuestCollection;
-import eu.unipv.epsilon.enigma.template.DalvikCandidateClassSource;
 import eu.unipv.epsilon.enigma.ui.main.CollectionsViewAdapter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends TranslucentControlsActivity {
 
     private static final Logger LOG = LoggerFactory.getLogger(MainActivity.class);
+    public static final String CONFIG_FIRST_START = "firstStart";
 
-    private RecyclerView collectionsView;
-
-    private GameAssetsSystem assetsSystem;
+    private CollectionsViewAdapter viewAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        LOG.info("Activity started, display density: {}, locale: {}",
-                getResources().getDisplayMetrics().density, getResources().getConfiguration().locale.getLanguage());
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        locateViews(R.id.toolbar, R.id.main_collections_view);
 
-        // Initialize toolbar
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);   // Title assigned by manifest
+        LOG.info("Activity created, display density: {}, locale: {}",
+                getResources().getDisplayMetrics().density, getResources().getConfiguration().locale.getLanguage());
 
-        // Create a new local data source to load any built-in collections
-        File collectionsDir = new File(getFilesDir(), "collections");
-        LOG.info("Internal collections path: " + collectionsDir.getPath());
+        // Initialize toolbar, its title gets assigned by activity name in manifest
+        setSupportActionBar(toolbarView);
 
-        // Do the same for external storage so users can add new collections on-the-go
-        String state = Environment.getExternalStorageState();
-        if (Environment.MEDIA_MOUNTED.equals(state) || Environment.MEDIA_MOUNTED_READ_ONLY.equals(state)) {
-            // External storage is readable
-            File extDocsDir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOCUMENTS);
-            File extCollectionsDir = new File(extDocsDir, getString(R.string.app_name) + '/' + "Collections");
-
-            LOG.info("External collections path: " + extCollectionsDir.getPath());
-            if (!extCollectionsDir.mkdirs())
-                LOG.error("External collections directory not created");
-
-            assetsSystem = new GameAssetsSystem(new DirectoryPool(collectionsDir), new DirectoryPool(extCollectionsDir));
-        } else {
-            LOG.info("External storage is not accessible");
-            assetsSystem = new GameAssetsSystem(new DirectoryPool(collectionsDir));
-        }
-
-        // Initialize Templating system
-        assetsSystem.createTemplateServer(new DalvikCandidateClassSource(this, assetsSystem));
-
-        // Initialize view
+        // Initialize and populate view
         initializeElementsView();
-
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            // Semitransparent UI configuration, only on compatible devices
-            GuiHelper.extendMainActivityToSystemArea(this, toolbar, collectionsView);
-        }
+        populateMainView();
     }
 
-    /** Generate a popup menu to navigate toward the quiz activity. */
+    @Override
+    protected void onStop() {
+        super.onStop();
+        LOG.debug("Activity stopped, saving preferences...");
+        SharedPreferences.Editor prefs = getPreferences(MODE_PRIVATE).edit();
+        prefs.putBoolean(CONFIG_FIRST_START, viewAdapter.getFirstStartCardVisible());
+        prefs.apply();
+    }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -100,27 +72,24 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void initializeElementsView() {
-        collectionsView = (RecyclerView) findViewById(R.id.main_collections_view);
+        // This improves performance if content changes do not alter the RecyclerView's layout size
+        recyclerView.setHasFixedSize(true);
 
-        // Use this setting to improve performance if you know that changes
-        // in the content do not change the layout size of the RecyclerView.
-        collectionsView.setHasFixedSize(true);
-
-        // Use a staggered layout manager
-        collectionsView.setLayoutManager(new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL));
-
-        collectionsView.setItemAnimator(new DefaultItemAnimator());
-
-        // Populate with data
-        populateMainView();
+        // Use a staggered layout manager and animate changes (i.e. removal of first start card)
+        recyclerView.setLayoutManager(new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL));
+        recyclerView.setItemAnimator(new DefaultItemAnimator());
     }
 
     private void populateMainView() {
+        EnigmaApplication application = (EnigmaApplication) getApplication();
+        GameAssetsSystem assetsSystem = application.getAssetsSystem();
+
         List<QuestCollection> collections = new ArrayList<>();
 
+        // Fill a list with all available collections info
         for (String collectionId : assetsSystem.getAvailableCollectionIDs()) {
             try {
-                collections.add(assetsSystem.getCollectionContainer(collectionId).loadCollectionMeta());
+                collections.add(assetsSystem.getCollectionContainer(collectionId).getCollectionMeta());
             } catch (MetadataNotFoundException e) {
                 LOG.error("Collection metadata not found", e);
             } catch (IOException e) {
@@ -128,8 +97,9 @@ public class MainActivity extends AppCompatActivity {
             }
         }
 
-        collectionsView.setAdapter(new CollectionsViewAdapter(collections,
-                getSharedPreferences(getString(R.string.app_name), Context.MODE_PRIVATE)));
+        viewAdapter = new CollectionsViewAdapter(collections, application.getGameStatus());
+        viewAdapter.setFirstStartCardVisible(getPreferences(MODE_PRIVATE).getBoolean(CONFIG_FIRST_START, true));
+        recyclerView.setAdapter(viewAdapter);
     }
 
 }

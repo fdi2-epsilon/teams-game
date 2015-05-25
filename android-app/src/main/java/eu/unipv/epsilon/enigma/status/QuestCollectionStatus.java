@@ -45,16 +45,6 @@ public class QuestCollectionStatus implements Serializable {
         solvedQuests.add(String.valueOf(questIndex));
     }
 
-    /**
-     * Called by the view code to get an interface to alter quest-specific status.
-     *
-     * This does not take advantage of polymorphism and return directly AndroidQuestViewInterface instead of
-     * QuestViewInterface, this is because only the Android version has the required Android-dependant annotations.
-     */
-    public AndroidQuestViewInterface getQuestViewInterface(int questIndex) {
-        return new AndroidQuestViewInterface(this, questIndex);
-    }
-
     /** Stores the actual progress in this collection to disk. */
     public void flush() {
         storeData(solvedQuests);
