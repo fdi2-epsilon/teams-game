@@ -13,7 +13,7 @@ import eu.unipv.epsilon.enigma.ui.quiz.QuizFragmentPageAdapter;
 import eu.unipv.epsilon.enigma.ui.quiz.QuizStatusTabColorizer;
 import eu.unipv.epsilon.enigma.ui.util.CollectionDataBundle;
 
-/** Shows the quiz that is currently played. */
+/** Shows the quiz that is currently played in a fragment and allows navigation between quizzes using tabs. */
 public class QuizActivity extends AppCompatActivity {
 
     public static final String PARAM_COLLECTION_ID = QuizActivity.class.getName() + ":param_collection_id";

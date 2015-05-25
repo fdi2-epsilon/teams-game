@@ -17,7 +17,8 @@ import eu.unipv.epsilon.enigma.ui.util.InterceptingWebViewClient;
 import java.net.URL;
 
 /**
- * This fragment displays the page number passed as an argument to {@link PageFragment#newInstance(String, int)}.
+ * Fragment containing an HTML quiz view.
+ * ID and index inside the collection are passed using {@link #newInstance(String, int)}.
  */
 public class PageFragment extends Fragment {
 
