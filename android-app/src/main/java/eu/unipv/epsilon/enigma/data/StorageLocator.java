@@ -2,6 +2,7 @@ package eu.unipv.epsilon.enigma.data;
 
 import android.content.Context;
 import android.os.Environment;
+import eu.unipv.epsilon.enigma.R;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -49,10 +50,10 @@ public class StorageLocator {
         if (!isExternalStorageAccessible())
             return null;
 
-        // External storage is readable
+        // External storage is readable, get path to collections directory
         File extDocsDir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOCUMENTS);
-        File extCollectionsDir = new File(extDocsDir,
-                 + '/' + EXTERNAL_COLLECTIONS_DIR);
+        File extCollectionsDir = new File(extDocsDir, String.format("%s/%s",
+                context.getString(R.string.app_name), EXTERNAL_COLLECTIONS_DIR));
 
         // Create the directory tree if it does not exist
         if (!extCollectionsDir.exists()) {
