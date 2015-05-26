@@ -70,6 +70,12 @@ public class PageFragment extends Fragment {
             mViewInterface.flushData();
     }
 
+    @Override
+    public void onPause() {
+        super.onPause();
+        mViewInterface.flushData();
+    }
+
     @Nullable
     @Override
     @SuppressLint("SetJavaScriptEnabled")

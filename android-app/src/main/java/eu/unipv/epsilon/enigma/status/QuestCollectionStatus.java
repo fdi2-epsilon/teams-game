@@ -1,12 +1,16 @@
 package eu.unipv.epsilon.enigma.status;
 
 import android.content.SharedPreferences;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 
 public class QuestCollectionStatus implements Serializable {
+
+    private static final Logger LOG = LoggerFactory.getLogger(QuestCollectionStatus.class);
 
     public static final String STATUS_KEY_PREFIX = "gamestatus_";
 
@@ -57,9 +61,16 @@ public class QuestCollectionStatus implements Serializable {
 
     private void storeData(Set<String> data) {
         // data == 'null' is equivalent to remove the key from the store, see 'putStringSet' for reference
-        statusStore.edit()
-                .putStringSet(getStoreKey(), data)
-                .apply();
+
+        String key = getStoreKey();
+
+        // TODO: Troubleshoot why we have to remove the key to actually store changes
+        //       I think that the Android API checks for value instance ptr. or something like that (hashcode?)
+        SharedPreferences.Editor edit = statusStore.edit();
+        edit.remove(key).apply();
+        edit.putStringSet(key, data).apply();
+
+        LOG.info("Saved {}: {}", key, data.toString());
     }
 
     public String getStoreKey() {
