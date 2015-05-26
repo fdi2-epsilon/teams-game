@@ -23,10 +23,26 @@
             100% { transform: scale(1.0); }
         }
 
+        .fullscreen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+
+        #bg {
+            background: linear-gradient(#eee, #ccc);
+        }
+
+        #fg {
+            background-color: rgba(0, 0, 0, .35);
+            visibility: hidden;
+        }
+
         body {
             text-align: center;
             font-family: 'Open Sans', sans-serif;
-            background: linear-gradient(#eee, #ccc);
         }
 
         h1 {
@@ -57,14 +73,20 @@
         li:hover { background-color: rgba(0, 0, 0, .12); }
         li.success, li.success:hover { background-color: greenyellow;}
         li.failure, li.failure:hover { background-color: red; }
-		
-		li.success {-webkit-animation: inOut .5s ease-in-out;}
+
+		li.success { -webkit-animation: inOut .5s ease-in-out; }
 
     </style>
 
     <!-- JavaScript here, don't worry: it's only text, random text -->
     <script>
         'use strict';
+
+        window.addEventListener('load', function () {
+            // Add overlay if quiz is complete
+            if (typeof enigma !== 'undefined' && enigma.getComplete())
+                document.getElementById('fg').style.visibility = 'visible';
+        });
 
         // The function called on page load, will be registered later at the end of the script.
         function loadProc() {
@@ -81,6 +103,7 @@
         // Function called on exact answer
         function cbSuccess() {
             if (typeof enigma === 'undefined') {
+                // We are not running inside the app
                 var title = document.querySelector('h1');
                 title.innerHTML = '- Wrong API Error -';
                 title.style.color = 'red';
@@ -107,9 +130,15 @@
     <!-- This page is very clean now, keep in mind that the JavaScript and CSS above can
          be moved to an external file so that this HTML file can be less than 40 lines. -->
 
-    <h1>${QUIZ_TITLE}</h1>
+    <div id="bg" class="fullscreen">
+        <!-- Questionable elements position -->
 
-    <ul id="answers">${QUIZ_ANSWERS}</ul>
+        <h1>${QUIZ_TITLE}</h1>
+
+        <ul id="answers">${QUIZ_ANSWERS}</ul>
+    </div>
+
+    <div id="fg" class="fullscreen"></div>
 
 </body>
 </html>
