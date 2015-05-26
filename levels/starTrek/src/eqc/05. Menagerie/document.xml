@@ -1,0 +1,8 @@
+<quiz template="list">
+    <title>Nell'omonimo episodio della prima stagione (l'unico diviso in due) un membro dell'equipaggio viene accusato di ammutinamento. Di chi si tratta?</title>
+    <answers>
+        <item correct="true">Spock</item>
+        <item>Leonard McCoy</item>
+        <item>Janice Rand</item>
+    </answers>
+</quiz>
