@@ -7,6 +7,7 @@ import eu.unipv.epsilon.enigma.loader.levels.protocol.LevelAssetsURLConnection;
 import eu.unipv.epsilon.enigma.loader.levels.protocol.LevelAssetsURLStreamHandler;
 import eu.unipv.epsilon.enigma.template.api.DocumentGenerationEvent;
 import eu.unipv.epsilon.enigma.template.reflect.classfinder.JvmPackageScanner;
+import eu.unipv.epsilon.enigma.template.reflect.classfinder.PackageScanner;
 import org.junit.Test;
 
 import java.io.File;
@@ -19,13 +20,13 @@ import static org.junit.Assert.assertTrue;
 
 public class AssetsReflectionTest {
 
-
     private final File baseDir = new File(getClass().getResource("/collections_pool").getPath());
+    private final PackageScanner packageScanner = new JvmPackageScanner();
     private final GameAssetsSystem system = new GameAssetsSystem(new DirectoryPool(baseDir));
 
     @Test
     public void testLocalPackageScan() throws ClassNotFoundException {
-        List<Class<?>> elements = JvmPackageScanner.getClassesInPackage("eu.unipv.epsilon.enigma.loader.levels.protocol");
+        List<Class<?>> elements = packageScanner.getClassesInPackage("eu.unipv.epsilon.enigma.loader.levels.protocol");
 
         assertTrue("The loaded package contain the right classes",
                 elements.contains(LevelAssetsURLStreamHandler.class));
@@ -38,8 +39,8 @@ public class AssetsReflectionTest {
     @Test
     public void testCollectionPackageScan() throws ClassNotFoundException {
         ClassLoader cl = new AssetsClassLoader(system, "testpkg04_tplremote");
-        List<Class<?>> elementsGlobal = JvmPackageScanner.getClassesInPackage("", cl, false);
-        List<Class<?>> elementsLocal = JvmPackageScanner.getClassesInPackage("", cl, true);
+        List<Class<?>> elementsGlobal = packageScanner.getClassesInPackage("", cl, false);
+        List<Class<?>> elementsLocal = packageScanner.getClassesInPackage("", cl, true);
 
         // elementsGlobal should contain both application and collection defined classes
         assertTrue(elementsGlobal.contains(GameAssetsSystem.class));

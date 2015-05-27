@@ -7,21 +7,13 @@ import java.util.LinkedList;
 import java.util.List;
 
 /**
- * Utility facade to find classes filtering them by their containing package.
+ * Utility {@link PackageScanner} to find classes filtering them by their containing package.
  * Intended to run on the Java Virtual Machine (does not work on Android)
  */
-public class JvmPackageScanner {
+public class JvmPackageScanner implements PackageScanner {
 
-    private JvmPackageScanner() { }
-
-    /**
-     * Attempts to list all the classes in the specified package as determined by the context class loader.
-     *
-     * @param packageName The name of the package to search classes in
-     * @return a list of classes found within the given package
-     * @throws ClassNotFoundException
-     */
-    public static List<Class<?>> getClassesInPackage(String packageName) throws ClassNotFoundException {
+    @Override
+    public List<Class<?>> getClassesInPackage(String packageName) throws ClassNotFoundException {
         ClassLoader contextClassLoader = Thread.currentThread().getContextClassLoader();
         if (contextClassLoader == null)
             throw new ClassNotFoundException("Cannot get the context class loader");
@@ -29,19 +21,8 @@ public class JvmPackageScanner {
         return getClassesInPackage(packageName, contextClassLoader, false);
     }
 
-    /**
-     * Attempts to list all the classes in the specified package as determined by the given class loader.
-     *
-     * Disabling recursive scans (i.e. walk through the class loader hierarchy) requires security permissions
-     * to access-transform {@link ClassLoader#findResources(String)} to {@code public}.
-     *
-     * @param packageName The name of the package to search classes in
-     * @param classLoader The class loader used to find resources and load classes
-     * @param local If the scan should not be extended also to the parent class loaders, false by default
-     * @return a list of classes found within the given package
-     * @throws ClassNotFoundException if there was a problem while searching for classes
-     */
-    public static List<Class<?>> getClassesInPackage(
+    @Override
+    public List<Class<?>> getClassesInPackage(
             String packageName, ClassLoader classLoader, boolean local) throws ClassNotFoundException {
 
         if (classLoader == null)

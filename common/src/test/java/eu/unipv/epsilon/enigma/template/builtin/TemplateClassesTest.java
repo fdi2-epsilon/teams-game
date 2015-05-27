@@ -2,8 +2,9 @@ package eu.unipv.epsilon.enigma.template.builtin;
 
 import eu.unipv.epsilon.enigma.GameAssetsSystem;
 import eu.unipv.epsilon.enigma.loader.levels.pool.DirectoryPool;
-import eu.unipv.epsilon.enigma.template.JvmCandidateClassSource;
+import eu.unipv.epsilon.enigma.template.JvmAssetsClassLoaderFactory;
 import eu.unipv.epsilon.enigma.template.TemplateServer;
+import eu.unipv.epsilon.enigma.template.reflect.classfinder.JvmPackageScanner;
 import org.junit.Test;
 
 import java.io.*;
@@ -19,7 +20,7 @@ public class TemplateClassesTest {
 
     public TemplateClassesTest() {
         // We want to serve dynamic content using JVM reflection (on Android should be Dalvik)
-        assetsSystem.createTemplateServer(new JvmCandidateClassSource(assetsSystem));
+        assetsSystem.createTemplateServer(new JvmPackageScanner(), new JvmAssetsClassLoaderFactory(assetsSystem));
     }
 
     @Test

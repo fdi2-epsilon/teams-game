@@ -4,9 +4,10 @@ import eu.unipv.epsilon.enigma.loader.levels.CollectionContainer;
 import eu.unipv.epsilon.enigma.loader.levels.pool.CollectionsPool;
 import eu.unipv.epsilon.enigma.loader.levels.protocol.ClasspathURLStreamHandler;
 import eu.unipv.epsilon.enigma.loader.levels.protocol.LevelAssetsURLStreamHandler;
-import eu.unipv.epsilon.enigma.template.CandidateClassSource;
+import eu.unipv.epsilon.enigma.template.AssetsClassLoaderFactory;
 import eu.unipv.epsilon.enigma.template.TemplateRegistry;
 import eu.unipv.epsilon.enigma.template.TemplateServer;
+import eu.unipv.epsilon.enigma.template.reflect.classfinder.PackageScanner;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -43,8 +44,9 @@ public class GameAssetsSystem {
         registerURLStreamHandlers();
     }
 
-    public void createTemplateServer(CandidateClassSource classSource) {
-        this.templateServer = new TemplateServer(new TemplateRegistry(classSource));
+    // TODO: As stated before we should move this out of GameAssetsSystem
+    public void createTemplateServer(PackageScanner packageScanner, AssetsClassLoaderFactory classLoaderFactory) {
+        this.templateServer = new TemplateServer(new TemplateRegistry(packageScanner, classLoaderFactory));
     }
 
     public TemplateServer getTemplateServer() {
