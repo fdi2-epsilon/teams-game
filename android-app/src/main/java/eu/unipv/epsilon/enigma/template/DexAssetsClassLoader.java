@@ -10,6 +10,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.*;
+import java.util.Map;
+import java.util.WeakHashMap;
 
 /**
  * Dalvik class loader for classes inside {@link CollectionContainer}s.
@@ -20,6 +22,8 @@ public class DexAssetsClassLoader extends BaseAssetsClassLoader {
 
     public static final String CLASSES_DEX_NAME = "classes.dex";
     public static final String CLASSES_DEX_OPTIMIZED_NAME = "classes.odex";
+
+    private Map<String, Class> cache = new WeakHashMap<>();
 
     /** Extracted dex cache directory */
     private File cacheDir;
@@ -36,17 +40,25 @@ public class DexAssetsClassLoader extends BaseAssetsClassLoader {
         try {
             setupClassLoader(context, assetsSystem);
         } catch (IOException e) {
-            LOG.error("Cannot initialize class loading, treating collection as classless", e);
+            LOG.info("Cannot initialize class loading, treating collection as classless", e);
             hasClasses = false;
         }
     }
 
     @Override
     protected Class<?> findClass(String name) throws ClassNotFoundException {
+        LOG.info("Trying to lookup class \"{}\" in collection \"{}\"", name, collectionId);
+
+        // Return a cached class if exists
+        if (cache.containsKey(name))
+            return cache.get(name);
+
         if (!hasClasses)
             throw new ClassNotFoundException("This collection does not contain classes at all!");
 
-        return dexClassLoader.loadClass(name);
+        Class<?> clazz = dexClassLoader.loadClass(name);
+        cache.put(name, clazz);
+        return clazz;
     }
 
     public String getDexPath() {
