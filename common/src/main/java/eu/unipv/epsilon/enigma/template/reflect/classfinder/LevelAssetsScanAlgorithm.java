@@ -39,7 +39,7 @@ public class LevelAssetsScanAlgorithm extends ScanAlgorithm {
     @Override
     public List<Class<?>> scan(String packageName) throws ClassNotFoundException {
         // Use the algorithm for archives passing the inner directory to search in
-        return archiveScanAlgorithm.scan(packageName, AssetsClassLoader.EQC_CLASSES_PATH);
+        return archiveScanAlgorithm.scan(packageName, AssetsClassLoader.EQC_CLASS_RESOURCES_PATH);
     }
 
 }
