@@ -36,7 +36,7 @@ public class TemplateClassesTest {
                         "</answers>"+
                 "</quiz>";
 
-        InputStream out = ts.getDynamicContentStream(new ByteArrayInputStream(xmlDoc.getBytes()), null);
+        InputStream out = ts.loadDynamicContent(new ByteArrayInputStream(xmlDoc.getBytes()), null).getResponseStream();
         String outString = buildStringFromStream(out);
         System.out.println(outString);
     }
@@ -63,7 +63,7 @@ public class TemplateClassesTest {
                         "</grid>"+
                 "</quiz>";
 
-        InputStream out = ts.getDynamicContentStream(new ByteArrayInputStream(xmlDoc.getBytes()), null);
+        InputStream out = ts.loadDynamicContent(new ByteArrayInputStream(xmlDoc.getBytes()), null).getResponseStream();
         String outString = buildStringFromStream(out);
         System.out.println(outString);
 

@@ -2,6 +2,8 @@ package eu.unipv.epsilon.enigma.ui.util;
 
 import android.annotation.TargetApi;
 import android.webkit.*;
+import eu.unipv.epsilon.enigma.loader.levels.protocol.ClasspathURLStreamHandler;
+import eu.unipv.epsilon.enigma.loader.levels.protocol.LevelAssetsURLStreamHandler;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -30,7 +32,8 @@ public class InterceptingWebViewClient extends WebViewClient {
     @SuppressWarnings("deprecation")
     public WebResourceResponse shouldInterceptRequest(WebView view, String url) {
 
-        if (url.startsWith("eqc:") || url.startsWith("assets:")) {
+        if (url.startsWith(LevelAssetsURLStreamHandler.PROTOCOL_NAME) ||
+                url.startsWith(ClasspathURLStreamHandler.PROTOCOL_NAME)) {
             try {
                 String mime;
                 if (url.lastIndexOf('.') > url.lastIndexOf('/')) {

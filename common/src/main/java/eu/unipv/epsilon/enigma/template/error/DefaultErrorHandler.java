@@ -1,5 +1,6 @@
 package eu.unipv.epsilon.enigma.template.error;
 
+import eu.unipv.epsilon.enigma.loader.levels.protocol.ClasspathURLStreamHandler;
 import eu.unipv.epsilon.enigma.template.util.MappedValueInputStream;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -14,8 +15,10 @@ import java.net.URL;
 public class DefaultErrorHandler implements ErrorHandler {
 
     private static final Logger LOG = LoggerFactory.getLogger(DefaultErrorHandler.class);
-    private static final String PAGE_PATH = "assets:/templates/error/error_page.html";
-    private static final String PAGE_IMAGE_PATH = "assets:/templates/error/chainsaw.png";
+    private static final URL PAGE_URL =
+            ClasspathURLStreamHandler.createURL("assets/templates/error/error_page.html");
+    private static final URL PAGE_IMAGE_URL =
+            ClasspathURLStreamHandler.createURL("assets/templates/error/chainsaw.png");
 
     @Override
     public InputStream handleArgumentsParseException(Throwable exception) {
@@ -35,12 +38,12 @@ public class DefaultErrorHandler implements ErrorHandler {
     }
 
     private InputStream generateErrorPage(String pageTitle, Throwable exception) throws IOException {
-        MappedValueInputStream page = new MappedValueInputStream(new URL(PAGE_PATH).openStream());
+        MappedValueInputStream page = new MappedValueInputStream(PAGE_URL.openStream());
         page.addMacro("PAGE_TITLE", pageTitle);
         page.addMacro("DESCRIPTION", '"' + exception.getLocalizedMessage() + '"');
         page.addMacro("CAUSE", exception.getClass().getName());
         page.addMacro("MESSAGE", printThrowableStackTrace(exception));
-        page.addMacro("IMAGE_URL", PAGE_IMAGE_PATH);
+        page.addMacro("IMAGE_URL", PAGE_IMAGE_URL.toString());
         return page;
     }
 

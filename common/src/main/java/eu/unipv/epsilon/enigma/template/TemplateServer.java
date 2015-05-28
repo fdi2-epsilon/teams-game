@@ -49,9 +49,9 @@ public class TemplateServer {
      * @param argsDocumentStream an {@link InputStream} to an XML arguments document ({@code document.xml} in EQC)
      * @param docURL an optional document URL that can be used by the template processor for relative resource access,
      *               the template processor can check if this information is available
-     * @return the processed view data stream, usually an HTML page
+     * @return the processed view response, containing a stream (usually an HTML page)
      */
-    public InputStream getDynamicContentStream(InputStream argsDocumentStream, URL docURL) {
+    public DynamicContentResponse loadDynamicContent(InputStream argsDocumentStream, URL docURL) {
         // If a collection URL is passed, register that collection's templates. If we have a generic URL, probably
         // the collection with the given host is not found and we have nothing registered, so it is ok.
         if (docURL != null)
@@ -70,14 +70,13 @@ public class TemplateServer {
 
             // Return the generated output
             InputStream output = event.getResponseStream();
-            return output != null ? output : EMPTY_STREAM;
+
+            return new DynamicContentResponse(proc, output != null ? output : EMPTY_STREAM);
 
         } catch (Exception e) {
             // Catch all and handle with ErrorHandler
             InputStream errorDocumentStream = errorHandler.handleArgumentsParseException(e);
-            if (errorDocumentStream == null)
-                return EMPTY_STREAM;
-            return errorDocumentStream;
+            return new DynamicContentResponse(null, errorDocumentStream != null ? errorDocumentStream : EMPTY_STREAM);
         }
     }
 
@@ -100,6 +99,31 @@ public class TemplateServer {
         // Get the template ID (or use default)
         String templateID = argsDocument.getAttribute(ARGS_ROOT_ATTRIBUTE_TEMPLATE_ID);
         return templateRegistry.getTemplateById(templateID.isEmpty() ? DEFAULT_TEMPLATE_ID : templateID);
+    }
+
+    public static class DynamicContentResponse {
+
+        private final TemplateProcessor selectedProcessor;
+        private final InputStream responseStream;
+
+        public DynamicContentResponse(TemplateProcessor selectedProcessor, InputStream responseStream) {
+            this.selectedProcessor = selectedProcessor;
+            this.responseStream = responseStream;
+        }
+
+        public TemplateProcessor getSelectedProcessor() {
+            return selectedProcessor;
+        }
+
+        public InputStream getResponseStream() {
+            return responseStream;
+        }
+
+        public ClassLoader getResourcesClassLoader() {
+            return selectedProcessor != null
+                    ? selectedProcessor.getProcessorClassLoader()
+                    : getClass().getClassLoader();
+        }
     }
 
 }

@@ -35,6 +35,13 @@ public class TemplateProcessor {
         generationEventHandler.invoke(inst, event);
     }
 
+    /**
+     * Gets the class loader used to load this template.
+     */
+    public ClassLoader getProcessorClassLoader() {
+        return clazz.getClassLoader();
+    }
+
     private void findDocumentGenerationEventHandler() {
         // Matches the first 'EventHandler' annotated method with a 'DocumentGenerationEvent' parameter
         for (Method m : clazz.getMethods()) {

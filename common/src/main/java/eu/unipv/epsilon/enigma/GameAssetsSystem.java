@@ -80,9 +80,49 @@ public class GameAssetsSystem {
         return null;
     }
 
-    // We may want to move this somewhere else
+
+
+
+
+
+
+
+
+
+
+    // TODO: WE WANT ALL OF THE FOLLOWING somewhere else
+
+    private MyUrlHandlerFactory streamHandlerFactory;
+
+    public MyUrlHandlerFactory getStreamHandlerFactory() {
+        return streamHandlerFactory;
+    }
+
+    public static class MyUrlHandlerFactory implements URLStreamHandlerFactory {
+
+        private LevelAssetsURLStreamHandler assetsUrlHandler;
+        private ClasspathURLStreamHandler classpathUrlHandler;
+
+        public MyUrlHandlerFactory(GameAssetsSystem assetsSystem) {
+            assetsUrlHandler = new LevelAssetsURLStreamHandler(assetsSystem);
+            classpathUrlHandler = new ClasspathURLStreamHandler();
+        }
+
+        public void setResourcesClassLoader(ClassLoader classLoader) {
+            classpathUrlHandler.setClassLoader(classLoader);
+        }
+
+        @Override
+        public URLStreamHandler createURLStreamHandler(String protocol) {
+            if (protocol.equalsIgnoreCase(LevelAssetsURLStreamHandler.PROTOCOL_NAME))
+                return assetsUrlHandler;
+            if (protocol.equalsIgnoreCase(ClasspathURLStreamHandler.PROTOCOL_NAME))
+                return classpathUrlHandler;
+            return null;
+        }
+    }
+
     private void registerURLStreamHandlers() {
-        final GameAssetsSystem sys = this;
         Field factory;
 
         try {
@@ -102,20 +142,14 @@ public class GameAssetsSystem {
 
         factory.setAccessible(true);
 
-        // Clear if already registered with another AssetsSystem / URLStreamHandler
         try {
+            // Clear if already registered with another AssetsSystem / URLStreamHandler
             factory.set(null, null);
 
-            URL.setURLStreamHandlerFactory(new URLStreamHandlerFactory() {
-                @Override
-                public URLStreamHandler createURLStreamHandler(String protocol) {
-                    if (protocol.equalsIgnoreCase(LevelAssetsURLStreamHandler.PROTOCOL_NAME))
-                        return new LevelAssetsURLStreamHandler(sys);
-                    if (protocol.equalsIgnoreCase(ClasspathURLStreamHandler.PROTOCOL_NAME))
-                        return new ClasspathURLStreamHandler();
-                    return null;
-                }
-            });
+            // Register stream handler
+            streamHandlerFactory = new MyUrlHandlerFactory(this);
+            URL.setURLStreamHandlerFactory(streamHandlerFactory);
+
         } catch (IllegalAccessException e) {
             LOG.error("Unable to cleanup URLStreamHandlerFactory before registering", e);
         }

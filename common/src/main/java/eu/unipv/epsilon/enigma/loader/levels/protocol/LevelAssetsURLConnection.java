@@ -52,8 +52,13 @@ public class LevelAssetsURLConnection extends URLConnection {
         if (templateServer == null || !containerEntry.getPath().endsWith(TEMPLATE_DOCUMENT))
             return containerEntry.getStream();
 
-        return templateServer.getDynamicContentStream(containerEntry.getStream(),
-                    LevelAssetsURLStreamHandler.createURL(url.getHost(), containerEntry.getPath()));
+        TemplateServer.DynamicContentResponse response =
+                templateServer.loadDynamicContent(containerEntry.getStream(),
+                        LevelAssetsURLStreamHandler.createURL(url.getHost(), containerEntry.getPath()));
+
+        // Set the right resources class loader so that classpath based urls work even if in collection container
+        assetsSystem.getStreamHandlerFactory().setResourcesClassLoader(response.getResourcesClassLoader());
+        return response.getResponseStream();
     }
 
     @Override

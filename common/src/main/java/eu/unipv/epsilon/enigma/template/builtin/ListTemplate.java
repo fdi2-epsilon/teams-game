@@ -1,5 +1,6 @@
 package eu.unipv.epsilon.enigma.template.builtin;
 
+import eu.unipv.epsilon.enigma.loader.levels.protocol.ClasspathURLStreamHandler;
 import eu.unipv.epsilon.enigma.template.api.DocumentGenerationEvent;
 import eu.unipv.epsilon.enigma.template.api.Template;
 import eu.unipv.epsilon.enigma.template.util.MappedValueInputStream;
@@ -32,7 +33,8 @@ import java.net.URL;
 @Template(id = "list")
 public class ListTemplate {
 
-    private static final String PAGE_PATH = "assets:/templates/list/index.html";
+    private static final URL PAGE_URL =
+            ClasspathURLStreamHandler.createURL("assets/templates/list/index.html");
 
     @Template.EventHandler
     public void generate(DocumentGenerationEvent e) throws IOException {
@@ -41,7 +43,7 @@ public class ListTemplate {
 
         NodeList answers = ((Element) args.getElementsByTagName("answers").item(0)).getElementsByTagName("item");
 
-        MappedValueInputStream page = new MappedValueInputStream(new URL(PAGE_PATH).openStream());
+        MappedValueInputStream page = new MappedValueInputStream(PAGE_URL.openStream());
         page.addMacro("QUIZ_TITLE", title.getTextContent());
         page.addMacro("QUIZ_ANSWERS", createAnswersHTML(answers));
 

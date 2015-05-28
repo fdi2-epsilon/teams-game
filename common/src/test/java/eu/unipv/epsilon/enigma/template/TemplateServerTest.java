@@ -29,7 +29,7 @@ public class TemplateServerTest {
                 "    <document src=\"index.html\" />\n" +
                 "</quiz>";
 
-        InputStream out = ts.getDynamicContentStream(new ByteArrayInputStream(xmlDoc.getBytes()), null);
+        InputStream out = ts.loadDynamicContent(new ByteArrayInputStream(xmlDoc.getBytes()), null).getResponseStream();
         String outString = buildStringFromStream(out);
 
         assertTrue("\"raw\" template loaded from InputStream should throw an UnsupportedOperationException",
