@@ -57,7 +57,8 @@ public class LevelAssetsURLConnection extends URLConnection {
                         LevelAssetsURLStreamHandler.createURL(url.getHost(), containerEntry.getPath()));
 
         // Set the right resources class loader so that classpath based urls work even if in collection container
-        assetsSystem.getStreamHandlerFactory().setResourcesClassLoader(response.getResourcesClassLoader());
+        assetsSystem.getStreamHandlerFactory().setResourcesClassLoader(
+                assetsSystem.getTemplateServer().getRegistry().getCollectionClassLoader());
         return response.getResponseStream();
     }
 

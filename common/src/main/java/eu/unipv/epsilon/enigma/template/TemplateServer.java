@@ -119,11 +119,6 @@ public class TemplateServer {
             return responseStream;
         }
 
-        public ClassLoader getResourcesClassLoader() {
-            return selectedProcessor != null
-                    ? selectedProcessor.getProcessorClassLoader()
-                    : getClass().getClassLoader();
-        }
     }
 
 }
