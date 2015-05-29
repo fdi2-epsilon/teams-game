@@ -5,7 +5,8 @@ import eu.unipv.epsilon.enigma.data.StorageLocator;
 import eu.unipv.epsilon.enigma.loader.levels.pool.CollectionsPool;
 import eu.unipv.epsilon.enigma.loader.levels.pool.DirectoryPool;
 import eu.unipv.epsilon.enigma.status.GameStatus;
-import eu.unipv.epsilon.enigma.template.DalvikCandidateClassSource;
+import eu.unipv.epsilon.enigma.template.DalvikAssetsClassLoaderFactory;
+import eu.unipv.epsilon.enigma.template.DalvikPackageScanner;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -58,7 +59,8 @@ public class EnigmaApplication extends Application {
         GameAssetsSystem assetsSystem = new GameAssetsSystem(poolsVarargs);
 
         // Initialize templates subsystem using Android-specific reflection algorithms
-        assetsSystem.createTemplateServer(new DalvikCandidateClassSource(this, assetsSystem));
+        assetsSystem.createTemplateServer(
+                new DalvikPackageScanner(this), new DalvikAssetsClassLoaderFactory(this, assetsSystem));
 
         return assetsSystem;
     }

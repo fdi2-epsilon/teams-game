@@ -1,6 +1,7 @@
 package eu.unipv.epsilon.enigma.template;
 
 import eu.unipv.epsilon.enigma.template.api.Template;
+import eu.unipv.epsilon.enigma.template.reflect.classfinder.PackageScanner;
 import eu.unipv.epsilon.enigma.template.util.AnnotationFilter;
 import eu.unipv.epsilon.enigma.template.util.FilteredIterator;
 import org.slf4j.Logger;
@@ -8,28 +9,45 @@ import org.slf4j.LoggerFactory;
 
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 
+/**
+ * A registry to filter and hold template processors to be used by a {@link TemplateServer}.
+ */
 public class TemplateRegistry {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(TemplateRegistry.class);
+    private static final Logger LOG = LoggerFactory.getLogger(TemplateRegistry.class);
 
-    private CandidateClassSource classSource;
+    /** The package to search for built-in template processor classes */
+    public static final String TEMPLATES_LOCATION_BUILTIN = "eu.unipv.epsilon.enigma.template.builtin";
+
+    /** The package to search for templates in collection containers, "" means root package */
+    public static final String TEMPLATES_LOCATION_COLLECTION_CONTAINER = "";
+
+    private PackageScanner packageScanner;
+    private AssetsClassLoaderFactory classLoaderFactory;
+
     private Map<String, TemplateProcessor> localTemplates = new HashMap<>();
     private String currentlyRegisteredCollectionID = "";
     private Map<String, TemplateProcessor> collectionTemplates = new HashMap<>();
 
-    public TemplateRegistry(CandidateClassSource classSource) {
-        this.classSource = classSource;
+    public TemplateRegistry(PackageScanner packageScanner, AssetsClassLoaderFactory classLoaderFactory) {
+        this.packageScanner = packageScanner;
+        this.classLoaderFactory = classLoaderFactory;
 
         // Register local templates
-        registerAnnotatedClasses(classSource.getLocalCandidateClasses(), localTemplates);
+        loadLocalClasses();
     }
 
+    /**
+     * Attempts to register any template processor defined inside the collection with the given ID
+     * @param collectionId the id of the collection to search for template processors
+     */
     public void registerCollectionTemplates(String collectionId) {
         if (!collectionId.equalsIgnoreCase(currentlyRegisteredCollectionID)) {
             collectionTemplates.clear();
-            registerAnnotatedClasses(classSource.getCollectionCandidateClasses(collectionId), collectionTemplates);
+            loadCollectionClasses(collectionId);
             currentlyRegisteredCollectionID = collectionId;
         }
     }
@@ -46,6 +64,33 @@ public class TemplateRegistry {
         else return collectionTemplates.get(id); // It is ok that we return null
     }
 
+    // Finds and registers built-in template processors
+    private void loadLocalClasses() {
+        try {
+            List<Class<?>> foundClasses = packageScanner.getClassesInPackage(TEMPLATES_LOCATION_BUILTIN);
+            registerAnnotatedClasses(foundClasses.iterator(), localTemplates);
+        } catch (ClassNotFoundException e) {
+            // No need to return empty iterator, do not register nothing
+            LOG.warn("No classes found or error, registering nothing", e);
+        }
+    }
+
+    // Finds and registers template processors defined in a collection container
+    private void loadCollectionClasses(String collectionId) {
+        try {
+            // The following line may throw an exception too, in that case catch it as usual skipping scan
+            ClassLoader cl = classLoaderFactory.createAssetsClassLoader(collectionId);
+
+            List<Class<?>> foundClasses =
+                    packageScanner.getClassesInPackage(TEMPLATES_LOCATION_COLLECTION_CONTAINER, cl, true);
+            registerAnnotatedClasses(foundClasses.iterator(), collectionTemplates);
+        } catch (ClassNotFoundException e) {
+            // No need to return empty iterator, do not register nothing and old collection data is already cleared
+            LOG.warn("No classes found or error, registering nothing", e);
+        }
+    }
+
+    // Filters 'classes' and registers found template processors in the 'registry' map with their @Template.id as key
     private void registerAnnotatedClasses(Iterator<Class<?>> classes, Map<String, TemplateProcessor> registry) {
         Iterator<Class<?>> templateClasses = new FilteredIterator<>(
                 classes, new AnnotationFilter(Template.class));
@@ -53,7 +98,7 @@ public class TemplateRegistry {
         while (templateClasses.hasNext()) {
             Class<?> templateClass = templateClasses.next();
             Template meta = templateClass.getAnnotation(Template.class);
-            LOGGER.info("Registered template \"{}\" ({})", meta.id(), templateClass.getName());
+            LOG.info("Registered template \"{}\" ({})", meta.id(), templateClass.getName());
             registry.put(meta.id(), new TemplateProcessor(templateClass));
         }
     }

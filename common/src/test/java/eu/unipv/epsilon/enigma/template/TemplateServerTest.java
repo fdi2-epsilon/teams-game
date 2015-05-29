@@ -4,6 +4,7 @@ import eu.unipv.epsilon.enigma.GameAssetsSystem;
 import eu.unipv.epsilon.enigma.loader.levels.CollectionContainer;
 import eu.unipv.epsilon.enigma.loader.levels.pool.DirectoryPool;
 import eu.unipv.epsilon.enigma.quest.QuestCollection;
+import eu.unipv.epsilon.enigma.template.reflect.classfinder.JvmPackageScanner;
 import org.junit.Test;
 
 import java.io.*;
@@ -17,7 +18,7 @@ public class TemplateServerTest {
 
     public TemplateServerTest() {
         // We want to serve dynamic content using JVM reflection (on Android should be Dalvik)
-        assetsSystem.createTemplateServer(new JvmCandidateClassSource(assetsSystem));
+        assetsSystem.createTemplateServer(new JvmPackageScanner(), new JvmAssetsClassLoaderFactory(assetsSystem));
     }
 
     @Test

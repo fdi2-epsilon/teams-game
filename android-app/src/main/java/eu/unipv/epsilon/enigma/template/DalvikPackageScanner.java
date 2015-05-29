@@ -2,61 +2,90 @@ package eu.unipv.epsilon.enigma.template;
 
 import android.content.Context;
 import dalvik.system.DexFile;
-import dalvik.system.PathClassLoader;
-import eu.unipv.epsilon.enigma.GameAssetsSystem;
-import eu.unipv.epsilon.enigma.loader.levels.CollectionContainer;
-import eu.unipv.epsilon.enigma.loader.levels.EqcFile;
 import eu.unipv.epsilon.enigma.template.reflect.classfinder.JvmPackageScanner;
+import eu.unipv.epsilon.enigma.template.reflect.classfinder.PackageScanner;
 import eu.unipv.epsilon.enigma.template.util.IterableEnumeration;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.zip.ZipFile;
+import java.util.*;
 
 /**
- * An utility facade to find classes given a package in the Dalvik Virtual Machine.
- * Android alternative to {@link JvmPackageScanner JvmPackageScanner}.
+ * An utility {@link PackageScanner} to find classes given a package in the Dalvik Virtual Machine.
+ *
+ * @see JvmPackageScanner JVM version
  */
-public class DalvikPackageScanner {
+public class DalvikPackageScanner implements PackageScanner {
 
-    private DalvikPackageScanner() { }
+    private static final Logger LOG = LoggerFactory.getLogger(DalvikPackageScanner.class);
 
-    /** Load from the local application dex using the context class loader */
-    public static List<Class<?>> getClassesInPackage(
-            Context context, String packageName) throws ClassNotFoundException {
-        return loadClasses(packageName, context.getClassLoader(), context.getPackageCodePath());
+    private final Context context;
+
+    public DalvikPackageScanner(Context context) {
+        this.context = context;
     }
 
-    /** Load from an eqc collection container using a PathClassLoader */
-    public static List<Class<?>> getClassesinZipPkg(
-            Context context, String packageName, GameAssetsSystem assetsSystem, String collectionId) throws ClassNotFoundException {
+    public List<Class<?>> getClassesInPackage(String packageName) throws ClassNotFoundException {
+        ClassLoader contextClassLoader = context.getClassLoader();
+        if (contextClassLoader == null)
+            throw new ClassNotFoundException("Cannot get the context class loader");
 
-        // Currently we haven't found a way yet to dynamically load "classes.dex" without passing in the a zipFile instance
-        CollectionContainer cc = assetsSystem.getCollectionContainer(collectionId);
-        if (!(cc instanceof EqcFile))
-            throw new ClassNotFoundException("Currently only EQC collections are supported");
-
-        ZipFile eqcZip = ((EqcFile) cc).getZipFile();
-        ClassLoader cl = new PathClassLoader(eqcZip.getName(), context.getClassLoader());
-
-        return loadClasses(packageName, cl, eqcZip.getName());
+        return getClassesInPackage(packageName, contextClassLoader, false);
     }
 
-    // Quick n' dirty implementation to load classes from a dex file with the passed in class loader
-    private static List<Class<?>> loadClasses(
-            String packageName, ClassLoader classLoader, String dexPath) throws ClassNotFoundException {
+    public List<Class<?>> getClassesInPackage(
+            String packageName, ClassLoader classLoader, boolean local) throws ClassNotFoundException {
+
+        Set<String> dexPaths = new HashSet<>();
+        // Search for classes in its own dex
+        dexPaths.add(getClassLoaderLocalDex(classLoader));
+
+        if (!local) {
+            // Not local, so we also search in the application code path if not already in the set
+            dexPaths.add(context.getPackageCodePath());
+            // May we also add some system dexs?
+        }
+
+        return findClassesDexs(packageName, classLoader, dexPaths);
+    }
+
+    // Utility: gets the passed class loader's main dex path
+    private String getClassLoaderLocalDex(ClassLoader classLoader) {
+        return classLoader instanceof DexAssetsClassLoader
+                ? ((DexAssetsClassLoader) classLoader).getDexPath()
+                : context.getPackageCodePath();
+    }
+
+    // Calls 'findClassesDex' for all the given 'dexPaths'
+    private List<Class<?>> findClassesDexs(String packageName, ClassLoader classLoader, Set<String> dexPaths) {
+        List<Class<?>> classes = new LinkedList<>();
+        for (String dexPath : dexPaths)
+            classes.addAll(findClassesDex(packageName, classLoader, dexPath));
+        return classes;
+    }
+
+    // Loads classes matching the given 'packageName' in the dex at 'dexPath' using 'classLoader'
+    private List<Class<?>> findClassesDex(String packageName, ClassLoader classLoader, String dexPath) {
         try {
             DexFile dex = new DexFile(dexPath);
-
             List<Class<?>> classes = new LinkedList<>();
-            for (String name : IterableEnumeration.make(dex.entries()))
-                if (name.startsWith(packageName))
-                    classes.add(classLoader.loadClass(name));
+
+            for (String name : IterableEnumeration.make(dex.entries())) {
+                if (name.startsWith(packageName)) {
+                    try {
+                        classes.add(classLoader.loadClass(name));
+                    } catch (ClassNotFoundException e) {
+                        // Class cannot be loaded by the class loader, skip it and log
+                        LOG.warn("Class " + name + "was found but cannot be loaded by the given class loader", e);
+                    }
+                }
+            }
             return classes;
 
         } catch (IOException e) {
-            throw new ClassNotFoundException("Cannot open DEX for reading", e);
+            LOG.error("Cannot open DEX for reading; returning nothing", e);
+            return Collections.emptyList();
         }
     }
 
