@@ -39,5 +39,5 @@ function checkSolved() {
 
     document.querySelector('#container h1').style.color = 'LimeGreen';
     if (typeof enigma !== 'undefined')
-        enigma.setSolved();
+        enigma.setComplete();
 }
