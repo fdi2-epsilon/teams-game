@@ -35,6 +35,7 @@ public class InterceptingWebViewClient extends WebViewClient {
         if (url.startsWith(LevelAssetsURLStreamHandler.PROTOCOL_NAME) ||
                 url.startsWith(ClasspathURLStreamHandler.PROTOCOL_NAME)) {
             try {
+                LOG.info("Trying to load URL " + url);
                 String mime;
                 if (url.lastIndexOf('.') > url.lastIndexOf('/')) {
                     String ext = url.substring(url.lastIndexOf('.') + 1);

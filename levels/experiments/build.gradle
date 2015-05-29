@@ -1,0 +1,30 @@
+description = 'Game quest test levels'
+
+buildscript {
+    repositories {
+        ivy { url 'https://fdi2-epsilon.github.io/ivy' }
+        jcenter()
+    }
+
+    dependencies {
+        classpath 'eu.unipv.epsilon:equests-gradle:0.6'
+    }
+}
+
+apply plugin: 'enigma-levels'
+
+repositories.jcenter()
+
+dependencies {
+    // Required for Template API
+    compile project(':common')
+
+    // REMOVE AFTER TESTING!
+    compile 'org.slf4j:slf4j-simple:1.7.12'
+}
+
+questCollection {
+    name = 'Experiments'
+    subtitle = 'Bytecode hell'
+    description = 'An experimental collection of (only 2) quizzes, <b>Grok</b>!'
+}

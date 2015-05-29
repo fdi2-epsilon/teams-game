@@ -1,0 +1,19 @@
+<quiz template="rotating-puzzle">
+    <title>Mmh...</title>
+    <footnote>Copyrighted image material taken from the game "Myst III: Exile"</footnote>
+    <background img="images/bg.jpg" />
+
+    <canvas img="images/back.png" width="340" height="322">
+        <item img="images/itm1.png" init-pos="0" pos="0" />
+        <item img="images/itm2.png" init-pos="3" pos="0" />
+        <item img="images/itm3.png" init-pos="3" pos="0" />
+        <item img="images/itm4.png" init-pos="0" pos="0" />
+        <item img="images/itm5.png" init-pos="2" pos="0" />
+        <item img="images/itm6.png" init-pos="0" pos="0" />
+        <item img="images/itm7.png" init-pos="3" pos="0" />
+        <item img="images/itm8.png" init-pos="3" pos="0" />
+        <item img="images/itm9.png" init-pos="3" pos="0" />
+    </canvas>
+
+    <auto-positioning padding="47 38" offset="1 1" mean-item-size="80 80" />
+</quiz>
