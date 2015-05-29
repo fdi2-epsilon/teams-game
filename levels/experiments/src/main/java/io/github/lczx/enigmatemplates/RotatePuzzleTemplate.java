@@ -112,10 +112,6 @@ public class RotatePuzzleTemplate {
 
     @Template.EventHandler
     public void handler(DocumentGenerationEvent e) throws IOException {
-        System.out.println("TRYING TO DUMP");
-        dumpStream(getClass().getClassLoader().getResourceAsStream(MY_ASSETS_PATH + "index.html"));
-        System.out.println("END DUMP");
-
         xmlArgs = e.getArguments();
 
         if (!e.hasPathData())
