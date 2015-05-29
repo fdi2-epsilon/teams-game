@@ -16,11 +16,11 @@ public class MappedValueInputStreamTest {
     public void testMacroExpansion() throws IOException {
         String input =
                 "Hi ${your_name}, I am ${my_name} and this is a ${macro}, here is some money $$ to test if" +
-                " $macros$ don't mess up $ $è $, and I already know that I can't code ${pointless_smiley}.";
+                " $macros$ don't mess up $ $Ã¨ $, and I already know that I can't code ${pointless_smiley}.";
 
         String expected =
                 "Hi prof, I am Luca and this is a ${macro}, here is some money $$ to test if $macros$" +
-                " don't mess up $ $è $, and I already know that I can't code :).";
+                " don't mess up $ $Ã¨ $, and I already know that I can't code :).";
 
         // After this I should buy a nice dollar chain, pure gangsta style, peace homie...
 
