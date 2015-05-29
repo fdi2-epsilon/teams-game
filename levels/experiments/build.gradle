@@ -26,5 +26,5 @@ dependencies {
 questCollection {
     name = 'Experiments'
     subtitle = 'Bytecode hell'
-    description = 'An experimental collection of (only 2) quizzes, <b>Grok</b>!'
+    description = 'An <b>experimental</b> collection of as much as 2 quizzes! <i>No less, no more!</i>'
 }
