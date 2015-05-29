@@ -12,7 +12,7 @@ import java.util.LinkedList;
 public abstract class SubstitutionInputStream extends FilterInputStream {
 
     // LinkedList<> allows removal without arguments
-    private final LinkedList<Character> buffer = new LinkedList<>(); //NOSONAR
+    private final LinkedList<Byte> buffer = new LinkedList<>(); //NOSONAR
 
     public SubstitutionInputStream(InputStream in) {
         super(in);
@@ -46,7 +46,7 @@ public abstract class SubstitutionInputStream extends FilterInputStream {
                 keyBuf.append((char) c2);
 
             // Get the expanded value and put it in the buffer
-            for (char vc : expandKey(keyBuf.toString()).toCharArray())
+            for (byte vc : expandKey(keyBuf.toString()).getBytes("UTF-8"))
                 buffer.add(vc);
 
             // Return the first char in the buffer
@@ -54,7 +54,7 @@ public abstract class SubstitutionInputStream extends FilterInputStream {
 
         } else {
             // False alarm, return the first char and put the second in the buffer
-            buffer.add((char) c2);
+            buffer.add((byte) c2);
             return c;
         }
     }
