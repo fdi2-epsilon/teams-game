@@ -1,4 +1,4 @@
-document.body.style.backgroundImage = 'url(' + screenBackground + ')';
+document.documentElement.style.backgroundImage = 'url(' + screenBackground + ')';
 
 var cnt = document.querySelector("#content");
 cnt.style.backgroundImage = 'url(' + frame.background + ')';
