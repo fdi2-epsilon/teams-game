@@ -3,7 +3,7 @@ package eu.unipv.epsilon.enigma.template.api;
 import java.util.NoSuchElementException;
 
 /** Arguments passed to a template processor to generate its view. */
-public interface TemplateArguments {
+public abstract class TemplateArguments {
 
     /**
      * Returns the argument value associated with the given key.
@@ -19,6 +19,14 @@ public interface TemplateArguments {
      * @return the value of the key
      * @throws NoSuchElementException if the element can not be found
      */
-    String query(String path) throws NoSuchElementException;
+    public abstract String query(String path) throws NoSuchElementException;
+
+    public String query(String path, String defaultValue) {
+        try {
+            return query(path);
+        } catch (NoSuchElementException e) {
+            return defaultValue;
+        }
+    }
 
 }
