@@ -92,8 +92,12 @@ public class TemplateRegistry {
                     packageScanner.getClassesInPackage(TEMPLATES_LOCATION_COLLECTION_CONTAINER, collectionClassLoader, true);
             registerAnnotatedClasses(foundClasses.iterator(), collectionTemplates);
         } catch (ClassNotFoundException e) {
-            // No need to return empty iterator, do not register nothing and old collection data is already cleared
+            // Do not register nothing, old collection data is already cleared
             LOG.warn("No classes found or error, registering nothing", e);
+
+            // But we need to set a class loader, we use the application one, used to load builtin template processors.
+            // Otherwise, the ClasspathURLStreamHandler protocol fails to get internal resources.
+            collectionClassLoader = getClass().getClassLoader();
         }
     }
 
