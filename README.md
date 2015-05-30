@@ -9,6 +9,9 @@ Codename `Enigma` is a framework for quiz collections produced at the teams soft
 
 We have plans for an Android and a Desktop application, including also multiplayer support in the next releases.  
 Check out [the docs](https://github.com/fdi2-epsilon/teams-game/wiki) if you want learn more and contribute.
+<br><br>
+
+![Android app screenshots](/../gh-pages/images/screens/exper_quizzes01.png?raw=true "Screenshots")
 
 ## Check it out!
 Let the built-in Gradle wrapper do everything for you:
