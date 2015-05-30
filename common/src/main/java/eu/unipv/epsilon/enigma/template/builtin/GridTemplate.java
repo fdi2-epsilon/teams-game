@@ -16,7 +16,7 @@ public class GridTemplate {
 
     @Template.EventHandler
     public void generate(DocumentGenerationEvent e) throws IOException {
-        Element args = e.getArguments();
+        Element args = e.getArgumentsRaw();
         Element gridTitle = (Element) args.getElementsByTagName("title").item(0);
 
         NodeList elements = ((Element) args.getElementsByTagName("grid").item(0)).getElementsByTagName("element");

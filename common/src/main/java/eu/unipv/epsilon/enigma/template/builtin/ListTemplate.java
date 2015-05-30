@@ -38,7 +38,7 @@ public class ListTemplate {
 
     @Template.EventHandler
     public void generate(DocumentGenerationEvent e) throws IOException {
-        Element args = e.getArguments();
+        Element args = e.getArgumentsRaw();
         Element title = (Element) args.getElementsByTagName("title").item(0);
 
         NodeList answers = ((Element) args.getElementsByTagName("answers").item(0)).getElementsByTagName("item");

@@ -32,7 +32,7 @@ public class RawTemplate {
 
     @Template.EventHandler
     public void generate(DocumentGenerationEvent e) throws IOException {
-        Element args = e.getArguments();
+        Element args = e.getArgumentsRaw();
 
         if (!e.hasPathData())
             throw new UnsupportedOperationException("The \"raw\" template cannot work without path data.");

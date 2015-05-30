@@ -9,10 +9,7 @@ import org.slf4j.LoggerFactory;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.net.URL;
 
 /**
@@ -82,7 +79,6 @@ public class RotatePuzzleTemplate {
         System.out.println(mdurl);
         dumpStream(mdurl.openStream());
     }
-*/
 
     // teST thinger
     private static void dumpStream(InputStream is) throws IOException {
@@ -92,6 +88,7 @@ public class RotatePuzzleTemplate {
             System.out.println(line);
     }
 
+*/
 
     private static final Logger LOG = LoggerFactory.getLogger(RotatePuzzleTemplate.class);
 
@@ -112,7 +109,7 @@ public class RotatePuzzleTemplate {
 
     @Template.EventHandler
     public void handler(DocumentGenerationEvent e) throws IOException {
-        xmlArgs = e.getArguments();
+        xmlArgs = e.getArgumentsRaw();
 
         if (!e.hasPathData())
             throw new UnsupportedOperationException("This template cannot work without path data.");
