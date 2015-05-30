@@ -61,6 +61,9 @@ task collectLevels(group: 'install', type: Copy) {
 }
 
 task uploadLevels(group: 'install', type: Exec, dependsOn: collectLevels) {
-    def appId = android.defaultConfig.applicationId
-    commandLine 'adb', 'push', '-p', "$buildDir/adb-push", "/data/data/$appId/files"
+    def uploadPath = "/data/data/$android.defaultConfig.applicationId/files"
+    commandLine 'adb', 'push', '-p', "$buildDir/adb-push", uploadPath
+    doFirst {
+        println "Uploading game levels to $uploadPath..."
+    }
 }
