@@ -1,5 +1,6 @@
-include 'levels:test-a',
+include 'levels:experiments',
+        'levels:starTrek',
+        'levels:test-a',
         'levels:test-b',
         'levels:test-c',
-        'levels:test-d',
-        'levels:starTrek'
+        'levels:test-d'

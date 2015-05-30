@@ -29,7 +29,9 @@ public class TemplateRegistry {
     private AssetsClassLoaderFactory classLoaderFactory;
 
     private Map<String, TemplateProcessor> localTemplates = new HashMap<>();
+
     private String currentlyRegisteredCollectionID = "";
+    private ClassLoader collectionClassLoader; // The class loader used to load templates in the current collection
     private Map<String, TemplateProcessor> collectionTemplates = new HashMap<>();
 
     public TemplateRegistry(PackageScanner packageScanner, AssetsClassLoaderFactory classLoaderFactory) {
@@ -64,6 +66,11 @@ public class TemplateRegistry {
         else return collectionTemplates.get(id); // It is ok that we return null
     }
 
+    /** Gets the class loader used to find the actual collection classes and resources. */
+    public ClassLoader getCollectionClassLoader() {
+        return collectionClassLoader;
+    }
+
     // Finds and registers built-in template processors
     private void loadLocalClasses() {
         try {
@@ -79,10 +86,10 @@ public class TemplateRegistry {
     private void loadCollectionClasses(String collectionId) {
         try {
             // The following line may throw an exception too, in that case catch it as usual skipping scan
-            ClassLoader cl = classLoaderFactory.createAssetsClassLoader(collectionId);
+            collectionClassLoader = classLoaderFactory.createAssetsClassLoader(collectionId);
 
             List<Class<?>> foundClasses =
-                    packageScanner.getClassesInPackage(TEMPLATES_LOCATION_COLLECTION_CONTAINER, cl, true);
+                    packageScanner.getClassesInPackage(TEMPLATES_LOCATION_COLLECTION_CONTAINER, collectionClassLoader, true);
             registerAnnotatedClasses(foundClasses.iterator(), collectionTemplates);
         } catch (ClassNotFoundException e) {
             // No need to return empty iterator, do not register nothing and old collection data is already cleared

@@ -10,6 +10,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.*;
+import java.net.URL;
+import java.util.Enumeration;
 import java.util.Map;
 import java.util.WeakHashMap;
 
@@ -97,8 +99,27 @@ public class DexAssetsClassLoader extends BaseAssetsClassLoader {
         File dexOptDir = new File(cacheDir, "opt");
         validateDirectory(dexOptDir);
 
+        final ClassLoader resHandler = this;
+
         // Use a DexClassLoader to generate an optimized dex
-        ClassLoader cl = new DexClassLoader(inputDex.getPath(), dexOptDir.getPath(), null, context.getClassLoader());
+        ClassLoader cl = new DexClassLoader(inputDex.getPath(), dexOptDir.getPath(), null, context.getClassLoader()) {
+
+            @Override
+            protected URL findResource(String name) {
+                return resHandler.getResource(name);
+            }
+
+            @Override
+            protected Enumeration<URL> findResources(String name) {
+                try {
+                    return resHandler.getResources(name);
+                } catch (IOException e) {
+                    LOG.error("Cannot lookup resource " + name);
+                    return null;
+                }
+            }
+
+        };
 
         // Move the optimized generated file (./opt/classes.dex -> ./classes.odex) to make new DexFile not complain.
         File dexOptFile = new File(dexOptDir, CLASSES_DEX_NAME);

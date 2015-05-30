@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Rotating thing</title>
+    <link rel="stylesheet" href="${STYLE_URL}" />
+    <script defer src="${SCRIPT_URL}"></script>
+
+    <script>
+        var screenBackground = '${BACKGROUND_IMAGE_PATH}';
+
+        // frame: { background: 'bg_img', width: w_px, height: h_px }
+        var frame = ${FRAME_DATA};
+
+        // items: [ {img: 'item_img', pos: [x, y], c: current_angle, t: target_angle}, ... ]
+        var items = [ ${ITEMS_DATA} ];
+    </script>
+
+</head>
+<body>
+
+    <section id="container">
+        <h1>${QUIZ_TITLE}</h1>
+
+        <div id="content"></div>
+
+        <footer>${QUIZ_FOOTNOTE}</footer>
+    </section>
+
+    <div id="fg" class="fullscreen"></div>
+
+</body>
+</html>

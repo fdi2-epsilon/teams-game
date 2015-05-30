@@ -1,0 +1,56 @@
+html {
+    margin: 0;
+    padding: 0;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    display: table;
+    background: no-repeat center center fixed;
+    -webkit-background-size: cover;
+    background-size: cover;
+}
+
+#container {
+    display: table-cell;
+    vertical-align: middle;
+    text-align: center;
+    font-family: 'Trebuchet MS', sans-serif;
+    color: white;
+}
+
+#container h1 {
+    font-size: 2em;
+    font-weight: normal;
+    text-shadow: 2px 2px 8px black;
+    transition: color .5s;
+}
+
+#container footer {
+    font: .9em serif;
+    font-style: italic;
+    text-shadow: 2px 2px 2px black;
+}
+
+#content {
+    margin: 10px auto;
+    text-align: center;
+    box-shadow: 0 0 75px rgba(0, 0, 0, .8);
+
+    /* This allows inner images to use position: absolute */
+    position: relative;
+}
+
+#content > img {
+    position: absolute;
+    transition: transform .5s ease-in-out;
+}
+
+#fg {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, .35);
+    visibility: hidden;
+}
