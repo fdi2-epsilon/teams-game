@@ -23,7 +23,7 @@
                 tools:src="@drawable/temp_img04"
                 tools:ignore="contentDescription"/>
 
-        <GridLayout
+        <FrameLayout
                 a:layout_width="match_parent"
                 a:layout_height="match_parent"
                 a:paddingTop="4dp"
@@ -36,6 +36,9 @@
                     a:textSize="@dimen/headline_font_size"
                     a:layout_marginStart="@dimen/card_content_padding"
                     a:textColor="#eee"
+                    a:maxLines="1"
+                    a:ellipsize="end"
+                    a:layout_marginEnd="32dp"
                     app:font_family="RobotoSlab"
                     app:font_family_ext="Regular"
                     tools:text="Series μ"/>
@@ -50,9 +53,8 @@
                     a:layout_gravity="end|center_vertical"
                     a:contentDescription="@string/main_card_tiny_actionOverflow_contentDescription"/>
 
-        </GridLayout>
+        </FrameLayout>
 
     </FrameLayout>
 
 </android.support.v7.widget.CardView>
-

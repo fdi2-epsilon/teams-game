@@ -44,6 +44,8 @@
                         a:textSize="@dimen/headline_font_size"
                         a:textColor="#eee"
                         a:layout_marginBottom="4dp"
+                        a:maxLines="1"
+                        a:ellipsize="end"
                         app:font_family="RobotoSlab"
                         app:font_family_ext="Regular"
                         tools:text="Series S"/>
@@ -56,6 +58,8 @@
                         a:textSize="@dimen/body_font_size_large"
                         a:textStyle="bold"
                         a:layout_marginBottom="4dp"
+                        a:maxLines="2"
+                        a:ellipsize="end"
                         tools:text="Quantum leap"/>
 
             </LinearLayout>

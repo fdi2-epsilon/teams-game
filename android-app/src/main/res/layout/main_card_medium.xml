@@ -36,6 +36,8 @@
                     a:layout_alignBottom="@id/card_image"
                     a:layout_margin="@dimen/card_content_padding"
                     a:textColor="#eee"
+                    a:maxLines="1"
+                    a:ellipsize="end"
                     app:font_family="RobotoSlab"
                     app:font_family_ext="Regular"
                     tools:text="Series M"/>
@@ -67,6 +69,8 @@
                     a:textSize="@dimen/body_font_size_large"
                     a:textStyle="bold"
                     a:layout_marginBottom="4dp"
+                    a:maxLines="2"
+                    a:ellipsize="end"
                     tools:text="Rabbits 4ever"/>
 
             <TextView
@@ -74,6 +78,8 @@
                     a:layout_width="wrap_content"
                     a:layout_height="wrap_content"
                     a:textSize="@dimen/body_font_size_small"
+                    a:maxLines="4"
+                    a:ellipsize="end"
                     tools:text="Lorem ipsum Lalo est, rabbits run on red toilet paper leading to the green lawn."/>
 
         </LinearLayout>
@@ -110,4 +116,3 @@
     </LinearLayout>
 
 </android.support.v7.widget.CardView>
-
