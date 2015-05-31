@@ -1,11 +1,7 @@
 package eu.unipv.epsilon.enigma.loader.levels;
 
-import eu.unipv.epsilon.enigma.loader.levels.parser.MetadataNotFoundException;
-import eu.unipv.epsilon.enigma.loader.levels.parser.MetadataParser;
-import eu.unipv.epsilon.enigma.loader.levels.parser.XmlMetaParser;
-import eu.unipv.epsilon.enigma.loader.levels.parser.YamlMetaParser;
+import eu.unipv.epsilon.enigma.loader.levels.parser.EqcMetadataParser;
 import eu.unipv.epsilon.enigma.loader.levels.parser.defaults.ContentChecker;
-import eu.unipv.epsilon.enigma.loader.levels.parser.defaults.DefaultsFactory;
 import eu.unipv.epsilon.enigma.quest.QuestCollection;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -19,8 +15,6 @@ public class EqcFile extends CollectionContainer implements ContentChecker {
 
     private static final Logger LOG = LoggerFactory.getLogger(EqcFile.class);
     public static final String CONTAINER_FILE_EXTENSION = "eqc";
-    public static final String CONFIG_YAML_FILENAME = "metadata.yaml";
-    public static final String CONFIG_XML_FILENAME = "metadata.xml";
 
     String id;
     ZipFile zipFile;
@@ -33,25 +27,8 @@ public class EqcFile extends CollectionContainer implements ContentChecker {
 
     @Override
     public QuestCollection loadCollectionMeta() throws IOException {
-        String fileName;
-        MetadataParser parser;
-
-        // TODO: Consider removing dependency on parsers and instead pass this CollectionContainer to the parser.
-        //       A "generic" parser can choose the right implementation depending on XML or YAML metadata.
-        //       We can still get a method like this in a facade depending on that generic parser.
-
-        if (containsEntry(CONFIG_YAML_FILENAME)) {
-            fileName = CONFIG_YAML_FILENAME;
-            parser = new YamlMetaParser(id, new DefaultsFactory(this));
-        }
-        else if (containsEntry(CONFIG_XML_FILENAME)) {
-            fileName = CONFIG_XML_FILENAME;
-            parser = new XmlMetaParser(id, new DefaultsFactory(this));
-        }
-        else
-            throw new MetadataNotFoundException(id);
-
-        InputStream entryStream = getEntry(fileName).getStream();
+        EqcMetadataParser parser = new EqcMetadataParser(id, this);
+        InputStream entryStream = getEntry(parser.getSelectedMetadataFilePath()).getStream();
         return parser.loadCollectionMetadata(entryStream);
     }
 
