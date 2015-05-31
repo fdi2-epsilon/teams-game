@@ -1,16 +1,14 @@
 package eu.unipv.epsilon.enigma.loader.levels.parser.defaults;
 
-import eu.unipv.epsilon.enigma.loader.levels.CollectionContainer;
-
 import java.util.NoSuchElementException;
 
 import static eu.unipv.epsilon.enigma.loader.levels.parser.MetadataParser.*;
 
 public class CollectionDefaults implements FieldProvider {
 
-    CollectionContainer context;
+    ContentChecker context;
 
-    public CollectionDefaults(CollectionContainer context) {
+    public CollectionDefaults(ContentChecker context) {
         this.context = context;
     }
 

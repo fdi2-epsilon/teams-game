@@ -1,12 +1,10 @@
 package eu.unipv.epsilon.enigma.loader.levels.parser.defaults;
 
-import eu.unipv.epsilon.enigma.loader.levels.CollectionContainer;
-
 public class DefaultsFactory implements IDefaultsFactory {
 
-    private CollectionContainer context;
+    private ContentChecker context;
 
-    public DefaultsFactory(CollectionContainer context) {
+    public DefaultsFactory(ContentChecker context) {
         this.context = context;
     }
 

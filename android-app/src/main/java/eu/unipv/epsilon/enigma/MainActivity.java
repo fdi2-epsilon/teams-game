@@ -6,7 +6,7 @@ import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.view.Menu;
 import android.view.MenuItem;
-import eu.unipv.epsilon.enigma.loader.levels.exception.MetadataNotFoundException;
+import eu.unipv.epsilon.enigma.loader.levels.parser.MetadataNotFoundException;
 import eu.unipv.epsilon.enigma.quest.QuestCollection;
 import eu.unipv.epsilon.enigma.ui.main.CollectionsViewAdapter;
 import org.slf4j.Logger;
