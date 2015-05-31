@@ -7,6 +7,7 @@ import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.view.Menu;
 import android.view.MenuItem;
 import eu.unipv.epsilon.enigma.loader.levels.parser.MetadataNotFoundException;
+import eu.unipv.epsilon.enigma.loader.levels.pool.CollectionsPool;
 import eu.unipv.epsilon.enigma.quest.QuestCollection;
 import eu.unipv.epsilon.enigma.ui.main.CollectionsViewAdapter;
 import org.slf4j.Logger;
@@ -82,12 +83,12 @@ public class MainActivity extends TranslucentControlsActivity {
 
     private void populateMainView() {
         EnigmaApplication application = (EnigmaApplication) getApplication();
-        GameAssetsSystem assetsSystem = application.getAssetsSystem();
+        CollectionsPool assetsSystem = application.getCollectionsPool();
 
         List<QuestCollection> collections = new ArrayList<>();
 
         // Fill a list with all available collections info
-        for (String collectionId : assetsSystem.getAvailableCollectionIDs()) {
+        for (String collectionId : assetsSystem.getStoredCollectionIDs()) {
             try {
                 collections.add(assetsSystem.getCollectionContainer(collectionId).getCollectionMeta());
             } catch (MetadataNotFoundException e) {

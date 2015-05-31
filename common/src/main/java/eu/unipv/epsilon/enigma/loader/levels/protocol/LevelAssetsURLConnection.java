@@ -1,8 +1,8 @@
 package eu.unipv.epsilon.enigma.loader.levels.protocol;
 
-import eu.unipv.epsilon.enigma.GameAssetsSystem;
 import eu.unipv.epsilon.enigma.loader.levels.CollectionContainer;
 import eu.unipv.epsilon.enigma.loader.levels.ContainerEntry;
+import eu.unipv.epsilon.enigma.loader.levels.pool.CollectionsPool;
 import eu.unipv.epsilon.enigma.template.TemplateServer;
 
 import java.io.IOException;
@@ -21,19 +21,22 @@ public class LevelAssetsURLConnection extends URLConnection {
     //   The final keyword on an array declaration means that the array object itself may only be assigned once,
     //   but its contents are still mutable. Therefore making arrays public is a security risk.
 
-    GameAssetsSystem assetsSystem;
-    ContainerEntry containerEntry = null;
+    private final CollectionsPool questCollections;
+    private final TemplateServer templateServer;
 
-    public LevelAssetsURLConnection(GameAssetsSystem assetsSystem, URL url) {
+    private ContainerEntry containerEntry = null;
+
+    public LevelAssetsURLConnection(URL url, CollectionsPool questCollections, TemplateServer templateServer) {
         super(url);
-        this.assetsSystem = assetsSystem;
+        this.questCollections = questCollections;
+        this.templateServer = templateServer;
     }
 
     @Override
     public void connect() throws IOException {
         if (!connected) {
 
-            CollectionContainer container = assetsSystem.getCollectionContainer(url.getHost());
+            CollectionContainer container = questCollections.getCollectionContainer(url.getHost());
             if (container == null)
                 throw new IOException("Collection \"" + url.getHost() + "\" not found.");
 
@@ -46,19 +49,19 @@ public class LevelAssetsURLConnection extends URLConnection {
     @Override
     public InputStream getInputStream() throws IOException {
         connect();
-        TemplateServer templateServer = assetsSystem.getTemplateServer();
 
         // Do not use templates if template server is not defined or we don't have a "document.xml"
         if (templateServer == null || !containerEntry.getPath().endsWith(TEMPLATE_DOCUMENT))
             return containerEntry.getStream();
 
+        URL documentURL = LevelAssetsURLStreamHandler.createURL(url.getHost(), containerEntry.getPath());
+
         TemplateServer.DynamicContentResponse response =
-                templateServer.loadDynamicContent(containerEntry.getStream(),
-                        LevelAssetsURLStreamHandler.createURL(url.getHost(), containerEntry.getPath()));
+                templateServer.loadDynamicContent(containerEntry.getStream(), documentURL);
 
         // Set the right resources class loader so that classpath based urls work even if in collection container
-        assetsSystem.getStreamHandlerFactory().setResourcesClassLoader(
-                assetsSystem.getTemplateServer().getRegistry().getCollectionClassLoader());
+        ((ProtocolManager) ProtocolManager.getRegisteredUrlFactory())
+                .setResourcesClassLoader(templateServer.getRegistry().getCollectionClassLoader());
         return response.getResponseStream();
     }
 
@@ -71,7 +74,7 @@ public class LevelAssetsURLConnection extends URLConnection {
 
     public CollectionContainer getContainer() {
         // Get always-valid copy from the assets system
-        return assetsSystem.getCollectionContainer(url.getHost());
+        return questCollections.getCollectionContainer(url.getHost());
     }
 
     private ContainerEntry findURLEntry(CollectionContainer container, String urlPath) throws IOException {

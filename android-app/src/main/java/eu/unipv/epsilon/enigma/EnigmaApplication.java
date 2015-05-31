@@ -4,9 +4,13 @@ import android.app.Application;
 import eu.unipv.epsilon.enigma.data.StorageLocator;
 import eu.unipv.epsilon.enigma.loader.levels.pool.CollectionsPool;
 import eu.unipv.epsilon.enigma.loader.levels.pool.DirectoryPool;
+import eu.unipv.epsilon.enigma.loader.levels.pool.MergedPool;
+import eu.unipv.epsilon.enigma.loader.levels.protocol.ProtocolManager;
 import eu.unipv.epsilon.enigma.status.GameStatus;
 import eu.unipv.epsilon.enigma.template.DalvikAssetsClassLoaderFactory;
 import eu.unipv.epsilon.enigma.template.DalvikPackageScanner;
+import eu.unipv.epsilon.enigma.template.TemplateRegistry;
+import eu.unipv.epsilon.enigma.template.TemplateServer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -19,7 +23,8 @@ import java.util.ArrayList;
 public class EnigmaApplication extends Application {
 
     private static final Logger LOG = LoggerFactory.getLogger(EnigmaApplication.class);
-    private GameAssetsSystem assetsSystem;
+
+    private CollectionsPool collectionsPool;
     private GameStatus gameStatus;
 
     @Override
@@ -27,19 +32,28 @@ public class EnigmaApplication extends Application {
         super.onCreate();
 
         // Keep initialization methods "side-effects free" and assign fields here
-        this.assetsSystem = initializeAssetsSystem();
-        this.gameStatus = initializeGameStatus();
+        this.collectionsPool = initializeCollectionsPool();
+
+        // Initialize templates subsystem using Android-specific reflection algorithms
+        TemplateServer templateServer = new TemplateServer(new TemplateRegistry(
+                new DalvikPackageScanner(this), new DalvikAssetsClassLoaderFactory(this, collectionsPool)));
+
+        // Create url handlers for collection URLs and classpath URLs
+        new ProtocolManager(collectionsPool, templateServer);
+
+        // Initialize game status storage
+        this.gameStatus = new GameStatus(getSharedPreferences(getString(R.string.app_name), MODE_PRIVATE));
     }
 
-    public GameAssetsSystem getAssetsSystem() {
-        return assetsSystem;
+    public CollectionsPool getCollectionsPool() {
+        return collectionsPool;
     }
 
     public GameStatus getGameStatus() {
         return gameStatus;
     }
 
-    private GameAssetsSystem initializeAssetsSystem() {
+    private CollectionsPool initializeCollectionsPool() {
         StorageLocator storageLocator = new StorageLocator(this);
         File intStore = storageLocator.getInternalCollectionsLocation();
         File extStore = storageLocator.getExternalCollectionsLocation();
@@ -56,17 +70,8 @@ public class EnigmaApplication extends Application {
 
         // Create assets system with available collection sources
         CollectionsPool[] poolsVarargs = pools.toArray(new CollectionsPool[pools.size()]);
-        GameAssetsSystem assetsSystem = new GameAssetsSystem(poolsVarargs);
 
-        // Initialize templates subsystem using Android-specific reflection algorithms
-        assetsSystem.createTemplateServer(
-                new DalvikPackageScanner(this), new DalvikAssetsClassLoaderFactory(this, assetsSystem));
-
-        return assetsSystem;
-    }
-
-    private GameStatus initializeGameStatus() {
-        return new GameStatus(getSharedPreferences(getString(R.string.app_name), MODE_PRIVATE));
+        return new MergedPool(poolsVarargs);
     }
 
 }

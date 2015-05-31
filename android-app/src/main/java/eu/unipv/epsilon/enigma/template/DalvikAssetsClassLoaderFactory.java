@@ -1,7 +1,7 @@
 package eu.unipv.epsilon.enigma.template;
 
 import android.content.Context;
-import eu.unipv.epsilon.enigma.GameAssetsSystem;
+import eu.unipv.epsilon.enigma.loader.levels.pool.CollectionsPool;
 
 /**
  * A ready to use {@link AssetsClassLoaderFactory} for the Dalvik virtual machine on Android.
@@ -9,16 +9,16 @@ import eu.unipv.epsilon.enigma.GameAssetsSystem;
 public class DalvikAssetsClassLoaderFactory implements AssetsClassLoaderFactory {
 
     private Context context;
-    private GameAssetsSystem assetsSystem;
+    private CollectionsPool questCollections;
 
-    public DalvikAssetsClassLoaderFactory(Context context, GameAssetsSystem assetsSystem) {
+    public DalvikAssetsClassLoaderFactory(Context context, CollectionsPool questCollections) {
         this.context = context;
-        this.assetsSystem = assetsSystem;
+        this.questCollections = questCollections;
     }
 
     @Override
     public ClassLoader createAssetsClassLoader(String collectionId) throws ClassNotFoundException {
-        DexAssetsClassLoader cl = new DexAssetsClassLoader(context, assetsSystem, collectionId);
+        DexAssetsClassLoader cl = new DexAssetsClassLoader(context, questCollections, collectionId);
 
         // Our collection may not have class files
         if (!cl.hasClasses())

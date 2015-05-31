@@ -15,10 +15,9 @@ import java.net.URL;
 public class DefaultErrorHandler implements ErrorHandler {
 
     private static final Logger LOG = LoggerFactory.getLogger(DefaultErrorHandler.class);
-    private static final URL PAGE_URL =
-            ClasspathURLStreamHandler.createURL("assets/templates/error/error_page.html");
-    private static final URL PAGE_IMAGE_URL =
-            ClasspathURLStreamHandler.createURL("assets/templates/error/chainsaw.png");
+
+    /*           DO NOT put static resource URLS here!!! (I miss Scala lazy vals...)            */
+    /* Because the URL system may not have been initialized when we create the template server. */
 
     @Override
     public InputStream handleArgumentsParseException(Throwable exception) {
@@ -38,6 +37,9 @@ public class DefaultErrorHandler implements ErrorHandler {
     }
 
     private InputStream generateErrorPage(String pageTitle, Throwable exception) throws IOException {
+        final URL PAGE_URL = ClasspathURLStreamHandler.createURL("assets/templates/error/error_page.html");
+        final URL PAGE_IMAGE_URL = ClasspathURLStreamHandler.createURL("assets/templates/error/chainsaw.png");
+
         MappedValueInputStream page = new MappedValueInputStream(PAGE_URL.openStream());
         page.addMacro("PAGE_TITLE", pageTitle);
         page.addMacro("DESCRIPTION", '"' + exception.getLocalizedMessage() + '"');

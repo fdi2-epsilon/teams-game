@@ -19,7 +19,7 @@ public class CollectionDataBundle {
     public static CollectionDataBundle fromId(EnigmaApplication application, String collectionId) {
         try {
             QuestCollection collection =
-                    application.getAssetsSystem().getCollectionContainer(collectionId).getCollectionMeta();
+                    application.getCollectionsPool().getCollectionContainer(collectionId).getCollectionMeta();
             QuestCollectionStatus collectionStatus =
                     application.getGameStatus().getCollectionStatus(collectionId);
 

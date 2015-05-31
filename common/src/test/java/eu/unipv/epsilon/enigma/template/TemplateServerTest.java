@@ -1,8 +1,9 @@
 package eu.unipv.epsilon.enigma.template;
 
-import eu.unipv.epsilon.enigma.GameAssetsSystem;
 import eu.unipv.epsilon.enigma.loader.levels.CollectionContainer;
+import eu.unipv.epsilon.enigma.loader.levels.pool.CollectionsPool;
 import eu.unipv.epsilon.enigma.loader.levels.pool.DirectoryPool;
+import eu.unipv.epsilon.enigma.loader.levels.protocol.ProtocolManager;
 import eu.unipv.epsilon.enigma.quest.QuestCollection;
 import eu.unipv.epsilon.enigma.template.reflect.classfinder.JvmPackageScanner;
 import org.junit.Test;
@@ -14,32 +15,34 @@ import static org.junit.Assert.assertTrue;
 public class TemplateServerTest {
 
     private final File baseDir = new File(getClass().getResource("/collections_pool").getPath());
-    private final GameAssetsSystem assetsSystem = new GameAssetsSystem(new DirectoryPool(baseDir));
 
-    public TemplateServerTest() {
-        // We want to serve dynamic content using JVM reflection (on Android should be Dalvik)
-        assetsSystem.createTemplateServer(new JvmPackageScanner(), new JvmAssetsClassLoaderFactory(assetsSystem));
-    }
+    // Create a collections pool to serve game assets
+    private final CollectionsPool questCollections = new DirectoryPool(baseDir);
+
+    // We want to serve dynamic content using JVM reflection (on Android should be Dalvik)
+    private final TemplateServer templateServer = new TemplateServer(new TemplateRegistry(
+            new JvmPackageScanner(), new JvmAssetsClassLoaderFactory(questCollections)));
+
+    // We want also "eqc:/" and "cp:/" to be available to our templates
+    private final ProtocolManager protocolManager = new ProtocolManager(questCollections, templateServer);
 
     @Test
     public void testRawTemplateFromStream() throws IOException {
-        TemplateServer ts = assetsSystem.getTemplateServer();
-
         String xmlDoc =
                 "<quiz template=\"raw\">\n" +
                 "    <document src=\"index.html\" />\n" +
                 "</quiz>";
-
-        InputStream out = ts.loadDynamicContent(new ByteArrayInputStream(xmlDoc.getBytes()), null).getResponseStream();
+        InputStream out = templateServer.loadDynamicContent(
+                new ByteArrayInputStream(xmlDoc.getBytes()), null).getResponseStream();
         String outString = buildStringFromStream(out);
 
-        assertTrue("\"raw\" template loaded from InputStream should throw an UnsupportedOperationException",
+        assertTrue("\"raw\" template loaded from InputStream should throw an UnsupportedOperationException message",
                 outString.contains("UnsupportedOperationException"));
     }
 
     @Test
     public void testCollectionContainerBuiltin() throws IOException {
-        CollectionContainer container = assetsSystem.getCollectionContainer("testpkg03_templates");
+        CollectionContainer container = questCollections.getCollectionContainer("testpkg03_templates");
         QuestCollection qc = container.getCollectionMeta();
 
         InputStream is1a = qc.get(0).getMainDocumentUrl().openStream();
@@ -59,7 +62,7 @@ public class TemplateServerTest {
 
     @Test
     public void testCollectionContainerCustom() throws IOException {
-        QuestCollection qc = assetsSystem.getCollectionContainer("testpkg04_tplremote").getCollectionMeta();
+        QuestCollection qc = questCollections.getCollectionContainer("testpkg04_tplremote").getCollectionMeta();
 
         InputStream is = qc.get(0).getMainDocumentUrl().openStream();
         assertTrue("Custom template should be loaded from the collection and throw a JesusChristException",

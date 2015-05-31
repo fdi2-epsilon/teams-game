@@ -2,9 +2,9 @@ package eu.unipv.epsilon.enigma.template;
 
 import android.content.Context;
 import dalvik.system.DexClassLoader;
-import eu.unipv.epsilon.enigma.GameAssetsSystem;
 import eu.unipv.epsilon.enigma.loader.levels.CollectionContainer;
 import eu.unipv.epsilon.enigma.loader.levels.ContainerEntry;
+import eu.unipv.epsilon.enigma.loader.levels.pool.CollectionsPool;
 import eu.unipv.epsilon.enigma.template.reflect.BaseAssetsClassLoader;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -36,11 +36,11 @@ public class DexAssetsClassLoader extends BaseAssetsClassLoader {
     // Set to true if this collection container contains class files
     private boolean hasClasses = true;
 
-    public DexAssetsClassLoader(Context context, GameAssetsSystem assetsSystem, String collectionId) {
+    public DexAssetsClassLoader(Context context, CollectionsPool questCollections, String collectionId) {
         super(context.getClassLoader(), collectionId);
 
         try {
-            setupClassLoader(context, assetsSystem);
+            setupClassLoader(context, questCollections);
         } catch (IOException e) {
             LOG.info("Cannot initialize class loading, treating collection as classless", e);
             hasClasses = false;
@@ -72,9 +72,9 @@ public class DexAssetsClassLoader extends BaseAssetsClassLoader {
     }
 
     // Does class loader initialization
-    private void setupClassLoader(Context context, GameAssetsSystem assetsSystem) throws IOException {
+    private void setupClassLoader(Context context, CollectionsPool questCollections) throws IOException {
         // Find the "classes.dex" stream from assets
-        CollectionContainer cc = assetsSystem.getCollectionContainer(collectionId);
+        CollectionContainer cc = questCollections.getCollectionContainer(collectionId);
         ContainerEntry entry = cc.getEntry(CLASSES_DEX_NAME);
         if (entry == null)
             throw new IOException("This collection does not contain classes");

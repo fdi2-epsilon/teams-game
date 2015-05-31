@@ -1,8 +1,10 @@
 package eu.unipv.epsilon.enigma.template.builtin;
 
-import eu.unipv.epsilon.enigma.GameAssetsSystem;
+import eu.unipv.epsilon.enigma.loader.levels.pool.CollectionsPool;
 import eu.unipv.epsilon.enigma.loader.levels.pool.DirectoryPool;
+import eu.unipv.epsilon.enigma.loader.levels.protocol.ProtocolManager;
 import eu.unipv.epsilon.enigma.template.JvmAssetsClassLoaderFactory;
+import eu.unipv.epsilon.enigma.template.TemplateRegistry;
 import eu.unipv.epsilon.enigma.template.TemplateServer;
 import eu.unipv.epsilon.enigma.template.reflect.classfinder.JvmPackageScanner;
 import org.junit.Test;
@@ -16,17 +18,19 @@ public class TemplateClassesTest {
     // << we can perfectly see that part of this code is mine because I am the only one english-speaking guy here >>
 
     private final File baseDir = new File(getClass().getResource("/collections_pool").getPath());
-    private final GameAssetsSystem assetsSystem = new GameAssetsSystem(new DirectoryPool(baseDir));
 
-    public TemplateClassesTest() {
-        // We want to serve dynamic content using JVM reflection (on Android should be Dalvik)
-        assetsSystem.createTemplateServer(new JvmPackageScanner(), new JvmAssetsClassLoaderFactory(assetsSystem));
-    }
+    // Create a collections pool to serve game assets
+    private final CollectionsPool questCollections = new DirectoryPool(baseDir);
+
+    // We want to serve dynamic content using JVM reflection (on Android should be Dalvik)
+    private final TemplateServer templateServer = new TemplateServer(new TemplateRegistry(
+        new JvmPackageScanner(), new JvmAssetsClassLoaderFactory(questCollections)));
+
+    // Register "eqc:/" and "cp:/" URLs for our templates and error handlers.
+    private final ProtocolManager protocolManager = new ProtocolManager(questCollections, templateServer);
 
     @Test
     public void testRawTemplateFromStream() throws IOException {
-        TemplateServer ts = assetsSystem.getTemplateServer();
-
         String xmlDoc =
                 "<quiz template=\"list\">"+
                         "<title>Waz mah name?</title>"+
@@ -37,15 +41,14 @@ public class TemplateClassesTest {
                         "</answers>"+
                 "</quiz>";
 
-        InputStream out = ts.loadDynamicContent(new ByteArrayInputStream(xmlDoc.getBytes()), null).getResponseStream();
+        InputStream out = templateServer.loadDynamicContent(
+                new ByteArrayInputStream(xmlDoc.getBytes()), null).getResponseStream();
         String outString = buildStringFromStream(out);
         System.out.println(outString);
     }
 
     @Test
     public void testGridTemplateStream() throws IOException {
-        TemplateServer ts = assetsSystem.getTemplateServer();
-
         String xmlDoc =
                 "<quiz template=\"grid\">"+
                         "<title>Eioeioeio</title>"+
@@ -64,7 +67,8 @@ public class TemplateClassesTest {
                         "</grid>"+
                 "</quiz>";
 
-        InputStream out = ts.loadDynamicContent(new ByteArrayInputStream(xmlDoc.getBytes()), null).getResponseStream();
+        InputStream out = templateServer.loadDynamicContent(
+                new ByteArrayInputStream(xmlDoc.getBytes()), null).getResponseStream();
         String outString = buildStringFromStream(out);
         System.out.println(outString);
 

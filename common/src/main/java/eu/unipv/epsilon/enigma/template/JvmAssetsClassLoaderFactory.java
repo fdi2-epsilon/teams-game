@@ -1,6 +1,6 @@
 package eu.unipv.epsilon.enigma.template;
 
-import eu.unipv.epsilon.enigma.GameAssetsSystem;
+import eu.unipv.epsilon.enigma.loader.levels.pool.CollectionsPool;
 import eu.unipv.epsilon.enigma.template.reflect.AssetsClassLoader;
 
 /**
@@ -8,15 +8,15 @@ import eu.unipv.epsilon.enigma.template.reflect.AssetsClassLoader;
  */
 public class JvmAssetsClassLoaderFactory implements AssetsClassLoaderFactory {
 
-    private GameAssetsSystem assetsSystem;
+    private CollectionsPool questCollections;
 
-    public JvmAssetsClassLoaderFactory(GameAssetsSystem assetsSystem) {
-        this.assetsSystem = assetsSystem;
+    public JvmAssetsClassLoaderFactory(CollectionsPool questCollections) {
+        this.questCollections = questCollections;
     }
 
     @Override
     public ClassLoader createAssetsClassLoader(String collectionId) {
-        return new AssetsClassLoader(assetsSystem, collectionId);
+        return new AssetsClassLoader(questCollections, collectionId);
     }
 
 }

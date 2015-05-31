@@ -1,8 +1,11 @@
 package eu.unipv.epsilon.enigma;
 
 import eu.unipv.epsilon.enigma.loader.levels.CollectionContainer;
+import eu.unipv.epsilon.enigma.loader.levels.pool.CollectionsPool;
 import eu.unipv.epsilon.enigma.loader.levels.pool.DirectoryPool;
+import eu.unipv.epsilon.enigma.loader.levels.pool.MergedPool;
 import eu.unipv.epsilon.enigma.loader.levels.protocol.LevelAssetsURLStreamHandler;
+import eu.unipv.epsilon.enigma.loader.levels.protocol.ProtocolManager;
 import eu.unipv.epsilon.enigma.quest.Quest;
 import eu.unipv.epsilon.enigma.quest.QuestCollection;
 import org.junit.Test;
@@ -16,19 +19,20 @@ import java.util.Collection;
 
 import static org.junit.Assert.*;
 
+// It seems that IntelliJ is bugged and cannot run Parameterized tests without using Gradle...
+
 @RunWith(Parameterized.class)
 public class GameAssetsSystemTest {
 
-    /*
-     * This performs only generic metadata loading tests,
-     * for templates, take a look at TemplateServerTest
-     */
+    /* This performs only generic metadata loading tests, for templates, take a look at TemplateServerTest */
 
     public static final String PROTO_HEAD = LevelAssetsURLStreamHandler.PROTOCOL_NAME + "://";
 
     private final File baseDir = new File(getClass().getResource("/collections_pool").getPath());
-    private final GameAssetsSystem system = new GameAssetsSystem(new DirectoryPool(baseDir));
+    private final CollectionsPool questCollections = new MergedPool(new DirectoryPool(baseDir));
     private final String cid;
+
+    private final ProtocolManager protocolManager = new ProtocolManager(questCollections, null);
 
     @Parameterized.Parameters
     public static Collection<Object[]> data() {
@@ -43,15 +47,15 @@ public class GameAssetsSystemTest {
     @Test
     public void testCollectionExistence() {
         assertTrue("Available collections set should contain " + cid,
-                system.getAvailableCollectionIDs().contains(cid));
+                questCollections.getStoredCollectionIDs().contains(cid));
 
         assertTrue("Asset system should lookup " + cid + "properly",
-                system.containsCollection(cid));
+                questCollections.containsCollection(cid));
     }
 
     @Test
     public void testContainerContent() {
-        CollectionContainer container = system.getCollectionContainer(cid);
+        CollectionContainer container = questCollections.getCollectionContainer(cid);
 
         assertNotNull("Container should exist",
                 container);
@@ -64,7 +68,7 @@ public class GameAssetsSystemTest {
 
     @Test
     public void testMetadata() throws IOException {
-        QuestCollection questCollection = system.getCollectionContainer(cid).getCollectionMeta();
+        QuestCollection questCollection = questCollections.getCollectionContainer(cid).getCollectionMeta();
 
         // Size test
         assertEquals("Collection size must be 3",
@@ -102,12 +106,12 @@ public class GameAssetsSystemTest {
         assertEquals(PROTO_HEAD + cid + "/quests/03/story.html", q3.getInfoDocumentUrl().toString());   // Default
         assertEquals(PROTO_HEAD + cid + "/quests/3icon.png", q3.getIconUrl().toString());               // Configured
 
-        system.getCollectionContainer(cid).invalidate();
+        questCollections.getCollectionContainer(cid).invalidate();
     }
 
     @Test
     public void testURLStreams() throws IOException {
-        CollectionContainer container = system.getCollectionContainer(cid);
+        CollectionContainer container = questCollections.getCollectionContainer(cid);
         QuestCollection qc = container.getCollectionMeta();
 
         URL url = qc.get(1).getMainDocumentUrl();

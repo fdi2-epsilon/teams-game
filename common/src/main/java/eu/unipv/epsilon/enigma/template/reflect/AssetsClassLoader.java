@@ -1,8 +1,8 @@
 package eu.unipv.epsilon.enigma.template.reflect;
 
-import eu.unipv.epsilon.enigma.GameAssetsSystem;
 import eu.unipv.epsilon.enigma.loader.levels.CollectionContainer;
 import eu.unipv.epsilon.enigma.loader.levels.ContainerEntry;
+import eu.unipv.epsilon.enigma.loader.levels.pool.CollectionsPool;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -20,19 +20,19 @@ public class AssetsClassLoader extends BaseAssetsClassLoader {
     private static final Logger LOG = LoggerFactory.getLogger(AssetsClassLoader.class);
 
     private Map<String, Class> cache = new WeakHashMap<>();
-    private GameAssetsSystem assetsSystem;
+    private CollectionsPool questCollections;
 
-    public AssetsClassLoader(GameAssetsSystem assetsSystem, String collectionId) {
+    public AssetsClassLoader(CollectionsPool questCollections, String collectionId) {
         super(AssetsClassLoader.class.getClassLoader(), collectionId);
 
         // We could have passed the CollectionContainer directly, but this approach
         // uses the system cache and avoids changing client code on internal API changes.
-        this.assetsSystem = assetsSystem;
+        this.questCollections = questCollections;
     }
 
     @Override
     public Class<?> findClass(String className) throws ClassNotFoundException {
-        LOG.info("Trying to lookup class \"{}\" in collection \"{}\"", className, collectionId);
+        LOG.info("Looking up class \"{}\" in collection \"{}\"", className, collectionId);
 
         // Return a cached class if exists
         if (cache.containsKey(className))
@@ -40,7 +40,7 @@ public class AssetsClassLoader extends BaseAssetsClassLoader {
 
         try {
             // Get an input stream for the class resource inside the collection
-            CollectionContainer eqc = assetsSystem.getCollectionContainer(collectionId);
+            CollectionContainer eqc = questCollections.getCollectionContainer(collectionId);
             ContainerEntry entry = eqc.getEntry(EQC_CLASS_RESOURCES_PATH + className.replace('.', '/') + ".class");
             InputStream is = entry.getStream();
 

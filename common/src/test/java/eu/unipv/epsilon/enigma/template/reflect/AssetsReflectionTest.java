@@ -1,10 +1,12 @@
 package eu.unipv.epsilon.enigma.template.reflect;
 
-import eu.unipv.epsilon.enigma.GameAssetsSystem;
+import eu.unipv.epsilon.enigma.loader.levels.pool.CollectionsPool;
 import eu.unipv.epsilon.enigma.loader.levels.pool.DirectoryPool;
 import eu.unipv.epsilon.enigma.loader.levels.protocol.ClasspathURLStreamHandler;
 import eu.unipv.epsilon.enigma.loader.levels.protocol.LevelAssetsURLConnection;
 import eu.unipv.epsilon.enigma.loader.levels.protocol.LevelAssetsURLStreamHandler;
+import eu.unipv.epsilon.enigma.loader.levels.protocol.ProtocolManager;
+import eu.unipv.epsilon.enigma.template.TemplateServer;
 import eu.unipv.epsilon.enigma.template.api.DocumentGenerationEvent;
 import eu.unipv.epsilon.enigma.template.reflect.classfinder.JvmPackageScanner;
 import eu.unipv.epsilon.enigma.template.reflect.classfinder.PackageScanner;
@@ -22,7 +24,10 @@ public class AssetsReflectionTest {
 
     private final File baseDir = new File(getClass().getResource("/collections_pool").getPath());
     private final PackageScanner packageScanner = new JvmPackageScanner();
-    private final GameAssetsSystem system = new GameAssetsSystem(new DirectoryPool(baseDir));
+    private final CollectionsPool questCollections = new DirectoryPool(baseDir);
+
+    /* By now, we need to register our protocols, since BaseAssetsClassLoader uses them to return resources. */
+    private final ProtocolManager protocolManager = new ProtocolManager(questCollections, null);
 
     @Test
     public void testLocalPackageScan() throws ClassNotFoundException {
@@ -38,22 +43,22 @@ public class AssetsReflectionTest {
 
     @Test
     public void testCollectionPackageScan() throws ClassNotFoundException {
-        ClassLoader cl = new AssetsClassLoader(system, "testpkg04_tplremote");
+        ClassLoader cl = new AssetsClassLoader(questCollections, "testpkg04_tplremote");
         List<Class<?>> elementsGlobal = packageScanner.getClassesInPackage("", cl, false);
         List<Class<?>> elementsLocal = packageScanner.getClassesInPackage("", cl, true);
 
         // elementsGlobal should contain both application and collection defined classes
-        assertTrue(elementsGlobal.contains(GameAssetsSystem.class));
+        assertTrue(elementsGlobal.contains(TemplateServer.class));
         assertTrue(elementsGlobal.contains(cl.loadClass("mypkg.JesusChristException")));
 
         // elementsLocal should only contain collection defined classes
-        assertFalse(elementsLocal.contains(GameAssetsSystem.class));
+        assertFalse(elementsLocal.contains(TemplateServer.class));
         assertTrue(elementsLocal.contains(cl.loadClass("mypkg.JesusChristException")));
     }
 
     @Test
     public void testCollectionClassLoading() throws Exception {
-        ClassLoader cl = new AssetsClassLoader(system, "testpkg04_tplremote");
+        ClassLoader cl = new AssetsClassLoader(questCollections, "testpkg04_tplremote");
 
         Class<?> clazz = cl.loadClass("mypkg.ForcedExceptionTemplate");
         Method m = clazz.getMethod("blabla", DocumentGenerationEvent.class);
@@ -68,7 +73,7 @@ public class AssetsReflectionTest {
                 passed = true;
         }
 
-        system.getCollectionContainer("testpkg04_tplremote").invalidate();
+        questCollections.getCollectionContainer("testpkg04_tplremote").invalidate();
 
         assertTrue("Method should have thrown an NPE inside an InvocationTargetException", passed);
     }

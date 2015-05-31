@@ -1,6 +1,7 @@
 package eu.unipv.epsilon.enigma.loader.levels.protocol;
 
-import eu.unipv.epsilon.enigma.GameAssetsSystem;
+import eu.unipv.epsilon.enigma.loader.levels.pool.CollectionsPool;
+import eu.unipv.epsilon.enigma.template.TemplateServer;
 
 import java.io.IOException;
 import java.net.MalformedURLException;
@@ -12,15 +13,23 @@ public class LevelAssetsURLStreamHandler extends URLStreamHandler {
 
     public static final String PROTOCOL_NAME = "eqc";
 
-    GameAssetsSystem assetsSystem;
+    CollectionsPool questCollections;
+    TemplateServer templateServer;
 
-    public LevelAssetsURLStreamHandler(GameAssetsSystem assetsSystem) {
-        this.assetsSystem = assetsSystem;
+    /**
+     * Creates a new {@code eqc:/} protocol URL stream handler.
+     *
+     * @param questCollections the {@link CollectionsPool} to search for assets in collection containers
+     * @param templateServer an optional template server used to load dynamic content (can be {@code null})
+     */
+    public LevelAssetsURLStreamHandler(CollectionsPool questCollections, TemplateServer templateServer) {
+        this.questCollections = questCollections;
+        this.templateServer = templateServer;
     }
 
     @Override
     protected URLConnection openConnection(URL u) throws IOException {
-        return new LevelAssetsURLConnection(assetsSystem, u);
+        return new LevelAssetsURLConnection(u, questCollections, templateServer);
     }
 
     public static URL createURL(String collectionId, String entryPath) {

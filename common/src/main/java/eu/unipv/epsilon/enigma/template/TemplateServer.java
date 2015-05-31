@@ -66,7 +66,7 @@ public class TemplateServer {
             DocumentGenerationEvent event = new DocumentGenerationEvent(document, docURL);
             proc.generateDocument(event);
 
-            //TODO IMPORTANT handle proc = null when template not registered
+            //TODO handle proc = null when template not registered using a special case in error handler interface
 
             // Return the generated output
             InputStream output = event.getResponseStream();
