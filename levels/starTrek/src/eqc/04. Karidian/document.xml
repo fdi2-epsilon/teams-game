@@ -1,7 +1,6 @@
 <quiz template="list">
     <title>Nell'episodio "La magnificenza del re", l'attore teatrale Anton Karidian, viene scoperto essere...</title>
     <answers>
-        <!-- TODO: SAME TO THE NEXT ONE?!? -->
         <item correct="true">Kodos il carnefice</item>
         <item>Sarek</item>
         <item>Christopher Pike</item>

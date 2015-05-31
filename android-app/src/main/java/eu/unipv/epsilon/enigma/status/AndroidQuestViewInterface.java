@@ -11,9 +11,6 @@ import java.io.Serializable;
  */
 public class AndroidQuestViewInterface implements QuestViewInterface, Serializable {
 
-    // TODO: This can be simply an interface extending QuestViewInterface but with annotated methods,
-    //       implementation can then be an anonymous class of QuestCollectionStatus, possible?!
-
     private final QuestCollectionStatus collectionStatus;
     private final int questIndex;
     private boolean hasDataChanged;
