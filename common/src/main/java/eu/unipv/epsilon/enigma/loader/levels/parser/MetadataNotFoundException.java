@@ -1,4 +1,4 @@
-package eu.unipv.epsilon.enigma.loader.levels.exception;
+package eu.unipv.epsilon.enigma.loader.levels.parser;
 
 import java.io.IOException;
 

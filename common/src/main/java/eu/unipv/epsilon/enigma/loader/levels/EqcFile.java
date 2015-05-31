@@ -1,9 +1,10 @@
 package eu.unipv.epsilon.enigma.loader.levels;
 
-import eu.unipv.epsilon.enigma.loader.levels.exception.MetadataNotFoundException;
+import eu.unipv.epsilon.enigma.loader.levels.parser.MetadataNotFoundException;
 import eu.unipv.epsilon.enigma.loader.levels.parser.MetadataParser;
 import eu.unipv.epsilon.enigma.loader.levels.parser.XmlMetaParser;
 import eu.unipv.epsilon.enigma.loader.levels.parser.YamlMetaParser;
+import eu.unipv.epsilon.enigma.loader.levels.parser.defaults.ContentChecker;
 import eu.unipv.epsilon.enigma.loader.levels.parser.defaults.DefaultsFactory;
 import eu.unipv.epsilon.enigma.quest.QuestCollection;
 import org.slf4j.Logger;
@@ -14,7 +15,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.zip.ZipFile;
 
-public class EqcFile extends CollectionContainer {
+public class EqcFile extends CollectionContainer implements ContentChecker {
 
     private static final Logger LOG = LoggerFactory.getLogger(EqcFile.class);
     public static final String CONTAINER_FILE_EXTENSION = "eqc";

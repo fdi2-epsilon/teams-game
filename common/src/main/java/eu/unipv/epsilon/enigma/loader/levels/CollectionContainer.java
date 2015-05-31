@@ -1,6 +1,6 @@
 package eu.unipv.epsilon.enigma.loader.levels;
 
-import eu.unipv.epsilon.enigma.loader.levels.exception.MetadataNotFoundException;
+import eu.unipv.epsilon.enigma.loader.levels.parser.MetadataNotFoundException;
 import eu.unipv.epsilon.enigma.loader.levels.pool.CachedCollectionsPool;
 import eu.unipv.epsilon.enigma.quest.QuestCollection;
 
