@@ -10,125 +10,23 @@
 
     <!-- Pragmatic Media Lab! Add some metadata if you want... -->
     <meta name="author" content="Luca Defilippi, Luca Zanussi">
-    <meta name="keywords" content="quiz, cinema, South Park">
-    <meta name="description" content="First epic quiz in project Enigma">
+    <meta name="keywords" content="quiz, ffs, random, dynamic, template">
+    <meta name="description" content="Template extracted from the first epic quiz in project Enigma">
 
-    <!-- CSS Style: Fancy things go in here, a lot, but don't be scared,
-         I suggest you to skip reading this and go directly to the <body>. -->
-    <style>
+    <!-- '_e' enigma.js helper library -->
+    <script src="cp:/assets/enigma.js"></script>
 
-        @-webkit-keyframes inOut {
-            0%   { transform: scale(1.0); }
-            50%  { transform: scale(0.8); }
-            100% { transform: scale(1.0); }
-        }
+    <!-- Load page style and core script -->
+    <link rel="stylesheet" href="cp:/assets/templates/list/style.css" />
+    <script src="cp:/assets/templates/list/logic.js"></script>
+    <!-- FOR LOCAL DEBUG <link rel="stylesheet" href="style.css"/> <script src="logic.js"></script> -->
 
-        .fullscreen {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-        }
-
-        #bg {
-            background: linear-gradient(#eee, #ccc);
-        }
-
-        #fg {
-            background-color: rgba(0, 0, 0, .35);
-            visibility: hidden;
-        }
-
-        body {
-            text-align: center;
-            font-family: 'Open Sans', sans-serif;
-        }
-
-        h1 {
-            font-size: 1.5em;
-            font-weight: 300;
-            margin: 50pt 20pt 20pt 20pt;
-            color: royalblue;
-        }
-
-        ul {
-            list-style-type: none;
-            padding: 0;
-            text-align: center;
-        }
-
-        li {
-            width: 50%;
-            margin: 10pt auto;
-            padding: 4pt 0;
-            font-size: 9pt;
-            letter-spacing: 1.5pt;
-            text-transform: uppercase;
-            transition: background-color .3s;
-            background-color: rgba(0, 0, 0, .05);
-            cursor: pointer;
-        }
-
-        li:hover { background-color: rgba(0, 0, 0, .12); }
-        li.success, li.success:hover { background-color: greenyellow;}
-        li.failure, li.failure:hover { background-color: red; }
-
-		li.success { -webkit-animation: inOut .5s ease-in-out; }
-
-    </style>
-
-    <!-- JavaScript here, don't worry: it's only text, random text -->
-    <script>
-        'use strict';
-
-        window.addEventListener('load', function () {
-            // Add overlay if quiz is complete
-            if (typeof enigma !== 'undefined' && enigma.getComplete())
-                document.getElementById('fg').style.visibility = 'visible';
-        });
-
-        // The function called on page load, will be registered later at the end of the script.
-        function loadProc() {
-
-            var elements = document.getElementById("answers").getElementsByTagName("li");
-            for (var i = 0; i < elements.length; i++) {
-                if (elements[i].hasAttribute("correct"))
-                    elements[i].onclick = cbSuccess;
-                else
-                    elements[i].onclick = cbFailure;
-            }
-        }
-
-        // Function called on exact answer
-        function cbSuccess() {
-            if (typeof enigma === 'undefined') {
-                // We are not running inside the app
-                var title = document.querySelector('h1');
-                title.innerHTML = '- Wrong API Error -';
-                title.style.color = 'red';
-                return;
-            }
-
-            enigma.setComplete();
-            this.classList.add('success');
-        }
-
-        // Epic fail handling (opposite as previous function)
-        function cbFailure() {
-		this.classList.add('failure');
-        }
-
-        // Exec 'loadProc' only when the document is fully loaded,
-        // so it can find its elements (e.g. #1st-elem, etc.).
-        window.addEventListener('load', loadProc)
-
-    </script>
+    <style> #bg { background: ${STYLE_BACKGROUND}; } </style>
 </head>
 <body>
 
-    <!-- This page is very clean now, keep in mind that the JavaScript and CSS above can
-         be moved to an external file so that this HTML file can be less than 40 lines. -->
+    <!-- This page is very clean now that JavaScript and CSS are placed in external files,
+         browsers will like this too, so external content can be cached between different pages. -->
 
     <div id="bg" class="fullscreen">
         <!-- Questionable elements position -->
@@ -137,8 +35,6 @@
 
         <ul id="answers">${QUIZ_ANSWERS}</ul>
     </div>
-
-    <div id="fg" class="fullscreen"></div>
 
 </body>
 </html>

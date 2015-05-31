@@ -5,7 +5,7 @@ import org.w3c.dom.Element;
 
 import java.util.*;
 
-public class XmlTemplateArguments implements TemplateArguments {
+public class XmlTemplateArguments extends TemplateArguments {
 
     private final Element documentElement;
     private final Map<String, String> cache = new WeakHashMap<>();
@@ -18,6 +18,7 @@ public class XmlTemplateArguments implements TemplateArguments {
         return documentElement;
     }
 
+    @Override
     public String query(String path) {
         if (cache.containsKey(path))
             return cache.get(path);
