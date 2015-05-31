@@ -2,7 +2,7 @@
 <resources>
 
     <!-- Main activity cards related -->
-    <string name="main_card_first_start_title">Ehilà, straniero!</string>
+    <string name="main_card_first_start_title">Ehilà, forestiero!</string>
     <string name="main_card_first_start_content">Benvenuto in <b>Enigma</b>, tocca una carta per iniziare la sua storia. <i>Buona fortuna!</i></string>
     <string name="main_card_large_continue_text">Continua</string>
     <string name="main_card_large_share_text">Condividi</string>
