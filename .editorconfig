@@ -1,0 +1,27 @@
+# Code style configuration - editorconfig.org
+# Feel free to change this as you want, but it would be nice if you let me know first!
+#
+# While there is not plugin requirement to automatically apply these style constraints
+# if you use IntelliJ (or Android Studio), you can easily get plugins for other editors
+# like NetBeans, Visual Studio or Vim at <editorconfig.org>.
+
+# We may want to use 'jedmao/eclint' to reformat existing code
+
+root = true
+
+[*]
+end_of_line = lf
+insert_final_newline = true
+charset = utf-8
+
+[*.java]
+indent_style = space
+indent_size = 4
+
+[*.html]
+indent_style = space
+indent_size = 2
+
+[.travis.yml]
+indent_style = space
+indent_size = 2
