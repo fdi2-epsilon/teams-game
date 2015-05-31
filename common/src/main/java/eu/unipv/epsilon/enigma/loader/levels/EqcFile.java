@@ -27,6 +27,8 @@ public class EqcFile extends CollectionContainer implements ContentChecker {
 
     @Override
     public QuestCollection loadCollectionMeta() throws IOException {
+        // I might have wanted to completely extract parsers from EqcFile / CollectionContainer BUT the YAML / XML
+        // metadata format is SPECIFIC for EQC files and may not work with any other type of collection container.
         EqcMetadataParser parser = new EqcMetadataParser(id, this);
         InputStream entryStream = getEntry(parser.getSelectedMetadataFilePath()).getStream();
         return parser.loadCollectionMetadata(entryStream);
