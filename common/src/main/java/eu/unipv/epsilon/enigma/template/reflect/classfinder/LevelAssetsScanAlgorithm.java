@@ -29,7 +29,8 @@ public class LevelAssetsScanAlgorithm extends ScanAlgorithm {
 
         // Currently, only EQC files are supported, we should alter the API to add general support
         if (collectionContainer instanceof EqcFile) {
-            // TODO: generalize entries() from ZipFile to CollectionContainer and avoid this cast
+            // TODO: Generalize entries() from ZipFile to CollectionContainer and avoid this cast
+            //       Start by adding an entries() in CollectionContainer returning IterableEnumeration...
             ZipFile eqcZip = ((EqcFile) collectionContainer).getZipFile();
             this.archiveScanAlgorithm = new ArchiveScanAlgorithm(classLoader, eqcZip);
         } else
