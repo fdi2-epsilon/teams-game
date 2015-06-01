@@ -6,8 +6,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.*;
-import java.lang.reflect.InvocationTargetException;
 import java.net.URL;
+import java.util.NoSuchElementException;
 
 /**
  * The default error handler which simply returns a formatted error message for the HTML view.
@@ -20,33 +20,46 @@ public class DefaultErrorHandler implements ErrorHandler {
     /* Because the URL system may not have been initialized when we create the template server. */
 
     @Override
+    public InputStream handleTemplateException(Throwable exception) {
+        // This exception was throws by the template processor
+        return generateErrorPage("The template crashed; not my fault", exception);
+    }
+
+    @Override
+    public InputStream handleTemplateNotFoundError(NoSuchElementException exception) {
+        // The template server could not find a valid template processor
+        return generateErrorPage("I should have tidied up my room...", exception);
+    }
+
+    @Override
     public InputStream handleArgumentsParseException(Throwable exception) {
+        // Arguments document XML parsing exception
+        return generateErrorPage("Too long; didn't read", exception);
+    }
+
+    @Override
+    public InputStream handleServerError(Throwable exception) {
+        // XML parsing, my bugs or reflection related exception
+        return generateErrorPage("An internal error!? Impossible.", exception);
+    }
+
+    private InputStream generateErrorPage(String pageTitle, Throwable exception) {
         try {
-            if (exception instanceof InvocationTargetException) {
-                // This exception was throws by the template processor
-                return generateErrorPage("The template processor crashed!", exception.getCause());
-            } else {
-                // Other XML parsing or reflection related exception
-                return generateErrorPage("An internal error!? Impossible.", exception);
-            }
+            final URL pageUrl = ClasspathURLStreamHandler.createURL("assets/templates/error/error_page.html");
+            final URL pageImageUrl = ClasspathURLStreamHandler.createURL("assets/templates/error/chainsaw.png");
+
+            MappedValueInputStream page = new MappedValueInputStream(pageUrl.openStream());
+            page.addMacro("PAGE_TITLE", pageTitle);
+            page.addMacro("DESCRIPTION", '"' + exception.getLocalizedMessage() + '"');
+            page.addMacro("CAUSE", exception.getClass().getName());
+            page.addMacro("MESSAGE", printThrowableStackTrace(exception));
+            page.addMacro("IMAGE_URL", pageImageUrl.toString());
+            return page;
         } catch (IOException e) {
             LOG.error("Cannot generate styled template error message, returning bare text", e);
             // Return the original error's bare stack trace in case of styled document loading problems
             return new ByteArrayInputStream(printThrowableStackTrace(exception).getBytes());
         }
-    }
-
-    private InputStream generateErrorPage(String pageTitle, Throwable exception) throws IOException {
-        final URL pageUrl = ClasspathURLStreamHandler.createURL("assets/templates/error/error_page.html");
-        final URL pageImageUrl = ClasspathURLStreamHandler.createURL("assets/templates/error/chainsaw.png");
-
-        MappedValueInputStream page = new MappedValueInputStream(pageUrl.openStream());
-        page.addMacro("PAGE_TITLE", pageTitle);
-        page.addMacro("DESCRIPTION", '"' + exception.getLocalizedMessage() + '"');
-        page.addMacro("CAUSE", exception.getClass().getName());
-        page.addMacro("MESSAGE", printThrowableStackTrace(exception));
-        page.addMacro("IMAGE_URL", pageImageUrl.toString());
-        return page;
     }
 
     @SuppressWarnings("squid:S1148") // Sonar: Use a logger to log this exception (using printStackTrace)

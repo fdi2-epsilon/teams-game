@@ -12,7 +12,9 @@ import javax.xml.parsers.ParserConfigurationException;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.lang.reflect.InvocationTargetException;
 import java.net.URL;
+import java.util.NoSuchElementException;
 
 /**
  * Entry point for template system queries: parses argument documents (i.e. {@code document.xml})
@@ -66,17 +68,23 @@ public class TemplateServer {
             DocumentGenerationEvent event = new DocumentGenerationEvent(document, docURL);
             proc.generateDocument(event);
 
-            //TODO handle proc = null when template not registered using a special case in error handler interface
-
             // Return the generated output
             InputStream output = event.getResponseStream();
 
             return new DynamicContentResponse(proc, output != null ? output : EMPTY_STREAM);
 
+        } catch (InvocationTargetException e) {
+            // The template processor crashed, show THE CAUSE (e is always InvocationTargetException)
+            return new DynamicContentResponse(null, errorHandler.handleTemplateException(e.getCause()));
+        } catch (NoSuchElementException e) {
+            // Template processor not found
+            return new DynamicContentResponse(null, errorHandler.handleTemplateNotFoundError(e));
+        } catch (ParserConfigurationException | SAXException e) {
+            // Error while parsing arguments document
+            return new DynamicContentResponse(null, errorHandler.handleArgumentsParseException(e));
         } catch (Exception e) {
-            // Catch all and handle with ErrorHandler
-            InputStream errorDocumentStream = errorHandler.handleArgumentsParseException(e);
-            return new DynamicContentResponse(null, errorDocumentStream != null ? errorDocumentStream : EMPTY_STREAM);
+            // Catch IOExceptions and such and handle as internal error
+            return new DynamicContentResponse(null, errorHandler.handleServerError(e));
         }
     }
 
@@ -98,7 +106,11 @@ public class TemplateServer {
     private TemplateProcessor getTemplateProc(Element argsDocument) {
         // Get the template ID (or use default)
         String templateID = argsDocument.getAttribute(ARGS_ROOT_ATTRIBUTE_TEMPLATE_ID);
-        return templateRegistry.getTemplateById(templateID.isEmpty() ? DEFAULT_TEMPLATE_ID : templateID);
+        TemplateProcessor templateProcessor =
+                templateRegistry.getTemplateById(templateID.isEmpty() ? DEFAULT_TEMPLATE_ID : templateID);
+        if (templateProcessor == null)
+            throw new NoSuchElementException("Cannot find a template with ID \"" + templateID + "\".");
+        return templateProcessor;
     }
 
     public static class DynamicContentResponse {
@@ -108,7 +120,7 @@ public class TemplateServer {
 
         public DynamicContentResponse(TemplateProcessor selectedProcessor, InputStream responseStream) {
             this.selectedProcessor = selectedProcessor;
-            this.responseStream = responseStream;
+            this.responseStream = responseStream != null ? responseStream : EMPTY_STREAM;
         }
 
         public TemplateProcessor getSelectedProcessor() {
