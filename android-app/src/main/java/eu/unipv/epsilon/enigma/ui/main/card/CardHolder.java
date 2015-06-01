@@ -15,9 +15,8 @@ public abstract class CardHolder extends RecyclerView.ViewHolder {
     protected CardHolder(ViewGroup parent, @LayoutRes int layoutResource, boolean isFullSpan) {
         super(LayoutInflater.from(parent.getContext()).inflate(layoutResource, parent, false));
 
-        if (isFullSpan) {
+        if (isFullSpan)
             ((StaggeredGridLayoutManager.LayoutParams) itemView.getLayoutParams()).setFullSpan(true);
-        }
     }
 
     public View getItemView() {

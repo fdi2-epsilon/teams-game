@@ -7,7 +7,7 @@ import android.widget.Button;
 import eu.unipv.epsilon.enigma.R;
 import eu.unipv.epsilon.enigma.ui.main.CollectionsViewAdapter;
 
-public class FirstStartCard extends CardHolder {
+public final class FirstStartCard extends CardHolder {
 
     @LayoutRes
     public static final int LAYOUT_RESOURCE = R.layout.main_card_first_start;

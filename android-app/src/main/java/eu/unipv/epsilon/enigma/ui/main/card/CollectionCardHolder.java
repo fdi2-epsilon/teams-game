@@ -21,7 +21,8 @@ import org.slf4j.LoggerFactory;
 import java.io.IOException;
 import java.net.URL;
 
-public abstract class CollectionCardHolder extends CardHolder {
+/** The base collection card holder with a title and background image. */
+public class CollectionCardHolder extends CardHolder {
 
     private static final Logger LOG = LoggerFactory.getLogger(CollectionCardHolder.class);
 
@@ -36,7 +37,10 @@ public abstract class CollectionCardHolder extends CardHolder {
 
     protected CollectionCardHolder(ViewGroup parent, @LayoutRes int layoutResource, boolean isFullSpan) {
         super(parent, layoutResource, isFullSpan);
+        bindLayoutElements();
+    }
 
+    protected void bindLayoutElements() {
         // Store references to view elements to avoid potentially expensive lookups later.
         titleRef = (TextView) itemView.findViewById(R.id.card_title);
         imageRef = (ImageView) itemView.findViewById(R.id.card_image);
@@ -47,11 +51,12 @@ public abstract class CollectionCardHolder extends CardHolder {
     public void updateViewFromData(QuestCollection collection, QuestCollectionStatus collectionStatus) {
         boundCollection = collection;
 
+        // Update local references view content from given data
         titleRef.setText(collection.getTitle());
         loadImage(collection.getIconUrl());
     }
 
-    // Temporary hook to get effective ImageView size for sampled image loading
+    // Hook to get effective ImageView size for sampled image loading
     protected void loadImage(final URL path) {
         imageRef.getViewTreeObserver().addOnPreDrawListener(new ViewTreeObserver.OnPreDrawListener() {
             @Override

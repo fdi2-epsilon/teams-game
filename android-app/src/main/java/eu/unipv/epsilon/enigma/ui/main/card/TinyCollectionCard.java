@@ -4,7 +4,7 @@ import android.support.annotation.LayoutRes;
 import android.view.ViewGroup;
 import eu.unipv.epsilon.enigma.R;
 
-public class TinyCollectionCard extends CollectionCardHolder {
+public final class TinyCollectionCard extends CollectionCardHolder {
 
     @LayoutRes
     public static final int LAYOUT_RESOURCE = R.layout.main_card_tiny;
