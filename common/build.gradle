@@ -15,6 +15,12 @@ dependencies {
     testCompile 'org.slf4j:slf4j-simple:1.7.12'
 }
 
+test {
+    testLogging {
+        exceptionFormat = 'full'
+    }
+}
+
 gradle.projectsEvaluated {
     tasks.withType(JavaCompile) {
         // Suppress Sun internal proprietary API warnings because it's

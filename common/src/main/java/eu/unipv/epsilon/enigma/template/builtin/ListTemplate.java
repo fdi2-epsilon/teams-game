@@ -6,11 +6,11 @@ import eu.unipv.epsilon.enigma.template.api.Template;
 import eu.unipv.epsilon.enigma.template.api.TemplateArguments;
 import eu.unipv.epsilon.enigma.template.api.xml.XmlTemplateArguments;
 import eu.unipv.epsilon.enigma.template.util.MappedValueInputStream;
-import org.w3c.dom.Element;
-import org.w3c.dom.NodeList;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.List;
+import java.util.Map;
 
 /**
  * <i>The standard multiple-answers quiz type.</i>
@@ -45,30 +45,25 @@ public class ListTemplate {
     public void generate(DocumentGenerationEvent e) throws IOException {
         TemplateArguments args = e.getArguments();
 
-        // BY NOW, we need to cast back TemplateArguments to perform a raw extractor query to get an XML item
-        // and get array of child nodes. This WILL change in the future, probably with a "queryAll" function.
-        // It is OK that we don't catch the NoSuchElementsException if answers node is not defined.
-        Element answersNode = ((XmlTemplateArguments) args).queryRaw("answers").getNode();
-        NodeList answers = answersNode.getElementsByTagName("item");
-
         MappedValueInputStream page = new MappedValueInputStream(PAGE_URL.openStream());
         page.addMacro("QUIZ_TITLE", args.query("title", QUIZ_TITLE_DEFAULT));
-        page.addMacro("QUIZ_ANSWERS", createAnswersHTML(answers));
+        page.addMacro("QUIZ_ANSWERS", createAnswersHTML(args.queryAll("answers/*item:*")));
         page.addMacro("STYLE_BACKGROUND", args.query("style:background", STYLE_BACKGROUND_DEFAULT));
 
         e.setResponseStream(page);
     }
 
-    private String createAnswersHTML(NodeList nodes) {
+    @SuppressWarnings("unchecked")
+    private String createAnswersHTML(Object queryResult) {
+        List<Map<String, String>> answers = (List<Map<String, String>>) queryResult;
         StringBuilder sb = new StringBuilder();
 
-        for (int i = 0; i < nodes.getLength(); ++i) {
-            Element x = (Element) nodes.item(i);
-
+        for (Map<String, String> answer : answers) {
             // True if it has a "correct" attribute and it is set to true or is empty
-            boolean correct = x.hasAttribute("correct") &&
-                    ("true".equalsIgnoreCase(x.getAttribute("correct")) || x.getAttribute("correct").isEmpty());
-            sb.append(String.format("<li%s>%s</li>", correct ? " correct" : "", x.getTextContent()));
+            boolean correct = answer.containsKey("correct") &&
+                    ("true".equalsIgnoreCase(answer.get("correct")) || answer.get("correct").isEmpty());
+            sb.append(String.format("<li%s>%s</li>",
+                    correct ? " correct" : "", answer.get(XmlTemplateArguments.ATTR_NODE_VALUE)));
         }
 
         return sb.toString();
