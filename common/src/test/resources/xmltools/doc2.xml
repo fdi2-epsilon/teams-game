@@ -1,0 +1,256 @@
+<!--                      'queryAll' test for XmlTemplateArguments                      -->
+<!-- 6 cylinders, 4 tracks / platters, 8 sectors (8B each, should be at least 512KB...) -->
+<hdd>
+    <cylinder id="00">
+        <track id="00">
+            <sector crc="0000FFFF" p="000">00 00 00 00 00 00 00 00</sector>
+            <sector crc="0000FFFE" p="001">00 00 00 00 00 00 00 01</sector>
+            <sector crc="0000FFFD" p="002">00 00 00 00 00 00 00 02</sector>
+            <sector crc="0000FFFC" p="003">00 00 00 00 00 00 00 03</sector>
+            <sector crc="0000FFFB" p="004">00 00 00 00 00 00 00 04</sector>
+            <sector crc="0000FFFA" p="005">00 00 00 00 00 00 00 05</sector>
+            <sector crc="0000FFF9" p="006">00 00 00 00 00 00 00 06</sector>
+            <sector crc="0000FFF8" p="007">00 00 00 00 00 00 00 07</sector>
+        </track>
+        <track id="01">
+            <sector crc="0000FFF7" p="008">00 00 00 00 00 00 00 08</sector>
+            <sector crc="0000FFF6" p="009">00 00 00 00 00 00 00 09</sector>
+            <sector crc="0000FFF5" p="010">00 00 00 00 00 00 00 0A</sector>
+            <sector crc="0000FFF4" p="011">00 00 00 00 00 00 00 0B</sector>
+            <sector crc="0000FFF3" p="012">00 00 00 00 00 00 00 0C</sector>
+            <sector crc="0000FFF2" p="013">00 00 00 00 00 00 00 0D</sector>
+            <sector crc="0000FFF1" p="014">00 00 00 00 00 00 00 0E</sector>
+            <sector crc="0000FFF0" p="015">00 00 00 00 00 00 00 0F</sector>
+        </track>
+        <track id="02">
+            <sector crc="0000FFEF" p="016">00 00 00 00 00 00 00 10</sector>
+            <sector crc="0000FFEE" p="017">00 00 00 00 00 00 00 11</sector>
+            <sector crc="0000FFED" p="018">00 00 00 00 00 00 00 12</sector>
+            <sector crc="0000FFEC" p="019">00 00 00 00 00 00 00 13</sector>
+            <sector crc="0000FFEB" p="020">00 00 00 00 00 00 00 14</sector>
+            <sector crc="0000FFEA" p="021">00 00 00 00 00 00 00 15</sector>
+            <sector crc="0000FFE9" p="022">00 00 00 00 00 00 00 16</sector>
+            <sector crc="0000FFE8" p="023">00 00 00 00 00 00 00 17</sector>
+        </track>
+        <track id="03">
+            <sector crc="0000FFE7" p="024">00 00 00 00 00 00 00 18</sector>
+            <sector crc="0000FFE6" p="025">00 00 00 00 00 00 00 19</sector>
+            <sector crc="0000FFE5" p="026">00 00 00 00 00 00 00 1A</sector>
+            <sector crc="0000FFE4" p="027">00 00 00 00 00 00 00 1B</sector>
+            <sector crc="0000FFE3" p="028">00 00 00 00 00 00 00 1C</sector>
+            <sector crc="0000FFE2" p="029">00 00 00 00 00 00 00 1D</sector>
+            <sector crc="0000FFE1" p="030">00 00 00 00 00 00 00 1E</sector>
+            <sector crc="0000FFE0" p="031">00 00 00 00 00 00 00 1F</sector>
+        </track>
+    </cylinder>
+    <cylinder id="01">
+        <track id="00">
+            <sector crc="00FFFF00" p="032">00 00 00 00 00 00 00 20</sector>
+            <sector crc="00FFFF01" p="033">00 00 00 00 00 00 00 21</sector>
+            <sector crc="00FFFF02" p="034">00 00 00 00 00 00 00 22</sector>
+            <sector crc="00FFFF03" p="035">00 00 00 00 00 00 00 23</sector>
+            <sector crc="00FFFF04" p="036">00 00 00 00 00 00 00 24</sector>
+            <sector crc="00FFFF05" p="037">00 00 00 00 00 00 00 25</sector>
+            <sector crc="00FFFF06" p="038">00 00 00 00 00 00 00 26</sector>
+            <sector crc="00FFFF07" p="039">00 00 00 00 00 00 00 27</sector>
+        </track>
+        <track id="01">
+            <sector crc="00FFFF08" p="040">00 00 00 00 00 00 00 28</sector>
+            <sector crc="00FFFF09" p="041">00 00 00 00 00 00 00 29</sector>
+            <sector crc="00FFFF0A" p="042">00 00 00 00 00 00 00 2A</sector>
+            <sector crc="00FFFF0B" p="043">00 00 00 00 00 00 00 2B</sector>
+            <sector crc="00FFFF0C" p="044">00 00 00 00 00 00 00 2C</sector>
+            <sector crc="00FFFF0D" p="045">00 00 00 00 00 00 00 0D</sector>
+            <sector crc="00FFFF0E" p="046">00 00 00 00 00 00 00 2E</sector>
+            <sector crc="00FFFF0F" p="047">00 00 00 00 00 00 00 2F</sector>
+        </track>
+        <track id="02">
+            <sector crc="00FFFF10" p="048">00 00 00 00 00 00 00 30</sector>
+            <sector crc="00FFFF11" p="049">00 00 00 00 00 00 00 31</sector>
+            <sector crc="00FFFF12" p="050">00 00 00 00 00 00 00 32</sector>
+            <sector crc="00FFFF13" p="051">00 00 00 00 00 00 00 33</sector>
+            <sector crc="00FFFF14" p="052">00 00 00 00 00 00 00 34</sector>
+            <sector crc="00FFFF15" p="053">00 00 00 00 00 00 00 35</sector>
+            <sector crc="00FFFF16" p="054">00 00 00 00 00 00 00 36</sector>
+            <sector crc="00FFFF17" p="055">00 00 00 00 00 00 00 37</sector>
+        </track>
+        <track id="03">
+            <sector crc="00FFFF18" p="056">00 00 00 00 00 00 00 38</sector>
+            <sector crc="00FFFF19" p="057">00 00 00 00 00 00 00 39</sector>
+            <sector crc="00FFFF1A" p="058">00 00 00 00 00 00 00 3A</sector>
+            <sector crc="00FFFF1B" p="059">00 00 00 00 00 00 00 3B</sector>
+            <sector crc="00FFFF1C" p="060">00 00 00 00 00 00 00 3C</sector>
+            <sector crc="00FFFF1D" p="061">00 00 00 00 00 00 00 3D</sector>
+            <sector crc="00FFFF1E" p="062">00 00 00 00 00 00 00 3E</sector>
+            <sector crc="00FFFF1F" p="063">00 00 00 00 00 00 00 3F</sector>
+        </track>
+    </cylinder>
+    <cylinder id="02">
+        <track id="00">
+            <sector crc="00FF00FF" p="064">00 00 00 00 00 00 00 40</sector>
+            <sector crc="00FF00FE" p="065">00 00 00 00 00 00 00 41</sector>
+            <sector crc="00FF00FD" p="066">00 00 00 00 00 00 00 42</sector>
+            <sector crc="00FF00FC" p="067">00 00 00 00 00 00 00 43</sector>
+            <sector crc="00FF00FB" p="068">00 00 00 00 00 00 00 44</sector>
+            <sector crc="00FF00FA" p="069">00 00 00 00 00 00 00 45</sector>
+            <sector crc="00FF00F9" p="070">00 00 00 00 00 00 00 46</sector>
+            <sector crc="00FF00F8" p="071">00 00 00 00 00 00 00 47</sector>
+        </track>
+        <track id="01">
+            <sector crc="00FF00F7" p="072">00 00 00 00 00 00 00 48</sector>
+            <sector crc="00FF00F6" p="073">00 00 00 00 00 00 00 49</sector>
+            <sector crc="00FF00F5" p="074">00 00 00 00 00 00 00 4A</sector>
+            <sector crc="00FF00F4" p="075">00 00 00 00 00 00 00 4B</sector>
+            <sector crc="00FF00F3" p="076">00 00 00 00 00 00 00 4C</sector>
+            <sector crc="00FF00F2" p="077">00 00 00 00 00 00 00 4D</sector>
+            <sector crc="00FF00F1" p="078">00 00 00 00 00 00 00 4E</sector>
+            <sector crc="00FF00F0" p="079">00 00 00 00 00 00 00 4F</sector>
+        </track>
+        <track id="02">
+            <sector crc="00FF00EF" p="080">00 00 00 00 00 00 00 50</sector>
+            <sector crc="00FF00EE" p="081">00 00 00 00 00 00 00 51</sector>
+            <sector crc="00FF00ED" p="082">00 00 00 00 00 00 00 52</sector>
+            <sector crc="00FF00EC" p="083">00 00 00 00 00 00 00 53</sector>
+            <sector crc="00FF00EB" p="084">00 00 00 00 00 00 00 54</sector>
+            <sector crc="00FF00EA" p="085">00 00 00 00 00 00 00 55</sector>
+            <sector crc="00FF00E9" p="086">00 00 00 00 00 00 00 56</sector>
+            <sector crc="00FF00E8" p="087">00 00 00 00 00 00 00 57</sector>
+        </track>
+        <track id="03">
+            <sector crc="00FF00E7" p="088">00 00 00 00 00 00 00 58</sector>
+            <sector crc="00FF00E6" p="089">00 00 00 00 00 00 00 59</sector>
+            <sector crc="00FF00E5" p="090">00 00 00 00 00 00 00 5A</sector>
+            <sector crc="00FF00E4" p="091">00 00 00 00 00 00 00 5B</sector>
+            <sector crc="00FF00E3" p="092">00 00 00 00 00 00 00 5C</sector>
+            <sector crc="00FF00E2" p="093">00 00 00 00 00 00 00 5D</sector>
+            <sector crc="00FF00E1" p="094">00 00 00 00 00 00 00 5E</sector>
+            <sector crc="00FF00E0" p="095">00 00 00 00 00 00 00 5F</sector>
+        </track>
+    </cylinder>
+    <cylinder id="03">
+        <track id="00">
+            <sector crc="FFFF0000" p="096">00 00 00 00 00 00 00 60</sector>
+            <sector crc="FFFF0001" p="097">00 00 00 00 00 00 00 61</sector>
+            <sector crc="FFFF0002" p="098">00 00 00 00 00 00 00 62</sector>
+            <sector crc="FFFF0003" p="099">00 00 00 00 00 00 00 63</sector>
+            <sector crc="FFFF0004" p="100">00 00 00 00 00 00 00 64</sector>
+            <sector crc="FFFF0005" p="101">00 00 00 00 00 00 00 65</sector>
+            <sector crc="FFFF0006" p="102">00 00 00 00 00 00 00 66</sector>
+            <sector crc="FFFF0007" p="103">00 00 00 00 00 00 00 67</sector>
+        </track>
+        <track id="01">
+            <sector crc="FFFF0008" p="104">00 00 00 00 00 00 00 68</sector>
+            <sector crc="FFFF0009" p="105">00 00 00 00 00 00 00 69</sector>
+            <sector crc="FFFF000A" p="106">00 00 00 00 00 00 00 6A</sector>
+            <sector crc="FFFF000B" p="107">00 00 00 00 00 00 00 6B</sector>
+            <sector crc="FFFF000C" p="108">00 00 00 00 00 00 00 6C</sector>
+            <sector crc="FFFF000D" p="109">00 00 00 00 00 00 00 6D</sector>
+            <sector crc="FFFF000E" p="110">00 00 00 00 00 00 00 6E</sector>
+            <sector crc="FFFF000F" p="111">00 00 00 00 00 00 00 6F</sector>
+        </track>
+        <track id="02">
+            <sector crc="FFFF0010" p="112">00 00 00 00 00 00 00 70</sector>
+            <sector crc="FFFF0011" p="113">00 00 00 00 00 00 00 71</sector>
+            <sector crc="FFFF0012" p="114">00 00 00 00 00 00 00 72</sector>
+            <sector crc="FFFF0013" p="115">00 00 00 00 00 00 00 73</sector>
+            <sector crc="FFFF0014" p="116">00 00 00 00 00 00 00 74</sector>
+            <sector crc="FFFF0015" p="117">00 00 00 00 00 00 00 75</sector>
+            <sector crc="FFFF0016" p="118">00 00 00 00 00 00 00 76</sector>
+            <sector crc="FFFF0017" p="119">00 00 00 00 00 00 00 77</sector>
+        </track>
+        <track id="03">
+            <sector crc="FFFF0018" p="120">00 00 00 00 00 00 00 78</sector>
+            <sector crc="FFFF0019" p="121">00 00 00 00 00 00 00 79</sector>
+            <sector crc="FFFF001A" p="122">00 00 00 00 00 00 00 7A</sector>
+            <sector crc="FFFF001B" p="123">00 00 00 00 00 00 00 7B</sector>
+            <sector crc="FFFF001C" p="124">00 00 00 00 00 00 00 7C</sector>
+            <sector crc="FFFF001D" p="125">00 00 00 00 00 00 00 7D</sector>
+            <sector crc="FFFF001E" p="126">00 00 00 00 00 00 00 7E</sector>
+            <sector crc="FFFF001F" p="127">00 00 00 00 00 00 00 7F</sector>
+        </track>
+    </cylinder>
+    <cylinder id="04">
+        <track id="00">
+            <sector crc="FF0000FF" p="128">00 00 00 00 00 00 00 80</sector>
+            <sector crc="FF0000FE" p="129">00 00 00 00 00 00 00 81</sector>
+            <sector crc="FF0000FD" p="130">00 00 00 00 00 00 00 82</sector>
+            <sector crc="FF0000FC" p="131">00 00 00 00 00 00 00 83</sector>
+            <sector crc="FF0000FB" p="132">00 00 00 00 00 00 00 84</sector>
+            <sector crc="FF0000FA" p="133">00 00 00 00 00 00 00 85</sector>
+            <sector crc="FF0000F9" p="134">00 00 00 00 00 00 00 86</sector>
+            <sector crc="FF0000F8" p="135">00 00 00 00 00 00 00 87</sector>
+        </track>
+        <track id="01">
+            <sector crc="FF0000F7" p="136">00 00 00 00 00 00 00 88</sector>
+            <sector crc="FF0000F6" p="137">00 00 00 00 00 00 00 89</sector>
+            <sector crc="FF0000F5" p="138">00 00 00 00 00 00 00 8A</sector>
+            <sector crc="FF0000F4" p="139">00 00 00 00 00 00 00 8B</sector>
+            <sector crc="FF0000F3" p="140">00 00 00 00 00 00 00 8C</sector>
+            <sector crc="FF0000F2" p="141">00 00 00 00 00 00 00 8D</sector>
+            <sector crc="FF0000F1" p="142">00 00 00 00 00 00 00 8E</sector>
+            <sector crc="FF0000F0" p="143">00 00 00 00 00 00 00 8F</sector>
+        </track>
+        <track id="02">
+            <sector crc="FF0000EF" p="144">00 00 00 00 00 00 00 90</sector>
+            <sector crc="FF0000EE" p="145">00 00 00 00 00 00 00 91</sector>
+            <sector crc="FF0000ED" p="146">00 00 00 00 00 00 00 92</sector>
+            <sector crc="FF0000EC" p="147">00 00 00 00 00 00 00 93</sector>
+            <sector crc="FF0000EB" p="148">00 00 00 00 00 00 00 94</sector>
+            <sector crc="FF0000EA" p="149">00 00 00 00 00 00 00 95</sector>
+            <sector crc="FF0000E9" p="150">00 00 00 00 00 00 00 96</sector>
+            <sector crc="FF0000E8" p="151">00 00 00 00 00 00 00 97</sector>
+        </track>
+        <track id="03">
+            <sector crc="FF0000E7" p="152">00 00 00 00 00 00 00 98</sector>
+            <sector crc="FF0000E6" p="153">00 00 00 00 00 00 00 99</sector>
+            <sector crc="FF0000E5" p="154">00 00 00 00 00 00 00 9A</sector>
+            <sector crc="FF0000E4" p="155">00 00 00 00 00 00 00 9B</sector>
+            <sector crc="FF0000E3" p="156">00 00 00 00 00 00 00 9C</sector>
+            <sector crc="FF0000E2" p="157">00 00 00 00 00 00 00 9D</sector>
+            <sector crc="FF0000E1" p="158">00 00 00 00 00 00 00 9E</sector>
+            <sector crc="FF0000E0" p="159">00 00 00 00 00 00 00 9F</sector>
+        </track>
+    </cylinder>
+    <cylinder id="05">
+        <track id="00">
+            <sector crc="0F0F0F00" p="160">00 00 00 00 00 00 00 A0</sector>
+            <sector crc="0F0F0F01" p="161">00 00 00 00 00 00 00 A1</sector>
+            <sector crc="0F0F0F02" p="162">00 00 00 00 00 00 00 A2</sector>
+            <sector crc="0F0F0F03" p="163">00 00 00 00 00 00 00 A3</sector>
+            <sector crc="0F0F0F04" p="164">00 00 00 00 00 00 00 A4</sector>
+            <sector crc="0F0F0F05" p="165">00 00 00 00 00 00 00 A5</sector>
+            <sector crc="0F0F0F06" p="166">00 00 00 00 00 00 00 A6</sector>
+            <sector crc="0F0F0F07" p="167">00 00 00 00 00 00 00 A7</sector>
+        </track>
+        <track id="01">
+            <sector crc="0F0F0F08" p="168">00 00 00 00 00 00 00 A8</sector>
+            <sector crc="0F0F0F09" p="169">00 00 00 00 00 00 00 A9</sector>
+            <sector crc="0F0F0F0A" p="170">00 00 00 00 00 00 00 AA</sector>
+            <sector crc="0F0F0F0B" p="171">00 00 00 00 00 00 00 AB</sector>
+            <sector crc="0F0F0F0C" p="172">00 00 00 00 00 00 00 AC</sector>
+            <sector crc="0F0F0F0D" p="173">00 00 00 00 00 00 00 AD</sector>
+            <sector crc="0F0F0F0E" p="174">00 00 00 00 00 00 00 AE</sector>
+            <sector crc="0F0F0F0F" p="175">00 00 00 00 00 00 00 AF</sector>
+        </track>
+        <track id="02">
+            <sector crc="0F0F0F10" p="176">00 00 00 00 00 00 00 B0</sector>
+            <sector crc="0F0F0F11" p="177">00 00 00 00 00 00 00 B1</sector>
+            <sector crc="0F0F0F12" p="178">00 00 00 00 00 00 00 B2</sector>
+            <sector crc="0F0F0F13" p="179">00 00 00 00 00 00 00 B3</sector>
+            <sector crc="0F0F0F14" p="180">00 00 00 00 00 00 00 B4</sector>
+            <sector crc="0F0F0F15" p="181">00 00 00 00 00 00 00 B5</sector>
+            <sector crc="0F0F0F16" p="182">00 00 00 00 00 00 00 B6</sector>
+            <sector crc="0F0F0F17" p="183">00 00 00 00 00 00 00 B7</sector>
+        </track>
+        <track id="03">5
+            <sector crc="0F0F0F18" p="184">00 00 00 00 00 00 00 B8</sector>
+            <sector crc="0F0F0F19" p="185">00 00 00 00 00 00 00 B9</sector>
+            <sector crc="0F0F0F1A" p="186">00 00 00 00 00 00 00 BA</sector>
+            <sector crc="0F0F0F1B" p="187">00 00 00 00 00 00 00 BB</sector>
+            <sector crc="0F0F0F1C" p="188">00 00 00 00 00 00 00 BC</sector>
+            <sector crc="0F0F0F1D" p="189">00 00 00 00 00 00 00 BD</sector>
+            <sector crc="0F0F0F1E" p="190">00 00 00 00 00 00 00 BE</sector>
+            <sector crc="0F0F0F1F" p="191">00 00 00 00 00 00 00 BF</sector>
+        </track>
+    </cylinder>
+</hdd>

@@ -7,6 +7,8 @@ import java.util.*;
 
 public class XmlTemplateArguments extends TemplateArguments {
 
+    public static final String ATTR_NODE_VALUE = "_value_";
+
     private final Element documentElement;
     private final Map<String, String> cache = new WeakHashMap<>();
 
@@ -28,6 +30,10 @@ public class XmlTemplateArguments extends TemplateArguments {
         return result;
     }
 
+    public Object queryAll(String path) {
+        return queryRaw(path).getResultObject();
+    }
+
     public Extractor queryRaw(String path) {
         if (path.length() > 0 && path.charAt(0) == '/') path = path.substring(1);
 
@@ -46,13 +52,23 @@ public class XmlTemplateArguments extends TemplateArguments {
 
         // Drop attribute from head
         tree.set(0, headAttr[0]);
-        return new AttributeExtractor(headAttr[1], getExtractor(tree));
+
+        boolean extractAll = "*".equals(headAttr[1]);
+
+        return new AttributeExtractor(headAttr[1], extractAll, getExtractor(tree));
     }
 
     private Extractor getExtractor(List<String> tree) {
         if (tree.size() == 0 || "".equals(tree.get(0))) return new RootExtractor(documentElement);
 
-        return new NodeExtractor(tree.get(0), getExtractor(tree.subList(1, tree.size())));
+        String currentNode = tree.get(0);
+        boolean extractAll = false;
+        if (currentNode.charAt(0) == '*') {
+            currentNode = currentNode.substring(1);
+            extractAll = true;
+        }
+
+        return new NodeExtractor(currentNode, extractAll, getExtractor(tree.subList(1, tree.size())));
     }
 
 }
