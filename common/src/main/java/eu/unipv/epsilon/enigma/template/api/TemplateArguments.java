@@ -3,7 +3,7 @@ package eu.unipv.epsilon.enigma.template.api;
 import java.util.NoSuchElementException;
 
 /** Arguments passed to a template processor to generate its view. */
-public abstract class TemplateArguments {
+public interface TemplateArguments {
 
     /**
      * Returns the argument value associated with the given key.
@@ -15,11 +15,20 @@ public abstract class TemplateArguments {
      *     Different implementations can add further syntactic sugar: for example, the XML implementation allows
      *     usage of colons to reach head element attributes (e.g. {@code "foo/bar/baz:color"} or {@code ":root-attr"}).
      * </p>
+     *
      * @param path the path of the argument to reach
-     * @return the value of the key
+     * @return the value of the selected element
      * @throws NoSuchElementException if the element can not be found
      */
-    public abstract String query(String path) throws NoSuchElementException;
+    String query(String path);
+
+    /**
+     * Returns the argument value associated with the given key or the passed default value if it fails.
+     * @param path the path of the argument to reach
+     * @param defaultValue the default value to use if the element could not be found
+     * @return the value of the selected element
+     */
+    String query(String path, String defaultValue);
 
     /**
      * Returns a memory structure containing the result of a multiple selection query.<br>
@@ -36,14 +45,6 @@ public abstract class TemplateArguments {
      * @return a {@code List<String>} if for elements selection (nodes or attributes in XmlTemplateArguments) or a
      *         {@code List<Map<String, String>>} if all arguments are selected in multiple nodes.
      */
-    public abstract Object queryAll(String path);
-
-    public String query(String path, String defaultValue) {
-        try {
-            return query(path);
-        } catch (NoSuchElementException e) {
-            return defaultValue;
-        }
-    }
+    Object queryAll(String path);
 
 }
