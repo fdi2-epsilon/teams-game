@@ -49,6 +49,7 @@ public class TemplateClassesTest {
 
     @Test
     public void testGridTemplateStream() throws IOException {
+        // This does not work anymore because GridTemplate still searches for "assets:/" and not "cp:/"
         String xmlDoc =
                 "<quiz template=\"grid\">"+
                         "<title>Eioeioeio</title>"+
