@@ -91,7 +91,7 @@ public class XmlTemplateArgumentsTest {
                 "[000, 001, 002, 003, 004, 005, 006, 007]",
                 args2.queryAll("cylinder/track/*sector:p").toString());
 
-        // Get content of all sectors in the first cylinder
+        // Get content of all sectors in the first track
         assertEquals(
                 "[00 00 00 00 00 00 00 00, " +
                  "00 00 00 00 00 00 00 01, " +
@@ -105,7 +105,7 @@ public class XmlTemplateArgumentsTest {
 
         // Get all attributes and node value of the first sector
         assertEquals(
-                "[{p=000, crc=0000FFFF, _value_=00 00 00 00 00 00 00 00}]",
+                "[{p=000, dcrc=0000FFFF, _value_=00 00 00 00 00 00 00 00}]",
                 args2.queryAll("cylinder/track/sector:*").toString());
 
         // Get all attributes and node value of first sector in first track of all cylinders
