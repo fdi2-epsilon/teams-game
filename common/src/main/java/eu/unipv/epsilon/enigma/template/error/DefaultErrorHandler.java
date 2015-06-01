@@ -7,7 +7,6 @@ import org.slf4j.LoggerFactory;
 
 import java.io.*;
 import java.net.URL;
-import java.util.NoSuchElementException;
 
 /**
  * The default error handler which simply returns a formatted error message for the HTML view.
@@ -22,11 +21,11 @@ public class DefaultErrorHandler implements ErrorHandler {
     @Override
     public InputStream handleTemplateException(Throwable exception) {
         // This exception was throws by the template processor
-        return generateErrorPage("The template crashed; not my fault", exception);
+        return generateErrorPage("...template crashed; not my fault", exception);
     }
 
     @Override
-    public InputStream handleTemplateNotFoundError(NoSuchElementException exception) {
+    public InputStream handleTemplateNotFoundError(Throwable exception) {
         // The template server could not find a valid template processor
         return generateErrorPage("I should have tidied up my room...", exception);
     }

@@ -118,7 +118,7 @@ public class RotatePuzzleTemplate {
         List<Map<String, String>> canvasItems = getCanvasItems();
 
         ItemPlacer placer = makeItemPlacer(canvasWidth, canvasHeight, canvasItems.size());
-        LOG.debug("Got item placer: " + placer);
+        LOG.info("Got item placer: " + placer);
 
         StringBuilder sb = new StringBuilder();
         for (int i = 0; i < canvasItems.size(); ++i) {

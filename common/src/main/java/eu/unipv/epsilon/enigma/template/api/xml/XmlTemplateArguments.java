@@ -40,7 +40,7 @@ public class XmlTemplateArguments implements TemplateArguments {
         try {
             return query(path);
         } catch (NoSuchElementException e) {
-            LOG.info("Element + \"" + path + "\" not found, returning passed default", e);
+            LOG.info("Element \"" + path + "\" not found, returning passed default", e);
             return defaultValue;
         }
     }

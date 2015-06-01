@@ -1,7 +1,6 @@
 package eu.unipv.epsilon.enigma.template.error;
 
 import java.io.InputStream;
-import java.util.NoSuchElementException;
 
 /**
  * Used by a {@link eu.unipv.epsilon.enigma.template.TemplateServer TemplateServer} to handle errors.
@@ -23,7 +22,7 @@ public interface ErrorHandler {
      * @param exception the thrown exception
      * @return an {@link InputStream} containing an error document for the view or {@code null}
      */
-    InputStream handleTemplateNotFoundError(NoSuchElementException exception);
+    InputStream handleTemplateNotFoundError(Throwable exception);
 
     /**
      * Called in the case that an exception was thrown during template processor arguments parsing.
