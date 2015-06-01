@@ -4,21 +4,19 @@ import android.content.SharedPreferences;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 
-public class QuestCollectionStatus implements Serializable {
+public class QuestCollectionStatus {
 
     private static final Logger LOG = LoggerFactory.getLogger(QuestCollectionStatus.class);
 
     public static final String STATUS_KEY_PREFIX = "gamestatus_";
 
-    /* Quest index inside collection stored as strings to avoid
-       useless conversions with the Android's SharedPreferences system. */
+    /* Quest index inside collection stored as strings instead of integers to
+       avoid useless conversions with the Android's SharedPreferences system. */
 
-    // HashSet<> maintains this fully serializable
-    private HashSet<String> solvedQuests; //NOSONAR
+    private Set<String> solvedQuests;
 
     private final SharedPreferences statusStore;
     private final String collectionId;
@@ -27,8 +25,7 @@ public class QuestCollectionStatus implements Serializable {
         this.statusStore = statusStore;
         this.collectionId = collectionId;
 
-        // Cast "safe" because Android uses HashSets
-        solvedQuests = (HashSet<String>) statusStore.getStringSet(getStoreKey(), null);
+        solvedQuests = statusStore.getStringSet(getStoreKey(), null);
 
         if (solvedQuests == null) {
             // Create a new set; since 'defValues' in 'getStringSet' is not a by-name-parameter,
@@ -64,8 +61,8 @@ public class QuestCollectionStatus implements Serializable {
 
         String key = getStoreKey();
 
-        // TODO: Troubleshoot why we have to remove the key to actually store changes
-        //       I think that the Android API checks for value instance ptr. or something like that (hashcode?)
+        // Why we have to remove the key, apply, and re-add it to actually store changes!?
+        // I think that the Android API checks for value instance ptr. or something like that (hashcode?)
         SharedPreferences.Editor edit = statusStore.edit();
         edit.remove(key).apply();
         edit.putStringSet(key, data).apply();

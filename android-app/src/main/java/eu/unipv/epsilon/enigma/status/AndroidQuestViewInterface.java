@@ -3,13 +3,11 @@ package eu.unipv.epsilon.enigma.status;
 import android.webkit.JavascriptInterface;
 import eu.unipv.epsilon.enigma.quest.status.QuestViewInterface;
 
-import java.io.Serializable;
-
 /**
  * A {@link QuestViewInterface} designed to work with the Android preferences system
  * and with the Android WebView, requiring {@link JavascriptInterface} annotated API methods.
  */
-public class AndroidQuestViewInterface implements QuestViewInterface, Serializable {
+public class AndroidQuestViewInterface implements QuestViewInterface {
 
     private final QuestCollectionStatus collectionStatus;
     private final int questIndex;
