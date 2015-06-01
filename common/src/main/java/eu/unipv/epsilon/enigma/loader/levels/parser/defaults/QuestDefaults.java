@@ -2,7 +2,7 @@ package eu.unipv.epsilon.enigma.loader.levels.parser.defaults;
 
 import java.util.NoSuchElementException;
 
-import static eu.unipv.epsilon.enigma.loader.levels.parser.MetadataParser.*;
+import static eu.unipv.epsilon.enigma.loader.levels.parser.MetadataFileTags.*;
 
 public class QuestDefaults implements FieldProvider {
 

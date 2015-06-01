@@ -17,12 +17,14 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.InvalidPropertiesFormatException;
 
+import static eu.unipv.epsilon.enigma.loader.levels.parser.MetadataFileTags.*;
+
 public class XmlMetaParser implements MetadataParser {
 
-    public static final String KEYXML_ROOT_NODE = "collection";
-    public static final String KEYXML_QUESTCOLLECTION_META = "meta";
-    public static final String KEYXML_QUESTCOLLECTION_ELEMENTS = "content";
-    public static final String KEYXML_QUEST_NODE = "quest";
+    public static final String KEY_XML_ROOT_NODE = "collection";
+    public static final String KEY_XML_QUESTCOLLECTION_META = "meta";
+    public static final String KEY_XML_QUESTCOLLECTION_ELEMENTS = "content";
+    public static final String KEY_XML_QUEST_NODE = "quest";
 
     private String collectionId;
     private DefaultsFactory defaultsFactory;
@@ -47,13 +49,13 @@ public class XmlMetaParser implements MetadataParser {
         FieldProvider defaults = defaultsFactory.getCollectionDefaults();
 
         // Check if root node is <document>...
-        if (!document.getNodeName().equalsIgnoreCase(KEYXML_ROOT_NODE)) {
+        if (!document.getNodeName().equalsIgnoreCase(KEY_XML_ROOT_NODE)) {
             throw new InvalidPropertiesFormatException(
-                    "Document should start with \"<" + KEYXML_ROOT_NODE + ">\" root node.");
+                    "Document should start with \"<" + KEY_XML_ROOT_NODE + ">\" root node.");
         }
 
         // ...it should contain only one <meta> tag
-        Element meta = getSingleContainerElement(document, KEYXML_QUESTCOLLECTION_META);
+        Element meta = getSingleContainerElement(document, KEY_XML_QUESTCOLLECTION_META);
 
         qc.setId(collectionId);
         qc.setTitle(valueOrDefault(meta, KEY_QUESTCOLLECTION_TITLE, defaults));
@@ -64,13 +66,13 @@ public class XmlMetaParser implements MetadataParser {
         qc.setIconUrl(LevelAssetsURLStreamHandler.createURL(collectionId, iconPathStr));
 
         // ...and only one <content> tag with <quest> children
-        Element content = getSingleContainerElement(document, KEYXML_QUESTCOLLECTION_ELEMENTS);
+        Element content = getSingleContainerElement(document, KEY_XML_QUESTCOLLECTION_ELEMENTS);
         if (content == null) {
             // No quests content
             return qc;
         }
 
-        NodeList quests = content.getElementsByTagName(KEYXML_QUEST_NODE);
+        NodeList quests = content.getElementsByTagName(KEY_XML_QUEST_NODE);
         int questIndex = 0;
         for (int i = 0; i < quests.getLength(); i++) {
             if (quests.item(i).getNodeType() == Node.ELEMENT_NODE) {

@@ -13,7 +13,11 @@ import java.io.InputStreamReader;
 import java.util.List;
 import java.util.Map;
 
+import static eu.unipv.epsilon.enigma.loader.levels.parser.MetadataFileTags.*;
+
 public class YamlMetaParser implements MetadataParser {
+
+    public static final String KEY_YAML_QUESTCOLLECTION_ELEMENTS = "quests";
 
     private String collectionId;
     private DefaultsFactory defaultsFactory;
@@ -42,7 +46,7 @@ public class YamlMetaParser implements MetadataParser {
         String iconPathStr = valueOrDefault(meta, KEY_QUESTCOLLECTION_PATH_ICON, defaults);
         qc.setIconUrl(LevelAssetsURLStreamHandler.createURL(collectionId, iconPathStr));
 
-        List quests = (List) meta.get(KEY_QUESTCOLLECTION_ELEMENTS);
+        List quests = (List) meta.get(KEY_YAML_QUESTCOLLECTION_ELEMENTS);
         if (quests != null)
             for (int i = 0; i < quests.size(); i++)
                 qc.addQuest(generateQuest(i, (Map) quests.get(i)));
