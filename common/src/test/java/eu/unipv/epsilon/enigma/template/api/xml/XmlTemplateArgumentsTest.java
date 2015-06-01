@@ -5,6 +5,9 @@ import org.w3c.dom.Document;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 import static org.junit.Assert.assertEquals;
 
@@ -104,19 +107,29 @@ public class XmlTemplateArgumentsTest {
                 args2.queryAll("cylinder/track/*sector").toString());
 
         // Get all attributes and node value of the first sector
-        assertEquals(
-                "[{p=000, dcrc=0000FFFF, _value_=00 00 00 00 00 00 00 00}]",
-                args2.queryAll("cylinder/track/sector:*").toString());
+        assertEquals(new ArrayList<Map<String, String>>() {{
+                        add(createComparisonAttribsMap("0000FFFF", "000", "00 00 00 00 00 00 00 00"));
+                }},
+                args2.queryAll("cylinder/track/sector:*"));
 
         // Get all attributes and node value of first sector in first track of all cylinders
-        assertEquals(
-                "[{p=000, crc=0000FFFF, _value_=00 00 00 00 00 00 00 00}, " +
-                 "{p=032, crc=00FFFF00, _value_=00 00 00 00 00 00 00 20}, " +
-                 "{p=064, crc=00FF00FF, _value_=00 00 00 00 00 00 00 40}, " +
-                 "{p=096, crc=FFFF0000, _value_=00 00 00 00 00 00 00 60}, " +
-                 "{p=128, crc=FF0000FF, _value_=00 00 00 00 00 00 00 80}, " +
-                 "{p=160, crc=0F0F0F00, _value_=00 00 00 00 00 00 00 A0}]",
-                args2.queryAll("*cylinder/track/sector:*").toString());
+        assertEquals(new ArrayList<Map<String, String>>() {{
+                        add(createComparisonAttribsMap("0000FFFF", "000", "00 00 00 00 00 00 00 00"));
+                        add(createComparisonAttribsMap("00FFFF00", "032", "00 00 00 00 00 00 00 20"));
+                        add(createComparisonAttribsMap("00FF00FF", "064", "00 00 00 00 00 00 00 40"));
+                        add(createComparisonAttribsMap("FFFF0000", "096", "00 00 00 00 00 00 00 60"));
+                        add(createComparisonAttribsMap("FF0000FF", "128", "00 00 00 00 00 00 00 80"));
+                        add(createComparisonAttribsMap("0F0F0F00", "160", "00 00 00 00 00 00 00 A0"));
+                }},
+                args2.queryAll("*cylinder/track/sector:*"));
+    }
+
+    private Map<String, String> createComparisonAttribsMap(final String crc, final String p, final String value) {
+        return new HashMap<String, String>() {{
+            put("crc", crc);
+            put("p", p);
+            put(XmlTemplateArguments.ATTR_NODE_VALUE, value);
+        }};
     }
 
 }
