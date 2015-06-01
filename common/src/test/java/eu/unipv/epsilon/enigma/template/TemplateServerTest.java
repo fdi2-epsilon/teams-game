@@ -23,8 +23,10 @@ public class TemplateServerTest {
     private final TemplateServer templateServer = new TemplateServer(new TemplateRegistry(
             new JvmPackageScanner(), new JvmAssetsClassLoaderFactory(questCollections)));
 
-    // We want also "eqc:/" and "cp:/" to be available to our templates
-    private final ProtocolManager protocolManager = new ProtocolManager(questCollections, templateServer);
+    public TemplateServerTest() {
+        // We want also "eqc:/" and "cp:/" to be available to our templates
+        new ProtocolManager(questCollections, templateServer).registerURLStreamHandlers();
+    }
 
     @Test
     public void testRawTemplateFromStream() throws IOException {

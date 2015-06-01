@@ -11,6 +11,8 @@ import eu.unipv.epsilon.enigma.quest.QuestCollection;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.*;
 import java.net.URL;
@@ -26,13 +28,13 @@ public class GameAssetsSystemTest {
 
     /* This performs only generic metadata loading tests, for templates, take a look at TemplateServerTest */
 
+    private static final Logger LOG = LoggerFactory.getLogger(GameAssetsSystemTest.class);
+
     public static final String PROTO_HEAD = LevelAssetsURLStreamHandler.PROTOCOL_NAME + "://";
 
     private final File baseDir = new File(getClass().getResource("/collections_pool").getPath());
     private final CollectionsPool questCollections = new MergedPool(new DirectoryPool(baseDir));
     private final String cid;
-
-    private final ProtocolManager protocolManager = new ProtocolManager(questCollections, null);
 
     @Parameterized.Parameters
     public static Collection<Object[]> data() {
@@ -41,6 +43,7 @@ public class GameAssetsSystemTest {
     }
 
     public GameAssetsSystemTest(String collectionId) {
+        new ProtocolManager(questCollections, null).registerURLStreamHandlers();
         this.cid = collectionId;
     }
 
@@ -68,7 +71,11 @@ public class GameAssetsSystemTest {
 
     @Test
     public void testMetadata() throws IOException {
+        LOG.info("Loading metadata");
         QuestCollection questCollection = questCollections.getCollectionContainer(cid).getCollectionMeta();
+        LOG.info("Reloading metadata, should be cached and content equals the one passed before");
+        assertEquals(questCollection.hashCode(),
+                questCollections.getCollectionContainer(cid).getCollectionMeta().hashCode());
 
         // Size test
         assertEquals("Collection size must be 3",

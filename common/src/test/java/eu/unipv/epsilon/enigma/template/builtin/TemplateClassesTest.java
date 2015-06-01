@@ -26,8 +26,10 @@ public class TemplateClassesTest {
     private final TemplateServer templateServer = new TemplateServer(new TemplateRegistry(
         new JvmPackageScanner(), new JvmAssetsClassLoaderFactory(questCollections)));
 
-    // Register "eqc:/" and "cp:/" URLs for our templates and error handlers.
-    private final ProtocolManager protocolManager = new ProtocolManager(questCollections, templateServer);
+    public TemplateClassesTest() {
+        // Register "eqc:/" and "cp:/" URLs for our templates and error handlers.
+        new ProtocolManager(questCollections, templateServer).registerURLStreamHandlers();
+    }
 
     @Test
     public void testRawTemplateFromStream() throws IOException {
@@ -49,7 +51,6 @@ public class TemplateClassesTest {
 
     @Test
     public void testGridTemplateStream() throws IOException {
-        // This does not work anymore because GridTemplate still searches for "assets:/" and not "cp:/"
         String xmlDoc =
                 "<quiz template=\"grid\">"+
                         "<title>Eioeioeio</title>"+

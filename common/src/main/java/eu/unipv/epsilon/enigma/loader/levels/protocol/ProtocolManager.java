@@ -20,7 +20,10 @@ public class ProtocolManager implements URLStreamHandlerFactory {
 
     /** The static field in URL class containing the currently registered URLStreamHandler */
     private static final Field urlFactoryField = findUrlFactoryField();
-    static { urlFactoryField.setAccessible(true); }
+
+    static {
+        urlFactoryField.setAccessible(true);
+    }
 
     private final LevelAssetsURLStreamHandler assetsUrlHandler;
     private final ClasspathURLStreamHandler classpathUrlHandler;
@@ -28,7 +31,6 @@ public class ProtocolManager implements URLStreamHandlerFactory {
     public ProtocolManager(CollectionsPool questCollections, TemplateServer templateServer) {
         assetsUrlHandler = new LevelAssetsURLStreamHandler(questCollections, templateServer);
         classpathUrlHandler = new ClasspathURLStreamHandler();
-        registerURLStreamHandlers();
     }
 
     @Override
@@ -52,11 +54,11 @@ public class ProtocolManager implements URLStreamHandlerFactory {
             return (URLStreamHandlerFactory) urlFactoryField.get(null);
         } catch (IllegalAccessException e) {
             throw new UnsupportedOperationException(
-                "Cannot get registered URLStreamHandlerFactory, is the field accessible?");
+                "Cannot get registered URLStreamHandlerFactory, is the field accessible?", e);
         }
     }
 
-    private void registerURLStreamHandlers() {
+    public void registerURLStreamHandlers() {
         try {
             // Cleanup any previously registered URL Stream Handler Factory, otherwise Java will throw a Runtime ERROR
             // and will crash our app. While it's good practice to register a stream handler only once,
@@ -81,7 +83,7 @@ public class ProtocolManager implements URLStreamHandlerFactory {
     private static Field findUrlFactoryField() {
         try {
             return URL.class.getDeclaredField("factory");
-        } catch (NoSuchFieldException e) {
+        } catch (NoSuchFieldException e) { //NOSONAR
             // Don't log the exception, factoryField is null
         }
 
@@ -90,7 +92,7 @@ public class ProtocolManager implements URLStreamHandlerFactory {
 
         try {
             return URL.class.getDeclaredField("streamHandlerFactory");
-        } catch (NoSuchFieldException e) {
+        } catch (NoSuchFieldException e) { //NOSONAR
             // Don't log the exception, factoryField is null
         }
 

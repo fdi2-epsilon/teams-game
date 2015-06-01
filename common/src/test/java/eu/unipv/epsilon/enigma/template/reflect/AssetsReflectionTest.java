@@ -26,8 +26,10 @@ public class AssetsReflectionTest {
     private final PackageScanner packageScanner = new JvmPackageScanner();
     private final CollectionsPool questCollections = new DirectoryPool(baseDir);
 
-    /* By now, we need to register our protocols, since BaseAssetsClassLoader uses them to return resources. */
-    private final ProtocolManager protocolManager = new ProtocolManager(questCollections, null);
+    public AssetsReflectionTest() {
+        /* By now, we need to register our protocols, since BaseAssetsClassLoader uses them to return resources. */
+        new ProtocolManager(questCollections, null).registerURLStreamHandlers();
+    }
 
     @Test
     public void testLocalPackageScan() throws ClassNotFoundException {

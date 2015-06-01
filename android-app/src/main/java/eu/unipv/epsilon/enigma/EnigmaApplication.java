@@ -16,6 +16,7 @@ import org.slf4j.LoggerFactory;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Application instance for Enigma, holds assets and game status subsystems.
@@ -39,7 +40,7 @@ public class EnigmaApplication extends Application {
                 new DalvikPackageScanner(this), new DalvikAssetsClassLoaderFactory(this, collectionsPool)));
 
         // Create url handlers for collection URLs and classpath URLs
-        new ProtocolManager(collectionsPool, templateServer);
+        new ProtocolManager(collectionsPool, templateServer).registerURLStreamHandlers();
 
         // Initialize game status storage
         this.gameStatus = new GameStatus(getSharedPreferences(getString(R.string.app_name), MODE_PRIVATE));
@@ -62,7 +63,7 @@ public class EnigmaApplication extends Application {
                 intStore == null ? "~none~" : intStore.getPath(),
                 extStore == null ? "~none~" : extStore.getPath());
 
-        ArrayList<CollectionsPool> pools = new ArrayList<>();
+        List<CollectionsPool> pools = new ArrayList<>();
         if (intStore != null)
             pools.add(new DirectoryPool(intStore));
         if (extStore != null)
