@@ -9,14 +9,15 @@ import org.w3c.dom.NodeList;
 import java.io.IOException;
 import java.net.URL;
 
-/* This template is deprecated in favor of "io.github.lczx.enigmatemplates.RotatePuzzleTemplate" *\
-\*         defined in the project ":levels:experiments" as a collection defined template.        */
-
+/**
+ * @deprecated in favor of {@code io.github.lczx.enigmatemplates.RotatePuzzleTemplate}
+ *             defined in project {@code ":levels:experiments"} as a collection defined template.
+ */
 @Template(id = "grid")
 @Deprecated
 public class GridTemplate {
 
-    private static final String PAGE_PATH = "assets:/templates/list/indexGrid.html";
+    private static final String PAGE_PATH = "cp:/assets/templates/list/indexGrid.html";
 
     @Template.EventHandler
     public void generate(DocumentGenerationEvent e) throws IOException {

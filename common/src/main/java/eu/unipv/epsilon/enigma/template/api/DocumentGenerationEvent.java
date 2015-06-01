@@ -42,6 +42,7 @@ public class DocumentGenerationEvent {
      * @return the XML arguments root element
      * @deprecated Use {@link #getArguments()} instead
      */
+    @Deprecated
     public Element getArgumentsRaw() {
         return templateArguments.getDocumentElement();
     }
