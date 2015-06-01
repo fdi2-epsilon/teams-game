@@ -18,9 +18,6 @@ repositories.jcenter()
 dependencies {
     // Required for Template API
     compile project(':common')
-
-    // REMOVE AFTER TESTING!
-    compile 'org.slf4j:slf4j-simple:1.7.12'
 }
 
 questCollection {

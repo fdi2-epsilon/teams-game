@@ -41,33 +41,47 @@ public class ItemPlacer {
         this.columns = columns;
     }
 
-    public void setItemSize(int width, int height) {
+    public ItemPlacer setItemSize(Dimensions size) {
+        return setItemSize((int) size.getX(), (int) size.getY());
+    }
+
+    public ItemPlacer setItemSize(int width, int height) {
         itemWidth = width;
         itemHeight = height;
         valid = false;
+        return this;
     }
 
-    public void setPadding(int x, int y) {
+    public ItemPlacer setPadding(Dimensions size) {
+        return setPadding((int) size.getX(), (int) size.getY());
+    }
+
+    public ItemPlacer setPadding(int x, int y) {
         paddingX = x;
         paddingY = y;
         valid = false;
+        return this;
     }
 
-    public void setOffset(int x, int y) {
+    public ItemPlacer setOffset(Dimensions amount) {
+        return setOffset((int) amount.getX(), (int) amount.getY());
+    }
+
+    public ItemPlacer setOffset(int x, int y) {
         offsetX = x;
         offsetY = y;
         valid = false;
+        return this;
     }
 
-    public Position getItemPosition(int index) {
+    public Dimensions getItemPosition(int index) {
         if (!valid)
             calculatePositions();
 
         int posX = index % columns;
-        int posY = (int) Math.floor(index / rows);
-        return new Position(xs[posX], ys[posY]);
+        int posY = (int) Math.floor((double) index / rows);
+        return new Dimensions(xs[posX], ys[posY]);
     }
-
 
     private void calculatePositions() {
         int w = canvasWidth - 2 * paddingX;
@@ -86,6 +100,12 @@ public class ItemPlacer {
             ys[i] = Math.round(stepY * (.5 + i) + totOffsetsY);
 
         valid = true;
+    }
+
+    @Override
+    public String toString() {
+        return String.format("ItemPlacer(%dx%d [%dx%d], item-size: %dx%d, padding: %d %d, offset: %d %d)",
+                rows, columns, canvasWidth, canvasHeight, itemWidth, itemHeight, paddingX, paddingY, offsetX, offsetY);
     }
 
 }

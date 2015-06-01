@@ -3,14 +3,15 @@ package io.github.lczx.enigmatemplates;
 import eu.unipv.epsilon.enigma.loader.levels.protocol.ClasspathURLStreamHandler;
 import eu.unipv.epsilon.enigma.template.api.DocumentGenerationEvent;
 import eu.unipv.epsilon.enigma.template.api.Template;
+import eu.unipv.epsilon.enigma.template.api.TemplateArguments;
 import eu.unipv.epsilon.enigma.template.util.MappedValueInputStream;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.w3c.dom.Element;
-import org.w3c.dom.NodeList;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.List;
+import java.util.Map;
 
 /**
  * <i>A template defining rotating items that should be placed correctly to solve the puzzle.</i>
@@ -68,35 +69,10 @@ import java.net.URL;
 @Template(id = "rotating-puzzle")
 public class RotatePuzzleTemplate {
 
-    /*
-    // REMOVE AFTER TESTS!
-    private static GameAssetsSystem as = new GameAssetsSystem(new DirectoryPool(new File("levels/experiments/build/eqcs")));
-
-    public static void main(String[] args) throws Exception {
-        as.createTemplateServer(new JvmCandidateClassSource(as));
-        URL mdurl = as.getCollectionContainer("experiments").getCollectionMeta().get(0).getMainDocumentUrl();
-
-        System.out.println(mdurl);
-        dumpStream(mdurl.openStream());
-    }
-
-    // teST thinger
-    private static void dumpStream(InputStream is) throws IOException {
-        BufferedReader br = new BufferedReader(new InputStreamReader(is));
-        String line;
-        while ((line = br.readLine()) != null)
-            System.out.println(line);
-    }
-
-*/
-
-    private static final Logger LOG = LoggerFactory.getLogger(RotatePuzzleTemplate.class);
-
-    // PLS PLACE LOGS ALL AROUND WITH CALCD AND ARGS VALUES
-
-
     // These are simple plugin classes, should I S.O.L.I.D. here too?
     // In any case, this is purely H.O.R.R.I.B.L.E. and if I have some time I will consider refactoring it.
+
+    private static final Logger LOG = LoggerFactory.getLogger(RotatePuzzleTemplate.class);
 
     private static final String MY_ASSETS_PATH = "assets/templates/rotating-puzzle/";
 
@@ -105,157 +81,77 @@ public class RotatePuzzleTemplate {
     private static final URL SCRIPT_URL =
             ClasspathURLStreamHandler.createURL(MY_ASSETS_PATH + "quizlogic.js");
 
-    Element xmlArgs;
+    TemplateArguments args;
 
     @Template.EventHandler
     public void handler(DocumentGenerationEvent e) throws IOException {
-        xmlArgs = e.getArgumentsRaw();
+        args = e.getArguments();
 
         if (!e.hasPathData())
             throw new UnsupportedOperationException("This template cannot work without path data.");
 
-        // Get canvas image size
-        String canvasImg = getBaseArgumentAttribute("canvas", "img", "");
-        int canvasW = 0, canvasH = 0;
-        if (!"".equals(canvasImg)) {
-            canvasW = Integer.parseInt(getBaseArgumentAttribute("canvas", "width", "0"));
-            canvasH = Integer.parseInt(getBaseArgumentAttribute("canvas", "height", "0"));
-        }
-
-        // Get number of item nodes
-        NodeList itemNodes = getSingleElement("canvas").getElementsByTagName("item");
-        int numItems = itemNodes.getLength();
-
-        ItemPlacer placer = buildItemPlacer(canvasW, canvasH, numItems);
-        StringBuilder sb = new StringBuilder();
-
-        for (int i = 0; i < itemNodes.getLength(); ++i) {
-            // We assume that we have element nodes and the input is correctly formatted
-            Element itemNode = (Element) itemNodes.item(i);
-
-            Position defaultPosition = placer != null ? placer.getItemPosition(i) : new Position(0, 0);
-            sb.append(new Item(itemNode, defaultPosition).toJson());
-        }
+        // Get canvas image and size (size can be specified without image)
+        String canvasImg = args.query("canvas:img", "");
+        int canvasWidth = Integer.parseInt(args.query("canvas:width", "0"));
+        int canvasHeight = Integer.parseInt(args.query("canvas:height", "0"));
+        LOG.debug("Got image data: \"{}\" as {}x{}", canvasImg, canvasWidth, canvasHeight);
 
         MappedValueInputStream in = new MappedValueInputStream(
                 getClass().getClassLoader().getResourceAsStream(MY_ASSETS_PATH + "index.html"));
 
         in.addMacro("STYLE_URL", STYLE_URL.toString());
         in.addMacro("SCRIPT_URL", SCRIPT_URL.toString());
-
-        in.addMacro("BACKGROUND_IMAGE_PATH", getBaseArgumentAttribute("background", "img", ""));
-
-        in.addMacro("QUIZ_TITLE",  getBaseArgument("title", ""));
-        in.addMacro("QUIZ_FOOTNOTE", getBaseArgument("footnote", ""));
+        in.addMacro("BACKGROUND_IMAGE_PATH", args.query("background:img", ""));
+        in.addMacro("QUIZ_TITLE", args.query("title"));
+        in.addMacro("QUIZ_FOOTNOTE", args.query("footnote"));
 
         in.addMacro("FRAME_DATA", String.format(
-                "{ background: '%s', width: %d, height: %d }", canvasImg, canvasW, canvasH));
-        in.addMacro("ITEMS_DATA", sb.toString());
+                "{ background: '%s', width: %d, height: %d }", canvasImg, canvasWidth, canvasHeight));
+        in.addMacro("ITEMS_DATA", getItemsData(canvasWidth, canvasHeight));
 
         e.setResponseStream(in);
         LOG.info("Response stream generated successfully");
     }
 
+    public String getItemsData(int canvasWidth, int canvasHeight) {
+        // Get number of item nodes
+        List<Map<String, String>> canvasItems = getCanvasItems();
+
+        ItemPlacer placer = makeItemPlacer(canvasWidth, canvasHeight, canvasItems.size());
+        LOG.debug("Got item placer: " + placer);
+
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < canvasItems.size(); ++i) {
+            Dimensions defaultPosition = placer != null ? placer.getItemPosition(i) : new Dimensions(0, 0);
+            sb.append(new PuzzleItem(canvasItems.get(i), defaultPosition).toJson());
+        }
+        return sb.toString();
+    }
+
     // Returns null if no default placer
-    public ItemPlacer buildItemPlacer(int canvasWidth, int canvasHeight, int numItems) {
-        if (getSingleElement("auto-positioning") == null) {
-            // No auto-positioning tag, no item placer
+    public ItemPlacer makeItemPlacer(int canvasWidth, int canvasHeight, int numItems) {
+        // Return null if we don't have the "auto-positioning" tag or something similar coming in the future
+        if (args.query("auto-positioning", null) == null)
             return null;
-        }
 
-        ItemPlacer p;
-        String rows = getBaseArgumentAttribute("auto-positioning", "rows", "");
-        String cols = getBaseArgumentAttribute("auto-positioning", "cols", "");
+        ItemPlacer placer;
+        String rows = args.query("auto-positioning:rows", "");
+        String cols = args.query("auto-positioning:cols", "");
 
-        if (isInteger(rows) && isInteger(cols))
-            p = new ItemPlacer(canvasWidth, canvasHeight, Integer.parseInt(rows), Integer.parseInt(cols));
+        if (rows.isEmpty() || cols.isEmpty())
+            placer = new ItemPlacer(canvasWidth, canvasHeight, numItems);
         else
-            p = new ItemPlacer(canvasWidth, canvasHeight, numItems);
+            placer = new ItemPlacer(canvasWidth, canvasHeight, Integer.parseInt(rows), Integer.parseInt(cols));
 
-        String paddingStr = getBaseArgumentAttribute("auto-positioning", "padding", "0 0");
-        Position padding = Position.fromXmlString(paddingStr);
-        p.setPadding((int) padding.x, (int) padding.y);
-
-        String offsetStr = getBaseArgumentAttribute("auto-positioning", "offset", "0 0");
-        Position offset = Position.fromXmlString(offsetStr);
-        p.setOffset((int) offset.x, (int) offset.y);
-
-        String meanSizeStr = getBaseArgumentAttribute("auto-positioning", "mean-item-size", "0 0");
-        Position meanSize = Position.fromXmlString(meanSizeStr);
-        p.setItemSize((int) meanSize.x, (int) meanSize.y);
-
-        return p;
+        return placer
+                .setPadding(Dimensions.fromXmlString(args.query("auto-positioning:padding", "0 0")))
+                .setOffset(Dimensions.fromXmlString(args.query("auto-positioning:offset", "0 0")))
+                .setItemSize(Dimensions.fromXmlString(args.query("auto-positioning:mean-item-size", "0 0")));
     }
 
-    /* XML helper functions */
-
-    // Gets the first element found with the given <key></key> or null if not found
-    public Element getSingleElement(String key) {
-        return (Element) xmlArgs.getElementsByTagName(key).item(0);
-    }
-
-    // Extracts <key>value</key and returns defaultValue on error
-    public String getBaseArgument(String key, String defaultValue) {
-        Element elem = getSingleElement(key);
-        return elem != null ? elem.getTextContent() : defaultValue;
-    }
-
-    // Extracts <key attr="value" /> and returns defaultValue on error
-    public String getBaseArgumentAttribute(String key, String attr, String defaultValue) {
-        Element elem = getSingleElement(key);
-        if (elem == null)
-            return defaultValue;
-
-        String attrValue = elem.getAttribute(attr);
-        return "".equals(attrValue) ? defaultValue : attrValue;
-    }
-
-    public boolean isInteger(String str) {
-        try {
-            Integer.parseInt(str);
-            return true;
-        } catch (NumberFormatException e) {
-            // Ignore exception
-            return false;
-        }
-    }
-
-    public class Item {
-
-        private Position defaultPos;
-        private String imgPath;
-        private String initPos;
-        private String targetPos;
-        private String pivot;
-
-        public Item(Element arg, Position defaultPos) {
-            imgPath = arg.getAttribute("img");
-            // ok if ""
-
-            initPos = arg.getAttribute("init-pos");
-            if (!isInteger(initPos)) initPos = "0";
-
-            targetPos = arg.getAttribute("pos");
-            if (!isInteger(targetPos)) targetPos = "0";
-
-            pivot = arg.getAttribute("pivot");
-
-            this.defaultPos = defaultPos;
-        }
-
-        public String toJson() {
-            Position x;
-            if (!"".equals(pivot)) {
-                // Check for parsing errors?
-                x = Position.fromXmlString(pivot);
-            } else {
-                x = defaultPos;
-            }
-
-            return String.format("{img: '%s', pos: %s, c: %s, t: %s}, ",
-                    imgPath, x, initPos, targetPos);
-        }
-
+    @SuppressWarnings("unchecked")
+    List<Map<String, String>> getCanvasItems() {
+        return (List<Map<String, String>>) args.queryAll("canvas/*item:*");
     }
 
 }
