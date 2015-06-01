@@ -44,7 +44,9 @@ public class AttributeExtractor extends Extractor {
     // Returns a List<Map<String, String>> if all attributes are requested
     @Override
     public Object getResultObject() {
-        if (!getAll) return getTexts();
+        if (!getAll)
+            return getTexts();
+
         List<Element> parentNodes = parent.getNodes();
 
         List<Map<String, String>> attributeMaps = new ArrayList<>();

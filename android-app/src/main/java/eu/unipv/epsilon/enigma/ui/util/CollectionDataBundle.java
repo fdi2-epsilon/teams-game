@@ -16,6 +16,19 @@ public class CollectionDataBundle {
     private final QuestCollection collection;
     private final QuestCollectionStatus collectionStatus;
 
+    public CollectionDataBundle(QuestCollection collection, QuestCollectionStatus collectionStatus) {
+        this.collection = collection;
+        this.collectionStatus = collectionStatus;
+    }
+
+    public QuestCollection getCollection() {
+        return collection;
+    }
+
+    public QuestCollectionStatus getCollectionStatus() {
+        return collectionStatus;
+    }
+
     public static CollectionDataBundle fromId(EnigmaApplication application, String collectionId) {
         try {
             QuestCollection collection =
@@ -28,19 +41,6 @@ public class CollectionDataBundle {
             // IllegalArgumentException because the passed intent argument is not valid.
             throw new IllegalArgumentException("Collection with id \"" + collectionId + "\" cannot be loaded", e);
         }
-    }
-
-    public CollectionDataBundle(QuestCollection collection, QuestCollectionStatus collectionStatus) {
-        this.collection = collection;
-        this.collectionStatus = collectionStatus;
-    }
-
-    public QuestCollection getCollection() {
-        return collection;
-    }
-
-    public QuestCollectionStatus getCollectionStatus() {
-        return collectionStatus;
     }
 
 }

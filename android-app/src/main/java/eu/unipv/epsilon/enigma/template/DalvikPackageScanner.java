@@ -26,6 +26,7 @@ public class DalvikPackageScanner implements PackageScanner {
         this.context = context;
     }
 
+    @Override
     public List<Class<?>> getClassesInPackage(String packageName) throws ClassNotFoundException {
         ClassLoader contextClassLoader = context.getClassLoader();
         if (contextClassLoader == null)
@@ -34,6 +35,7 @@ public class DalvikPackageScanner implements PackageScanner {
         return getClassesInPackage(packageName, contextClassLoader, false);
     }
 
+    @Override
     public List<Class<?>> getClassesInPackage(
             String packageName, ClassLoader classLoader, boolean local) throws ClassNotFoundException {
 
@@ -72,20 +74,25 @@ public class DalvikPackageScanner implements PackageScanner {
             List<Class<?>> classes = new LinkedList<>();
 
             for (String name : IterableEnumeration.make(dex.entries())) {
-                if (name.startsWith(packageName)) {
-                    try {
-                        classes.add(classLoader.loadClass(name));
-                    } catch (ClassNotFoundException e) {
-                        // Class cannot be loaded by the class loader, skip it and log
-                        LOG.warn("Class " + name + "was found but cannot be loaded by the given class loader", e);
-                    }
-                }
+                if (!name.startsWith(packageName))
+                    continue;
+                tryLoadClass(name, classLoader, classes);
             }
             return classes;
 
         } catch (IOException e) {
             LOG.error("Cannot open DEX for reading; returning nothing", e);
             return Collections.emptyList();
+        }
+    }
+
+    // Tries to load a class and to add it to the passed list, logs errors (extracted from findClassesDex)
+    private void tryLoadClass(String name, ClassLoader classLoader, List<Class<?>> classes) {
+        try {
+            classes.add(classLoader.loadClass(name));
+        } catch (ClassNotFoundException e) {
+            // Class cannot be loaded by the class loader, skip it and log
+            LOG.warn("Class " + name + "was found but cannot be loaded by the given class loader", e);
         }
     }
 

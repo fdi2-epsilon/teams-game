@@ -35,6 +35,8 @@ import java.util.Map;
 @Template(id = "list")
 public class ListTemplate {
 
+    private static final String TAG_CORRECT = "correct";
+
     private static final URL PAGE_URL =
             ClasspathURLStreamHandler.createURL("assets/templates/list/index.html");
 
@@ -60,8 +62,8 @@ public class ListTemplate {
 
         for (Map<String, String> answer : answers) {
             // True if it has a "correct" attribute and it is set to true or is empty
-            boolean correct = answer.containsKey("correct") &&
-                    ("true".equalsIgnoreCase(answer.get("correct")) || answer.get("correct").isEmpty());
+            boolean correct = answer.containsKey(TAG_CORRECT) &&
+                    ("true".equalsIgnoreCase(answer.get(TAG_CORRECT)) || answer.get(TAG_CORRECT).isEmpty());
             sb.append(String.format("<li%s>%s</li>",
                     correct ? " correct" : "", answer.get(XmlTemplateArguments.ATTR_NODE_VALUE)));
         }

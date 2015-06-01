@@ -20,9 +20,9 @@ public class RootExtractor extends Extractor {
 
     @Override
     public List<Element> getNodes() {
-        return new ArrayList<Element>() {{
-            add(documentElement);
-        }};
+        List<Element> ret = new ArrayList<>();
+        ret.add(documentElement);
+        return ret;
     }
 
     @Override

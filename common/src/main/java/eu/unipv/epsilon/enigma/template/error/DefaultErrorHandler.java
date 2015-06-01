@@ -37,20 +37,21 @@ public class DefaultErrorHandler implements ErrorHandler {
     }
 
     private InputStream generateErrorPage(String pageTitle, Throwable exception) throws IOException {
-        final URL PAGE_URL = ClasspathURLStreamHandler.createURL("assets/templates/error/error_page.html");
-        final URL PAGE_IMAGE_URL = ClasspathURLStreamHandler.createURL("assets/templates/error/chainsaw.png");
+        final URL pageUrl = ClasspathURLStreamHandler.createURL("assets/templates/error/error_page.html");
+        final URL pageImageUrl = ClasspathURLStreamHandler.createURL("assets/templates/error/chainsaw.png");
 
-        MappedValueInputStream page = new MappedValueInputStream(PAGE_URL.openStream());
+        MappedValueInputStream page = new MappedValueInputStream(pageUrl.openStream());
         page.addMacro("PAGE_TITLE", pageTitle);
         page.addMacro("DESCRIPTION", '"' + exception.getLocalizedMessage() + '"');
         page.addMacro("CAUSE", exception.getClass().getName());
         page.addMacro("MESSAGE", printThrowableStackTrace(exception));
-        page.addMacro("IMAGE_URL", PAGE_IMAGE_URL.toString());
+        page.addMacro("IMAGE_URL", pageImageUrl.toString());
         return page;
     }
 
-    @SuppressWarnings("squid:S1148") // Sonar: Use a logger to log this exception
+    @SuppressWarnings("squid:S1148") // Sonar: Use a logger to log this exception (using printStackTrace)
     private String printThrowableStackTrace(Throwable e) {
+        LOG.error("Handled exception", e);
         StringWriter errors = new StringWriter();
         e.printStackTrace(new PrintWriter(errors));
         return errors.toString();

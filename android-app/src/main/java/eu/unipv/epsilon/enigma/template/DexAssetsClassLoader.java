@@ -34,22 +34,21 @@ public class DexAssetsClassLoader extends BaseAssetsClassLoader {
     private ClassLoader dexClassLoader;
 
     // Set to true if this collection container contains class files
-    private boolean hasClasses = true;
+    private boolean hasClasses = false;
 
     public DexAssetsClassLoader(Context context, CollectionsPool questCollections, String collectionId) {
         super(context.getClassLoader(), collectionId);
-
         try {
             setupClassLoader(context, questCollections);
+            hasClasses = true;
         } catch (IOException e) {
             LOG.info("Cannot initialize class loading, treating collection as classless", e);
-            hasClasses = false;
         }
     }
 
     @Override
     protected Class<?> findClass(String name) throws ClassNotFoundException {
-        LOG.info("Trying to lookup class \"{}\" in collection \"{}\"", name, collectionId);
+        LOG.info("Looking up class \"{}\" in collection \"{}\"", name, collectionId);
 
         // Return a cached class if exists
         if (cache.containsKey(name))
@@ -104,6 +103,8 @@ public class DexAssetsClassLoader extends BaseAssetsClassLoader {
         // Use a DexClassLoader to generate an optimized dex
         ClassLoader cl = new DexClassLoader(inputDex.getPath(), dexOptDir.getPath(), null, context.getClassLoader()) {
 
+            // Override is needed to lookup assets inside collection container
+
             @Override
             protected URL findResource(String name) {
                 return resHandler.getResource(name);
@@ -114,7 +115,7 @@ public class DexAssetsClassLoader extends BaseAssetsClassLoader {
                 try {
                     return resHandler.getResources(name);
                 } catch (IOException e) {
-                    LOG.error("Cannot lookup resource " + name);
+                    LOG.error("Cannot lookup resource " + name, e);
                     return null;
                 }
             }
