@@ -1,0 +1,10 @@
+<quiz template="list">
+    <title>Which is the answer to this question?</title>
+    <answers>
+        <item>Camels and llamas</item>
+        <item correct="true">Is there life on Earth?</item>
+        <item>The wall</item>
+        <item>I am hungry</item>
+    </answers>
+    <style background="linear-gradient(90deg, #ffd, #dfd)"/>
+</quiz>

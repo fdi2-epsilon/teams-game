@@ -1,0 +1,10 @@
+<quiz template="list">
+    <title>...</title>
+    <answers>
+        <item>I am staring at the wall</item>
+        <item>I am sleeping</item>
+        <item>I am watching TV (turned off)</item>
+        <item correct="true">I am looking at this question</item>
+    </answers>
+    <style background="linear-gradient(90deg, #ddf, #fdf)"/>
+</quiz>

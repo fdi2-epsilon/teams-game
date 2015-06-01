@@ -1,0 +1,10 @@
+<quiz template="list">
+    <title>Did you like this survey?</title>
+    <answers>
+        <item>Hahaha... haha... HAHAHAHA!</item>
+        <item>This survey is a waste of time</item>
+        <item correct="true">Emh... yeah... it was... ehm... pretty good</item>
+        <item>THE GOAT OF FUKK!!!</item>
+    </answers>
+    <style background="linear-gradient(90deg, #fdf, #fdd)"/>
+</quiz>

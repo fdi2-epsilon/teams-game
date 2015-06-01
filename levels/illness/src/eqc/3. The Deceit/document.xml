@@ -1,0 +1,10 @@
+<quiz template="list">
+    <title>Everybody knows that...</title>
+    <answers>
+        <item>Donkeys can fly</item>
+        <item>I wanna know that</item>
+        <item correct="true">Chicken doesn't mean Hen</item>
+        <item>You will die</item>
+    </answers>
+    <style background="linear-gradient(90deg, #dfd, #dff)"/>
+</quiz>

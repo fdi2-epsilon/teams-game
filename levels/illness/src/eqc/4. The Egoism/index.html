@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <!-- Page title, we don't need it since our pages
+       are rendered inside a WebView but whatever... -->
+  <title>Enigma Quest</title>
+
+  <meta charset="UTF-8">
+  <meta name="author" content="Luca Defilippi, Luca Zanussi">
+  <meta name="keywords" content="quiz, ffs, random, dynamic, template">
+  <meta name="description" content="Template extracted from the first epic quiz in project Enigma">
+
+  <link rel="stylesheet" href="style.css"/>
+  <script src="cp:/assets/enigma.js"></script>
+  <script src="enigma.js"></script>
+  <script>
+    'use strict';
+
+    // Function called after page load, so we can look at the full DOM.
+    window.addEventListener('load', function () {
+      var elements = document.querySelectorAll('img');
+      for (var i = 0; i < elements.length; i++) {
+        if (elements[i].hasAttribute('correct'))
+          elements[i].onclick = cbSuccess;
+        else
+          elements[i].onclick = cbFailure;
+      }
+    });
+
+    function cbSuccess() {
+      _e.solve();
+      this.classList.add('success');
+    }
+
+    function cbFailure() {
+      this.classList.add('failure');
+    }
+  </script>
+</head>
+<body>
+
+<h1>Which animal is not part of my very own <i>"new-generation concept"</i>?</h1>
+<table>
+  <tr>
+    <td><img src="img_alpaca.jpg"/></td>
+    <td><img src="img_camel.jpg"/></td>
+  </tr>
+  <tr>
+    <td><img correct src="img_kangaroo.jpg"/></td>
+    <td><img src="img_llama.jpg"/></td>
+  </tr>
+</table>
+
+
+</body>
+</html>

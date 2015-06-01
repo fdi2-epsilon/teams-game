@@ -1,0 +1,21 @@
+description = 'Game quest test levels'
+
+buildscript {
+    repositories {
+        ivy { url 'https://fdi2-epsilon.github.io/ivy' }
+        jcenter()
+    }
+
+    dependencies {
+        classpath 'eu.unipv.epsilon:equests-gradle:0.5'
+    }
+}
+
+apply plugin: 'java'
+apply plugin: 'enigma-levels'
+
+questCollection {
+    name = 'Illness'
+    subtitle = 'You won\'t get out alive'
+    description = 'A turbolent trip in the crazy mind of someone.'
+}

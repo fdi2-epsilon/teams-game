@@ -1,0 +1,48 @@
+@-webkit-keyframes eff {
+    from { transform: rotateY(0); }
+    to { transform: rotateY(360deg); }
+}
+
+html {
+    background: linear-gradient(90deg, #dff, #ddf);
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    text-align: center;
+    font-family: 'Open Sans', 'Trebuchet MS', sans-serif;
+}
+
+h1 {
+    font-size: 1.5em;
+    font-weight: 300;
+    margin: 50pt 20pt 20pt 20pt;
+    color: royalblue;
+}
+
+table {
+    padding: 10pt;
+}
+
+td {
+    padding: 10pt;
+    perspective: 1000px;
+    -webkit-perspective: 1000px;
+}
+
+img {
+    width: 100%;
+    outline: rgba(255, 255, 255, 0) solid 0pt;
+    transition: .2s outline;
+    box-shadow: 4px 4px 8px rgba(0, 0, 0, .3);
+}
+
+img.failure {
+    outline: rgba(255, 0, 0, .6) solid 5pt;
+}
+
+img.success {
+    -webkit-animation: eff 1s ease-in-out;
+    outline: rgba(50, 205, 50, .6) solid 8pt;
+}
