@@ -91,7 +91,7 @@
     section {
       font-family: 'Open Sans', sans-serif;
       font-size: .9em;
-      padding: 70px 50px;
+      padding: 100px 50px;
       box-sizing: border-box;
       text-align: center;
       width: 100%;
@@ -100,8 +100,12 @@
 
     section h2 {
       font-weight: 300;
-      font-size: 2em;
+      font-size: 2.8em;
       margin: 0 0 30px 0;
+    }
+
+    section p {
+      line-height: 20pt;
     }
 
     #s-lame {
@@ -120,15 +124,132 @@
     #s-lame p {
       margin: 0;
       padding: 15pt 10pt;
-      text-align: right;
-      line-height: 17pt;
+      text-align: left;
     }
 
     #s-lame p:nth-child(2) {
       background-color: rgba(0, 0, 0, .2);
     }
 
+    #s-templating {
+      background-color: #ffe51e;
+    }
 
+    #s-templating h2 {
+      margin-bottom: 50pt;
+    }
+
+    #s-templating h2 > span {
+      font-size: .6em;
+      display: block;
+    }
+
+    #s-templating .content {
+      margin-right: 260px;
+      height: 400px;
+      display: table;
+    }
+
+    #s-templating .content > div {
+      display: table-cell;
+      vertical-align: middle;
+      margin: 0 auto;
+    }
+
+    #s-templating p {
+      margin: 45pt 0;
+    }
+
+    #phone {
+      text-align: left;
+      position: relative;
+      width: 228px;
+      height: 400px;
+      float: right;
+    }
+
+    #phone > img {
+      margin: 0;
+      position: absolute;
+      opacity: 0;
+    }
+
+    #phone > img:nth-child(1) { animation: xfade 30s 24s infinite; }
+    #phone > img:nth-child(2) { animation: xfade 30s 18s infinite; }
+    #phone > img:nth-child(3) { animation: xfade 30s 12s infinite; }
+    #phone > img:nth-child(4) { animation: xfade 30s  6s infinite; }
+    #phone > img:nth-child(5) { animation: xfade 30s  0s infinite; }
+
+    #s-stories {
+      background: linear-gradient(to top right, rgba(210,255,82,1) 0%, rgba(145,232,66,1) 100%);
+    }
+
+    #s-stories div {
+      margin: 20pt auto;
+      background-color: rgba(255, 255, 255, .6);
+      padding: 10pt;
+      border-radius: 10pt;
+      width: 90%;
+      height: 500px;
+    }
+
+    #s-stories object {
+      background-color: white;
+      width: 100%;
+      height: 100%;
+    }
+
+    #s-marco {
+      color: white;
+      background-color: #890CE8;
+    }
+
+    #s-navigating {
+      color: black;
+      background: linear-gradient(to bottom right, rgba(241,231,103,1) 0%, rgba(254,182,69,1) 100%);
+    }
+
+    #s-navigating .container {
+      display: flex;
+    }
+
+    #s-navigating .container > div {
+      flex-grow: 1;
+      width: 100%;
+      margin: 10pt;
+      padding: 10pt;
+      color: black;
+      background-color: rgba(255, 255, 255, .4);
+      border: 3pt solid rgba(255, 255, 255, .6);
+      border-radius: 15pt;
+    }
+
+    #s-navigating h3 {
+      font-weight: 400;
+      margin: 0;
+    }
+
+    #s-navigating pre {
+      margin-top: 2pt;
+      display: block;
+    }
+
+    #s-navigating .container p {
+      font-size: .8em;
+      line-height: 15pt;
+    }
+
+    #s-navigating li:nth-child(1) { float: left; }
+    #s-navigating li:nth-child(2) { display: inline-block; }
+    #s-navigating li:nth-child(3) { float: right; }
+
+    @keyframes xfade {
+      0%   { opacity: 1; }
+      20%  { opacity: 1; }
+      22%  { opacity: 0; }
+      98%  { opacity: 0; }
+      100% { opacity: 1; }
+    }
 
     #footer {
       position: fixed;
@@ -189,68 +310,103 @@
 
   <section id="s-templating">
 
-    <h2>Quiz collections with "powerful" templating library</h2>
+    <h2>Quiz collections<span>with <q>powerful</q> templating library</span></h2>
 
-    <p>
-      Templates are a way to separate quiz content from its view representation:
-      A <code>document.xml</code> just like <a target="blank"
-                                               href="https://github.com/fdi2-epsilon/teams-game/blob/master/levels/starTrek/src/eqc/01.%20Lo%20sbarco/document.xml">this</a>
-      is parsed by a template processor and
-      transformed in
-      <del>awesome</del>
-      HTML pages, ready to be displayed to the user.
+    <div id="phone"></div>
+    <script>
+      // Preload script
+      var img, p = document.querySelector('#phone');
+      img = new Image(); img.src = 'img/dev5.png'; p.appendChild(img);
+      img = new Image(); img.src = 'img/dev4.png'; p.appendChild(img);
+      img = new Image(); img.src = 'img/dev3.png'; p.appendChild(img);
+      img = new Image(); img.src = 'img/dev2.png'; p.appendChild(img);
+      img = new Image(); img.src = 'img/dev1.png'; p.appendChild(img);
+    </script>
 
-      The best part is that you can also define your own template processors using the template API in Java, package
-      them together
-      with your quizzes and use them at runtime.
-    </p>
+    <div class="content">
+      <div>
+        <p>
+          Templates are a way to separate quiz content from its view representation.
+        </p>
+        <p>
+          A <code>document.xml</code> just like <a target="blank" href="https://github.com/fdi2-epsilon/teams-game/blob/master/levels/starTrek/src/eqc/01.%20Lo%20sbarco/document.xml">this</a>
+          is parsed by a template processor and transformed in <del>awesome</del> HTML pages, ready to be displayed to the user.
+        </p>
+        <p>
+          The best part is that you can also define your own template processors using the template API in Java, package
+          them together
+          with your quizzes and use them at runtime.
+        </p>
+      </div>
+    </div>
 
   </section>
 
   <section id="s-stories">
 
     <h2>Compelling stories 4 everyone!</h2>
-    Luca D. took care to write some user stories as issues on GitHub.
-    Then I made a simple Scala app, <a target="_blank" href="https://github.com/fdi2-epsilon/journal">Journal</a>, to
-    filter the story issues and format them to HTML... and everyone lost their mind. Here's the output:
+    <p>
+      Luca D. took care to write some user stories as issues on GitHub.
+      Then I made a simple Scala app, <a target="_blank" href="https://github.com/fdi2-epsilon/journal">Journal</a>, to
+      filter the story issues and format them to HTML... and everyone lost their mind. Here's the output:
+    </p>
 
-    <object width="800" height="400" data="oth/report-output/user-stories.html"></object>
+    <div>
+      <object data="oth/report-output/user-stories.html"></object>
+    </div>
 
-    Pff... I have just noticed that these are not in english...
+    <p>
+      <i>Pff... I have just noticed that these are not in english...</i>
+    </p>
 
   </section>
 
   <section id="s-marco">
-    <h2>But Marco had his problems...</h2>
-    Our teammate Marco had to face some personal problems and was not able to contribute to the project or even
-    dedicate himself to much to studying. We devote all of the time and work spent in this project to him; hoping for
-    better times soon.
+    <h2>But then Marco had some trouble...</h2>
+    <p>
+      Our teammate Marco had to face some personal problems and was not able to contribute to the project or even
+      dedicate himself to much to studying.
+    </p>
+    <p>
+      We devote all of the time and work spent in this project to him; hoping for better times soon.
+    </p>
   </section>
 
   <section id="s-navigating">
     <h2>Navigating the source</h2>
-    The Enigma source code is composed of multiple parts:
-    <ul>
-      <li>
+    <p>
+      The Enigma source code is primarily composed of three parts:
+    </p>
+
+    <div class="container">
+      <div>
         <h3>a common core</h3>
-        <code>teams-game/common/</code><br>
-        Code that we don't have to write again if we want to support a new platform,
-        but just use it as a library.
-      </li>
-      <li>
-        <h3>platform specific view code</h3>
-        <code>teams-game/android-app/</code><br>
-        The real Android application that can be run on any Android 4.4 device or newer.<br>
-        Start looking at MainActivity or EnigmaApplication to get started.
-      </li>
-      <li>
+        <pre>teams-game/common/</pre>
+        <p>
+          Code that we don't have to write again if we want to support a new platform,
+          but just use it as a library.
+        </p>
+      </div>
+
+      <div>
+        <h3>platform specific view</h3>
+        <pre>teams-game/android-app/</pre>
+        <p>
+          The real Android application that can be run on any Android 4.4 device or newer.<br>
+          Start looking at MainActivity or EnigmaApplication to get started.
+        </p>
+      </div>
+
+      <div>
         <h3>game levels</h3>
-        <code>teams-game/levels/</code><br>
-        Game levels are template directives or HTML content, ready to be
-        packaged by our own tool, <a target="_blank" href="https://github.com/fdi2-epsilon/equests-gradle">equests-gradle</a>,
-        in eqc files ready to be loaded in the app.
-      </li>
-    </ul>
+        <pre>teams-game/levels/</pre>
+        <p>
+          Game levels are template directives or HTML content, ready to be packaged by our own tool,
+          <a target="_blank" href="https://github.com/fdi2-epsilon/equests-gradle">equests-gradle</a>,
+          in eqc files ready to be loaded in the app.
+        </p>
+      </div>
+    </div>
 
   </section>
 
