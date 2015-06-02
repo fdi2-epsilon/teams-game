@@ -10,6 +10,8 @@
   <link rel="apple-touch-icon" href="apple-touch-icon.png">
   <!-- Place favicon.ico in the root directory -->
 
+  <link href='http://fonts.googleapis.com/css?family=Open+Sans:300,600,700,400' rel='stylesheet' type='text/css'>
+
   <link rel="stylesheet" href="css/boilerplate.css">
   <link rel="stylesheet" href="css/main.css">
 
@@ -20,48 +22,118 @@
       padding: 0;
     }
 
-    #slide-1 {
-      background: url(img/title_800.png) center/cover;
+    #hero {
+      background: url(img/title_800.jpg) 70% 50%/cover;
       position: relative;
-      height: 60vh;
+      height: 90vh;
+      box-shadow: 0 0 30pt black;
+      z-index: 100;
     }
 
-    .header {
+    header {
+      font-family: 'Open Sans', sans-serif;
+
       position: absolute;
-      top: 50%;
       text-align: center;
+      top: 50%;
       width: 100%;
       color: #fff;
       font-size: 26px;
+
       -ms-transform: translate(0, -50%);
       -webkit-transform: translate(0, -50%);
       -moz-transform: translate(0, -50%);
       transform: translate(0, -50%);
     }
 
-    .slide {
-      padding: 100px 50px;
-      text-align: center;
-      width: 80%;
-      margin: 0px auto;
+    header h1 {
+      text-shadow: 2px 2px 6px black;
+      font-weight: 300;
     }
 
-    .slide h2 {
-      margin: 0 0 30px 0;
+    header ul {
+      margin: 0;
+      padding: 0;
+      list-style-type: none;
     }
 
+    header li {
+      display: inline-block;
 
-    #content {
+    }
+
+    header a {
+      color: #ddd;
+      text-decoration: none;
+      font-size: 8pt;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 1pt;
+      background-color: rgba(0, 0, 0, .4);
+      border-radius: 4pt;
+      padding: 6pt 8pt;
+      margin: 0 12pt;
+      transition: .2s color, .2s background-color;
+    }
+
+    header a:hover {
+      color: #fff;
+      background-color: rgba(0, 0, 0, .6);
+    }
+
+    main {
       position: absolute;
       background-color: white;
       z-index: 100;
       margin-bottom: 50vh;
     }
 
+    section {
+      font-family: 'Open Sans', sans-serif;
+      font-size: .9em;
+      padding: 70px 50px;
+      box-sizing: border-box;
+      text-align: center;
+      width: 100%;
+      margin: 0 auto;
+    }
+
+    section h2 {
+      font-weight: 300;
+      font-size: 2em;
+      margin: 0 0 30px 0;
+    }
+
+    #s-lame {
+      color: white;
+      position: relative;
+      background: #005888 url(img/sprite1.png) center/cover;
+    }
+
+    #s-lame div {
+      background-color: rgba(0, 0, 0, .2);
+      margin-top: 60pt;
+      margin-left: 45%;
+      padding: 3pt 0;
+    }
+
+    #s-lame p {
+      margin: 0;
+      padding: 15pt 10pt;
+      text-align: right;
+      line-height: 17pt;
+    }
+
+    #s-lame p:nth-child(2) {
+      background-color: rgba(0, 0, 0, .2);
+    }
+
+
+
     #footer {
       position: fixed;
       top: 50%;
-      left: 0px;
+      left: 0;
       width: 100%;
       height: 50%;
       padding: 100px 0;
@@ -82,37 +154,48 @@
 </p>
 <![endif]-->
 
-<div id="content">
+<main>
 
-
-  <div id="slide-1">
-    <a target="_blank" href="https://github.com/fdi2-epsilon/teams-game"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://camo.githubusercontent.com/365986a132ccd6a44c23a9169022c0b5c890c387/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f7265645f6161303030302e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_red_aa0000.png"></a>
-    <div class="header">
-      <h1>This page is less than half done!</h1>
-
-      Get the <code>prof-review</code> tagged version<br><br>
-      Download generated sample quiz collections<br><br>
-    </div>
+  <div id="hero">
+    <a target="_blank" href="https://github.com/fdi2-epsilon/teams-game"><img
+      style="position: absolute; top: 0; right: 0; border: 0;"
+      src="https://camo.githubusercontent.com/365986a132ccd6a44c23a9169022c0b5c890c387/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f7265645f6161303030302e706e67"
+      alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_red_aa0000.png"></a>
+    <header>
+      <h1>Enigma, a simple quiz game</h1>
+      <ul>
+        <li><a href="#">Download review version</a></li>
+        <li><a href="#">Get sample quiz collections</a></li>
+      </ul>
+    </header>
   </div>
 
-  <div class="slide">
+  <section id="s-lame">
     <h2>The lamest project ever</h2>
+    <div>
+      <p>
+        Enigma is a simple quiz application for Android and <del>PCs</del>.
+      </p>
+      <p>
+        Collections of quizzes representing different stories are loaded from special <code>eqc</code> <i>Enigma Quest
+        Collection</i> files.
+      </p>
+      <p>
+        Sincerely, a Desktop application and group playing were and still are planned features, but manpower isn't
+        enough...
+      </p>
+    </div>
+  </section>
 
-    <p>
-      Enigma is a simple quiz application for Android and
-      <del>PCs</del>
-      .
-      Collections of quizzes are loaded from <code>eqc</code> files. <b>TODO: SO?</b>
-    </p>
-  </div>
-
-  <div class="slide">
+  <section id="s-templating">
 
     <h2>Quiz collections with "powerful" templating library</h2>
 
     <p>
       Templates are a way to separate quiz content from its view representation:
-      A <code>document.xml</code> just like <a target="blank" href="https://github.com/fdi2-epsilon/teams-game/blob/master/levels/starTrek/src/eqc/01.%20Lo%20sbarco/document.xml">this</a> is parsed by a template processor and
+      A <code>document.xml</code> just like <a target="blank"
+                                               href="https://github.com/fdi2-epsilon/teams-game/blob/master/levels/starTrek/src/eqc/01.%20Lo%20sbarco/document.xml">this</a>
+      is parsed by a template processor and
       transformed in
       <del>awesome</del>
       HTML pages, ready to be displayed to the user.
@@ -122,27 +205,29 @@
       with your quizzes and use them at runtime.
     </p>
 
-  </div>
+  </section>
 
-  <div class="slide">
+  <section id="s-stories">
 
     <h2>Compelling stories 4 everyone!</h2>
     Luca D. took care to write some user stories as issues on GitHub.
-    Then I made a simple Scala app, <a target="_blank" href="https://github.com/fdi2-epsilon/journal">Journal</a>, to filter the story issues and format them to HTML... and everyone lost their mind. Here's the output:
+    Then I made a simple Scala app, <a target="_blank" href="https://github.com/fdi2-epsilon/journal">Journal</a>, to
+    filter the story issues and format them to HTML... and everyone lost their mind. Here's the output:
 
     <object width="800" height="400" data="oth/report-output/user-stories.html"></object>
 
     Pff... I have just noticed that these are not in english...
 
-  </div>
+  </section>
 
-  <div class="slide">
+  <section id="s-marco">
     <h2>But Marco had his problems...</h2>
     Our teammate Marco had to face some personal problems and was not able to contribute to the project or even
-    dedicate himself to much to studying. We devote all of the time and work spent in this project to him; hoping for better times soon.
-  </div>
+    dedicate himself to much to studying. We devote all of the time and work spent in this project to him; hoping for
+    better times soon.
+  </section>
 
-  <div class="slide">
+  <section id="s-navigating">
     <h2>Navigating the source</h2>
     The Enigma source code is composed of multiple parts:
     <ul>
@@ -162,13 +247,14 @@
         <h3>game levels</h3>
         <code>teams-game/levels/</code><br>
         Game levels are template directives or HTML content, ready to be
-        packaged by our own tool, <a target="_blank" href="https://github.com/fdi2-epsilon/equests-gradle">equests-gradle</a>, in eqc files ready to be loaded in the app.
+        packaged by our own tool, <a target="_blank" href="https://github.com/fdi2-epsilon/equests-gradle">equests-gradle</a>,
+        in eqc files ready to be loaded in the app.
       </li>
     </ul>
 
-  </div>
+  </section>
 
-  <div class="slide">
+  <section id="s-compile">
     <h2>Compile n' run</h2>
     Gradle is an highly customizable build tool and we use it to ease our development cycle.<br><br>
     By simply running <code>./gradlew installDebug</code> in the root project directory,
@@ -177,12 +263,13 @@
     If you open the app now, it will show nothing, this is because you need to have some quizzes:
     if you use the emulator, you can package and upload game levels by using <code>./gradlew uploadLevels</code>,
     otherwise you will need to only do <code>./gradlew collectLevels</code> and manually copy generated collections from
-    <code>android-app/build/adb-push/</code> to <code>Documents/Enigma/Collections</code> on your phone (create the directories if they do not exist).
+    <code>android-app/build/adb-push/</code> to <code>Documents/Enigma/Collections</code> on your phone (create the
+    directories if they do not exist).
 
     For any problem, <b>TODO</b> please contact us as soon as possible.
-  </div>
+  </section>
 
-</div>
+</main>
 
 <div id="footer">
   <p>I am da footer, some contacts here and sw used</p>
