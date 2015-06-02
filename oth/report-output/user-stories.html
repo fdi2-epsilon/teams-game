@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <link rel="stylesheet" href="user-stories_files/style.css">
+</head>
+<body>
+  <ul>
+    <li class="opt" id="open">Open all</li>
+    <li class="opt" id="close">Close all</li>
+  </ul>
+  <script>
+    document.querySelector('#open').addEventListener('click', function () {
+        forAllIssues(function (e) { e.setAttribute('open', ''); });
+    });
+    document.querySelector('#close').addEventListener('click', function () {
+        forAllIssues(function (e) { e.removeAttribute('open'); });
+    });
+    function forAllIssues(f) {
+        [].forEach.call(document.querySelectorAll('details'), f);
+    }
+  </script>
+<section>
+  <h1><a href="https://github.com/fdi2-epsilon/teams-game/issues/18">Caricamento enigmi da parte dell'utente</a></h1>
+  <details open>
+    <summary>Created by <a href="https://github.com/lucad93">lucad93</a>, closed</summary>
+      <p>L'utente finale dell'applicazione android deve poter aggiungere nuovi enigmi alla sua collezione a partire da file .eqc che verranno caricati all'avvio successivo.</p>
+  </details>
+</section>
+<section>
+  <h1><a href="https://github.com/fdi2-epsilon/teams-game/issues/15">Messaggio di benvenuto</a></h1>
+  <details open>
+    <summary>Created by <a href="https://github.com/lucad93">lucad93</a> for Sprint #2, closed</summary>
+      <p>L'utente finale dell'applicazione deve visualizzare un messaggio di benvenuto all'avvio dell'applicazione, che può far scomparire tappando un pulsante "ok".</p>
+  </details>
+</section>
+<section>
+  <h1><a href="https://github.com/fdi2-epsilon/teams-game/issues/10">Ritorno alla schermata iniziale</a></h1>
+  <details open>
+    <summary>Created by <a href="https://github.com/lucad93">lucad93</a> for Sprint #1, closed</summary>
+      <p>L'utente deve poter tornare sempre alla schermata iniziale (quella contenente le varie storie) dalla schermata degli enigmi mediante un pulsante "indietro".</p>
+  </details>
+</section>
+<section>
+  <h1><a href="https://github.com/fdi2-epsilon/teams-game/issues/9">Identificazione veloce delle storie recenti</a></h1>
+  <details open>
+    <summary>Created by <a href="https://github.com/Vik28">Vik28</a> for Sprint #1, closed</summary>
+      <p>L'utente deve poter individuare immediatamente la collezione di enigmi (campagna) giocata più recentemente, averne una immagine e descrizione rapida per un riconoscimento ancora più immediato.</p>
+  </details>
+</section>
+<section>
+  <h1><a href="https://github.com/fdi2-epsilon/teams-game/issues/8">Campagne in 1° piano</a></h1>
+  <details open>
+    <summary>Created by <a href="https://github.com/Vik28">Vik28</a> for Sprint #1, closed</summary>
+      <p>L'utente deve poter visualizzare le collezioni di enigmi direttamente nella prima schermata per un accesso più semplice e diretto.</p>
+  </details>
+</section>
+<section>
+  <h1><a href="https://github.com/fdi2-epsilon/teams-game/issues/7">Pannello introduttivo al primo avvio</a></h1>
+  <details open>
+    <summary>Created by <a href="https://github.com/Vik28">Vik28</a> for Sprint #2, closed</summary>
+      <p>L'utente deve poter visualizzare, al primo avvio, una schermata che lo introduca al funzionamento dell'applicazione.</p>
+  </details>
+</section>
+<section>
+  <h1><a href="https://github.com/fdi2-epsilon/teams-game/issues/6">Diverse storie giocabili in parallelo, accesso da singola schermata</a></h1>
+  <details open>
+    <summary>Created by <a href="https://github.com/lucad93">lucad93</a> for Sprint #1, closed</summary>
+      <p>L'utente deve poter vedere tutte le storie in una sola schermata, e poter scegliere la sua preferita, perchè il gioco non abbia necessariamente un andamento in linea.</p>
+  </details>
+</section>
+<section>
+  <h1><a href="https://github.com/fdi2-epsilon/teams-game/issues/5">Passaggio rapido tra enigmi a scorrimento</a></h1>
+  <details open>
+    <summary>Created by <a href="https://github.com/lucad93">lucad93</a> for Sprint #1, closed</summary>
+      <p>L'utente deve poter passare da un enigma all'altro scorrendo il dito sullo schermo</p>
+  </details>
+</section>
+</body>

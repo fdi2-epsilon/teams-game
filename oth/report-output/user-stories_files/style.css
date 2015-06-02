@@ -1,0 +1,52 @@
+@font-face { font-family: 'Fontin Regular'; src: url(Fontin-Regular.otf); }
+@font-face { font-family: 'Fontin Caps'; src: url(Fontin-SmallCaps.otf); }
+@font-face { font-family: 'Fanwood Text'; src: url(Fanwood-Text.otf); }
+@font-face { font-family: 'Fanwood Italic'; src: url(Fanwood-Italic.otf); }
+
+body {
+    margin-top: 30pt;
+    margin-left: 20pt;
+}
+a { text-decoration: none; }
+a:link { color: SteelBlue; }
+a:visited { color: Teal; }
+
+ul {
+    position: fixed;
+    top: 0;
+    right: 0;
+    background-color: rgba(230, 230, 230, .7);
+    padding: 5pt 10pt;
+}
+
+li {
+    font: 9pt 'Fontin Caps';
+    float: left;
+    list-style-type: none;
+    cursor: pointer;
+    margin-right: 8pt;
+}
+
+section {
+    margin-bottom: 2.5em;
+}
+
+h1 {
+    font: 1.6em 'Fontin Regular';
+    margin-bottom: .5em;
+}
+
+details {
+    font: .9em 'Fanwood Text';
+    margin-left: 10pt;
+}
+
+details > summary {
+    font-family: 'Fanwood Italic';
+}
+
+details > p {
+    margin: 6pt 30pt 40pt 11pt;
+    text-align: justify;
+    text-justify: inter-word;
+} 

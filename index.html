@@ -1,0 +1,195 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <title></title>
+  <meta name="description" content="">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <link rel="apple-touch-icon" href="apple-touch-icon.png">
+  <!-- Place favicon.ico in the root directory -->
+
+  <link rel="stylesheet" href="css/boilerplate.css">
+  <link rel="stylesheet" href="css/main.css">
+
+  <style>
+
+    body {
+      margin: 0;
+      padding: 0;
+    }
+
+    #slide-1 {
+      background: url(img/title_800.png) center/cover;
+      position: relative;
+      height: 60vh;
+    }
+
+    .header {
+      position: absolute;
+      top: 50%;
+      text-align: center;
+      width: 100%;
+      color: #fff;
+      font-size: 26px;
+      -ms-transform: translate(0, -50%);
+      -webkit-transform: translate(0, -50%);
+      -moz-transform: translate(0, -50%);
+      transform: translate(0, -50%);
+    }
+
+    .slide {
+      padding: 100px 50px;
+      text-align: center;
+      width: 80%;
+      margin: 0px auto;
+    }
+
+    .slide h2 {
+      margin: 0 0 30px 0;
+    }
+
+
+    #content {
+      position: absolute;
+      background-color: white;
+      z-index: 100;
+      margin-bottom: 50vh;
+    }
+
+    #footer {
+      position: fixed;
+      top: 50%;
+      left: 0px;
+      width: 100%;
+      height: 50%;
+      padding: 100px 0;
+      text-align: center;
+      background: #ddd;
+    }
+
+  </style>
+
+</head>
+<body>
+
+<!--[if lt IE 8]>
+<p class="browserupgrade">
+  You are using an <strong>outdated</strong> browser.
+  Please <a href="http://browsehappy.com/">upgrade
+  your browser</a> to improve your experience.
+</p>
+<![endif]-->
+
+<div id="content">
+
+
+  <div id="slide-1">
+    <a target="_blank" href="https://github.com/fdi2-epsilon/teams-game"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://camo.githubusercontent.com/365986a132ccd6a44c23a9169022c0b5c890c387/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f7265645f6161303030302e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_red_aa0000.png"></a>
+    <div class="header">
+      <h1>This page is less than half done!</h1>
+
+      Get the <code>prof-review</code> tagged version<br><br>
+      Download generated sample quiz collections<br><br>
+    </div>
+  </div>
+
+  <div class="slide">
+    <h2>The lamest project ever</h2>
+
+    <p>
+      Enigma is a simple quiz application for Android and
+      <del>PCs</del>
+      .
+      Collections of quizzes are loaded from <code>eqc</code> files. <b>TODO: SO?</b>
+    </p>
+  </div>
+
+  <div class="slide">
+
+    <h2>Quiz collections with "powerful" templating library</h2>
+
+    <p>
+      Templates are a way to separate quiz content from its view representation:
+      A <code>document.xml</code> just like <a target="blank" href="https://github.com/fdi2-epsilon/teams-game/blob/master/levels/starTrek/src/eqc/01.%20Lo%20sbarco/document.xml">this</a> is parsed by a template processor and
+      transformed in
+      <del>awesome</del>
+      HTML pages, ready to be displayed to the user.
+
+      The best part is that you can also define your own template processors using the template API in Java, package
+      them together
+      with your quizzes and use them at runtime.
+    </p>
+
+  </div>
+
+  <div class="slide">
+
+    <h2>Compelling stories 4 everyone!</h2>
+    Luca D. took care to write some user stories as issues on GitHub.
+    Then I made a simple Scala app, <a target="_blank" href="https://github.com/fdi2-epsilon/journal">Journal</a>, to filter the story issues and format them to HTML... and everyone lost their mind. Here's the output:
+
+    <object width="800" height="400" data="oth/report-output/user-stories.html"></object>
+
+    Pff... I have just noticed that these are not in english...
+
+  </div>
+
+  <div class="slide">
+    <h2>But Marco had his problems...</h2>
+    Our teammate Marco had to face some personal problems and was not able to contribute to the project or even
+    dedicate himself to much to studying. We devote all of the time and work spent in this project to him; hoping for better times soon.
+  </div>
+
+  <div class="slide">
+    <h2>Navigating the source</h2>
+    The Enigma source code is composed of multiple parts:
+    <ul>
+      <li>
+        <h3>a common core</h3>
+        <code>teams-game/common/</code><br>
+        Code that we don't have to write again if we want to support a new platform,
+        but just use it as a library.
+      </li>
+      <li>
+        <h3>platform specific view code</h3>
+        <code>teams-game/android-app/</code><br>
+        The real Android application that can be run on any Android 4.4 device or newer.<br>
+        Start looking at MainActivity or EnigmaApplication to get started.
+      </li>
+      <li>
+        <h3>game levels</h3>
+        <code>teams-game/levels/</code><br>
+        Game levels are template directives or HTML content, ready to be
+        packaged by our own tool, <a target="_blank" href="https://github.com/fdi2-epsilon/equests-gradle">equests-gradle</a>, in eqc files ready to be loaded in the app.
+      </li>
+    </ul>
+
+  </div>
+
+  <div class="slide">
+    <h2>Compile n' run</h2>
+    Gradle is an highly customizable build tool and we use it to ease our development cycle.<br><br>
+    By simply running <code>./gradlew installDebug</code> in the root project directory,
+    dependencies are downloaded and the app is compiled and uploaded to a connected Android device or emulator.<br><br>
+
+    If you open the app now, it will show nothing, this is because you need to have some quizzes:
+    if you use the emulator, you can package and upload game levels by using <code>./gradlew uploadLevels</code>,
+    otherwise you will need to only do <code>./gradlew collectLevels</code> and manually copy generated collections from
+    <code>android-app/build/adb-push/</code> to <code>Documents/Enigma/Collections</code> on your phone (create the directories if they do not exist).
+
+    For any problem, <b>TODO</b> please contact us as soon as possible.
+  </div>
+
+</div>
+
+<div id="footer">
+  <p>I am da footer, some contacts here and sw used</p>
+</div>
+
+
+<script src="js/main.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,24 @@
+/* TEAM */
+Lead:           Luca Zanussi
+Contact:        luca.z [at] outlook.com
+From:           Vigevano, Italy
+
+
+
+/* THANKS */
+Review:         Team Epsilon @ UNIPV.eu
+From:           Pavia, Italy
+Company:        Università degli Studi di Pavia
+URL:            fdi2-epsilon.github.io
+Contact:        --
+
+
+
+/* SITE */
+URL:            fdi2-epsilon.github.io/teams-game
+Last update:    constantly updated
+Languages:      en-US
+Doctype:        HTML5
+Standards:      HTML5, CSS3
+Components:     --
+Software:       Adobe Photoshop CC 2014, Adobe After Effects CC 2014
