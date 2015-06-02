@@ -11,6 +11,7 @@
   <!-- Place favicon.ico in the root directory -->
 
   <link href='http://fonts.googleapis.com/css?family=Open+Sans:300,600,700,400' rel='stylesheet' type='text/css'>
+  <link href='https://octicons.github.com/components/octicons/octicons/octicons.css' rel='stylesheet' type='text/css'>
 
   <link rel="stylesheet" href="css/boilerplate.css">
   <link rel="stylesheet" href="css/main.css">
@@ -20,6 +21,11 @@
     body {
       margin: 0;
       padding: 0;
+    }
+
+    code {
+      background-color: rgba(0, 0, 0, .07);
+      padding: 1pt 3pt;
     }
 
     #hero {
@@ -132,6 +138,7 @@
     }
 
     #s-templating {
+      overflow: hidden;
       background-color: #ffe51e;
     }
 
@@ -166,6 +173,12 @@
       width: 228px;
       height: 400px;
       float: right;
+      transform: translate(300px, 0);
+      transition: .5s transform cubic-bezier(0, 0, 0, 1);
+    }
+
+    #phone.shown {
+      transform: translate(0, 0px);
     }
 
     #phone > img {
@@ -179,6 +192,14 @@
     #phone > img:nth-child(3) { animation: xfade 30s 12s infinite; }
     #phone > img:nth-child(4) { animation: xfade 30s  6s infinite; }
     #phone > img:nth-child(5) { animation: xfade 30s  0s infinite; }
+
+    @keyframes xfade {
+      0%   { opacity: 1; }
+      20%  { opacity: 1; }
+      22%  { opacity: 0; }
+      98%  { opacity: 0; }
+      100% { opacity: 1; }
+    }
 
     #s-stories {
       background: linear-gradient(to top right, rgba(210,255,82,1) 0%, rgba(145,232,66,1) 100%);
@@ -243,23 +264,81 @@
     #s-navigating li:nth-child(2) { display: inline-block; }
     #s-navigating li:nth-child(3) { float: right; }
 
-    @keyframes xfade {
-      0%   { opacity: 1; }
-      20%  { opacity: 1; }
-      22%  { opacity: 0; }
-      98%  { opacity: 0; }
-      100% { opacity: 1; }
+    #s-compile p {
+      line-height: normal;
     }
 
-    #footer {
+    #s-compile .container {
+      display: flex;
+    }
+
+    #s-compile .container > div {
+      width: 100%;
+      text-align: justify;
+      margin: 0 20pt;
+    }
+
+    #hesitate { margin-top: 40pt; }
+    #hesitate:before, #hesitate:after { content: '\2014'}
+
+    footer {
+      font-family: 'Open Sans', sans-serif;
+      color: #888;
+
       position: fixed;
-      top: 50%;
+      bottom: 0;
       left: 0;
       width: 100%;
-      height: 50%;
+      height: 250pt;
       padding: 100px 0;
       text-align: center;
       background: #ddd;
+    }
+
+    footer h2 {
+      font-size: 1.4em;
+      font-weight: 400;
+      margin-top: 20pt;
+      margin-bottom: 5pt;
+    }
+
+    footer span {
+      vertical-align: middle;
+    }
+
+    footer ul {
+      margin: 3pt;
+      list-style-type: none;
+      padding: 0;
+    }
+
+    footer li {
+      margin: 0 10pt;
+      display: inline-block;
+    }
+
+    footer img {
+      opacity: .7;
+      transition: .5s opacity;
+    }
+
+    footer img:hover {
+      opacity: 1;
+    }
+
+    #gh {
+      font-size: .8em;
+      margin-top: 30pt;
+    }
+
+    #page-author {
+      position: fixed;
+      width: 100%;
+      bottom: 8pt;
+      text-transform: uppercase;
+      font-weight: 600;
+      font-size: .8em;
+      letter-spacing: 1pt;
     }
 
   </style>
@@ -321,6 +400,15 @@
       img = new Image(); img.src = 'img/dev3.png'; p.appendChild(img);
       img = new Image(); img.src = 'img/dev2.png'; p.appendChild(img);
       img = new Image(); img.src = 'img/dev1.png'; p.appendChild(img);
+
+      // Show script
+      function scrollf() {
+        if (window.scrollY + window.innerHeight > p.offsetTop + p.clientHeight) {
+          p.classList.add('shown');
+          window.removeEventListener('scroll', scrollf);
+        }
+      }
+      window.addEventListener('scroll', scrollf);
     </script>
 
     <div class="content">
@@ -412,24 +500,60 @@
 
   <section id="s-compile">
     <h2>Compile n' run</h2>
-    Gradle is an highly customizable build tool and we use it to ease our development cycle.<br><br>
-    By simply running <code>./gradlew installDebug</code> in the root project directory,
-    dependencies are downloaded and the app is compiled and uploaded to a connected Android device or emulator.<br><br>
+    <p>
+      Gradle is an highly customizable build tool and we use it to ease our development cycle.
+    </p>
+    <p>
+      By simply running <code>./gradlew installDebug</code> in the root project directory,
+      dependencies are downloaded and the app is compiled and uploaded to a connected Android device or emulator.
+    </p>
 
-    If you open the app now, it will show nothing, this is because you need to have some quizzes:
-    if you use the emulator, you can package and upload game levels by using <code>./gradlew uploadLevels</code>,
-    otherwise you will need to only do <code>./gradlew collectLevels</code> and manually copy generated collections from
-    <code>android-app/build/adb-push/</code> to <code>Documents/Enigma/Collections</code> on your phone (create the
-    directories if they do not exist).
+    <p>
+      If you open the app now, it will show nothing, this is because you need to have some quizzes:
+    </p>
 
-    For any problem, <b>TODO</b> please contact us as soon as possible.
+    <div class="container">
+      <div>
+        <b>if you use the emulator</b>, you can package and upload game levels by using <code>./gradlew uploadLevels</code>.
+      </div>
+      <div>
+        <b>if you use are using a real device</b>, you will need to only do <code>./gradlew collectLevels</code>
+        and manually copy generated collections from <code>android-app/build/adb-push/</code> to
+        <code>Documents/Enigma/Collections</code> on your phone (create the directories if they do not exist).
+      </div>
+    </div>
+
+    <p id="hesitate">
+      <i>For any problem, don't hesitate to contact us as soon as possible.</i>
+    </p>
+
   </section>
 
 </main>
 
-<div id="footer">
-  <p>I am da footer, some contacts here and sw used</p>
-</div>
+<footer>
+  <div>
+    <h2><span class="mega-octicon octicon-code"></span> with <span class="mega-octicon octicon-bug"></span> by</h2>
+    <ul>
+      <li>Luca DeFilippi</li>
+      <li>Vittorio Ferrari</li>
+      <li>Franck Teguia</li>
+      <li>Marco Villagomez</li>
+      <li>Luca Zanussi</li>
+    </ul>
+    <h2>using</h2>
+    <ul>
+      <li><img title="IntelliJ IDEA" src="img/logos/intellij.png"/></li>
+      <li><img title="Git" src="img/logos/git.png"/></li>
+      <li><img title="Gradle" src="img/logos/gradle.png"/></li>
+      <li><img title="Scala" src="img/logos/scala.png"/></li>
+      <li><img title="Android" src="img/logos/android.png"/></li>
+    </ul>
+    <div id="gh">hosted on <span class="octicon octicon-logo-github"></span></div>
+    <div id="page-author">awful and inappropriate page design by Luca Zanussi, public domain</div>
+  </div>
+
+</footer>
 
 
 <script src="js/main.js"></script>
