@@ -73,6 +73,4 @@ public class QuestCollection implements Serializable {
         return quests.get(index);
     }
 
-
-
 }

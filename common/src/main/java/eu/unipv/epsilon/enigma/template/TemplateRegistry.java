@@ -17,6 +17,8 @@ import java.util.Map;
  */
 public class TemplateRegistry {
 
+    // TODO: Separete this into TemplateScanner and TemplateRegistry
+
     private static final Logger LOG = LoggerFactory.getLogger(TemplateRegistry.class);
 
     /** The package to search for built-in template processor classes */

@@ -20,6 +20,8 @@ import java.util.WeakHashMap;
  */
 public class DexAssetsClassLoader extends BaseAssetsClassLoader {
 
+    // TODO: Try to simplify this a little, maybe by finding a way around to DexClassLoader resource overrides
+
     private static final Logger LOG = LoggerFactory.getLogger(DexAssetsClassLoader.class);
 
     public static final String CLASSES_DEX_NAME = "classes.dex";
