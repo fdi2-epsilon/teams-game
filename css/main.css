@@ -100,7 +100,8 @@ section a {
     margin: 0;
     border-radius: 4pt;
     text-decoration: none;
-    border-bottom: 1px dotted;
+    font-style: italic;
+    transition: .3s background-color, .6s box-shadow;
 }
 
 section a:visited {
@@ -108,7 +109,8 @@ section a:visited {
 }
 
 section a:hover {
-    background-color: rgba(0, 0, 0, .1);
+    background-color: rgba(0, 0, 0, .05);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, .2);
 }
 
 section h2 {
