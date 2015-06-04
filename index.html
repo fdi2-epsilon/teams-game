@@ -34,8 +34,8 @@
     <header>
       <h1>Enigma, a simple quiz game</h1>
       <ul>
-        <li><a href="#">Download review version</a></li>
-        <li><a href="#">Get sample quiz collections</a></li>
+        <li><a href="https://github.com/fdi2-epsilon/teams-game/archive/prof-review.tar.gz">Download review version</a></li>
+        <li><a href="https://github.com/fdi2-epsilon/teams-game/releases/download/prof-review/game-levels-packed.tgz">Get sample quiz collections</a></li>
       </ul>
     </header>
   </div>
@@ -84,6 +84,11 @@
           them together
           with your quizzes and use them at runtime.
         </p>
+        <blockquote>
+          Want an example? <code><a target="_blank" href="https://github.com/fdi2-epsilon/teams-game/blob/master/common/src/main/java/eu/unipv/epsilon/enigma/template/builtin/ListTemplate.java">ListTemplate</a></code>
+          is loaded using reflection and describes himself with some @Annotations, then uses <a target="_blank" href="https://github.com/fdi2-epsilon/teams-game/blob/master/common/src/main/resources/assets/templates/list/index.html">this HTML</a>
+          as a base for its generated views using input stream manipulation utilities provided by the API.
+        </blockquote>
       </div>
     </div>
   </section>
@@ -107,7 +112,7 @@
     <h2>But then Marco had some trouble...</h2>
     <p>
       Our teammate Marco had to face some personal problems and was not able to contribute to the project or even
-      dedicate himself to much to studying.
+      dedicate himself too much to studying.
     </p>
     <p>
       We devote all of the time and work spent in this project to him; hoping for better times soon.
@@ -133,7 +138,8 @@
         <pre>teams-game/android-app/</pre>
         <p>
           The real Android application that can be run on any Android 4.4 device or newer.<br>
-          Start looking at <code>MainActivity</code> or <code>EnigmaApplication</code> to get started.
+          Start looking at <code><a target="_blank" href="https://github.com/fdi2-epsilon/teams-game/blob/master/android-app/src/main/java/eu/unipv/epsilon/enigma/MainActivity.java">MainActivity</a></code>
+          or <code><a target="_blank" href="https://github.com/fdi2-epsilon/teams-game/blob/master/android-app/src/main/java/eu/unipv/epsilon/enigma/EnigmaApplication.java">EnigmaApplication</a></code> to get started.
         </p>
       </div>
       <div>
@@ -166,8 +172,8 @@
       </div>
       <div>
         <b>if you use are using a real device</b>, you will need to only do <code>./gradlew collectLevels</code>
-        and manually copy generated collections from <code>android-app/build/adb-push/</code> to
-        <code>Documents/Enigma/Collections</code> on your phone (create the directories if they do not exist).
+        and manually copy generated collections from <code>android-app/build/adb-push/collections/</code> to
+        <code>Documents/Enigma/Collections/</code> on your phone (create the directories if they do not exist).
       </div>
     </div>
     <p id="hesitate">
@@ -178,8 +184,8 @@
   <section id="s-next">
     <h2>What's next</h2>
     <p>
-      Here is some brainstorming about things that can still be implemented in the project, maybe if we consider
-      playing on it after the course.
+      What's next? Nobody can tell, but here I have written are some ideas that I have in mind, from security fixes to UI redesign
+      (if we still want to play with this after the course).
     </p>
     <ul>
       <li>Multithreading</li>

@@ -76,6 +76,11 @@ header a:hover {
     background-color: rgba(0, 0, 0, .7);
 }
 
+header a:active {
+    transition-duration: .05s;
+    background-color: rgba(0, 50, 100, 0.67);
+}
+
 main {
     width: 100%; /* for IE */
     margin-bottom: 550px; /* footer size + padding */
@@ -97,19 +102,22 @@ section {
 }
 
 section a {
-    padding: 2pt 4pt;
     margin: 0;
-    border-radius: 4pt;
     text-decoration: none;
+}
+
+section :not(code) > a {
+    padding: 2pt 4pt;
+    border-radius: 4pt;
     font-style: italic;
     transition: .3s background-color, .6s box-shadow;
 }
 
-section a:visited {
+section :not(code) > a:visited {
     color: darkblue;
 }
 
-section a:hover {
+section :not(code) > a:hover {
     background-color: rgba(0, 0, 0, .05);
     box-shadow: 0 2px 8px rgba(0, 0, 0, .2);
 }
@@ -188,34 +196,14 @@ section p {
 }
 
 #s-templating p {
-    margin: 45pt 0;
+    margin: 25pt 0;
 }
 
-@keyframes starsScroll {
-    from { background-position:     0 0; }
-    to   { background-position: 100vw 0; }
-}
-
-#s-next {
-    color: white;
-    background-image: url(../img/stars.png);
-    animation: starsScroll 30s linear infinite;
-}
-
-#s-next ul {
-    margin-top: 30pt;
-    padding: 0;
-    list-style: none;
-}
-
-#s-next li {
-    margin: 5pt 0;
-}
-
-#s-next li:before {
-    font: normal normal normal 16px/1 octicons;
-    content: '\f03a';
-    margin-right: 5px;
+#s-templating blockquote {
+    background-color: rgba(0, 0, 0, .07);
+    padding: 5pt;
+    font-size: .85em;
+    line-height: 14pt;
 }
 
 #phone {
@@ -265,9 +253,9 @@ section p {
 
 #s-stories div {
     margin: 20pt auto;
-    background-color: rgba(255, 255, 255, .6);
+    /*background-color: rgba(255, 255, 255, .6);
     padding: 10pt;
-    border-radius: 10pt;
+    border-radius: 10pt;*/
     width: 90%;
     height: 500px;
     transition: .8s opacity;
@@ -280,6 +268,9 @@ section p {
 
 #s-stories object {
     background-color: white;
+    border-radius: 10pt;
+    box-shadow: 0 0 50px rgba(0, 0, 0, .5);
+
     width: 100%;
     height: 100%;
 }
@@ -360,6 +351,33 @@ section p {
 
 #hesitate { margin-top: 40pt; }
 #hesitate:before, #hesitate:after { content: '\2014'}
+
+@keyframes starsScroll {
+    from { background-position:     0 0; }
+    to   { background-position: 100vw 0; }
+}
+
+#s-next {
+    color: white;
+    background-image: url(../img/stars.png);
+    animation: starsScroll 30s linear infinite;
+}
+
+#s-next ul {
+    margin-top: 30pt;
+    padding: 0;
+    list-style: none;
+}
+
+#s-next li {
+    margin: 5pt 0;
+}
+
+#s-next li:before {
+    font: normal normal normal 16px/1 octicons;
+    content: '\f03a';
+    margin-right: 5px;
+}
 
 footer {
     font-family: 'Open Sans', sans-serif;
