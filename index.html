@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta http-equiv="x-ua-compatible" content="ie=edge">
-  <title></title>
+  <title>Enigma, a simple quiz game</title>
   <meta name="description" content="">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -14,15 +14,13 @@
   <link href='https://octicons.github.com/components/octicons/octicons/octicons.css' rel='stylesheet' type='text/css'>
 
   <link rel="stylesheet" href="css/main.css">
-
 </head>
 <body>
 
 <!--[if lt IE 8]>
 <p class="browserupgrade">
   You are using an <strong>outdated</strong> browser.
-  Please <a href="http://browsehappy.com/">upgrade
-  your browser</a> to improve your experience.
+  Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.
 </p>
 <![endif]-->
 
@@ -61,9 +59,7 @@
   </section>
 
   <section id="s-templating">
-
     <h2>Quiz collections<span>with <q>powerful</q> templating library</span></h2>
-
     <div id="phone"></div>
     <script>
       // Preload script
@@ -74,7 +70,6 @@
       img = new Image(); img.src = 'img/dev2.png'; p.appendChild(img);
       img = new Image(); img.src = 'img/dev1.png'; p.appendChild(img);
     </script>
-
     <div class="content">
       <div>
         <p>
@@ -91,26 +86,21 @@
         </p>
       </div>
     </div>
-
   </section>
 
   <section id="s-stories">
-
     <h2>Compelling stories 4 everyone!</h2>
     <p>
       Luca D. took care to write some user stories as issues on GitHub.
       Then I made a simple Scala app, <a target="_blank" href="https://github.com/fdi2-epsilon/journal">Journal</a>, to
       filter the story issues and format them to HTML... and everyone lost their mind. Here's the output:
     </p>
-
     <div>
       <object data="oth/report-output/user-stories.html"></object>
     </div>
-
     <p>
       <i>Pff... I have just noticed that these are not in english...</i>
     </p>
-
   </section>
 
   <section id="s-marco">
@@ -129,7 +119,6 @@
     <p>
       The Enigma source code is primarily composed of three parts:
     </p>
-
     <div class="container">
       <div>
         <h3>a common core</h3>
@@ -139,7 +128,6 @@
           but just use it as a library.
         </p>
       </div>
-
       <div>
         <h3>platform specific view</h3>
         <pre>teams-game/android-app/</pre>
@@ -148,7 +136,6 @@
           Start looking at <code>MainActivity</code> or <code>EnigmaApplication</code> to get started.
         </p>
       </div>
-
       <div>
         <h3>game levels</h3>
         <pre>teams-game/levels/</pre>
@@ -159,7 +146,6 @@
         </p>
       </div>
     </div>
-
   </section>
 
   <section id="s-compile">
@@ -171,11 +157,9 @@
       By simply running <code>./gradlew installDebug</code> in the root project directory,
       dependencies are downloaded and the app is compiled and uploaded to a connected Android device or emulator.
     </p>
-
     <p>
       If you open the app now, it will show nothing, this is because you need to have some quizzes:
     </p>
-
     <div class="container">
       <div>
         <b>if you use the emulator</b>, you can package and upload game levels by using <code>./gradlew uploadLevels</code>.
@@ -186,11 +170,26 @@
         <code>Documents/Enigma/Collections</code> on your phone (create the directories if they do not exist).
       </div>
     </div>
-
     <p id="hesitate">
       <i>For any problem, don't hesitate to contact us as soon as possible.</i>
     </p>
+  </section>
 
+  <section id="s-next">
+    <h2>What's next</h2>
+    <p>
+      Here is some brainstorming about things that can still be implemented in the project, maybe if we consider
+      playing on it after the course.
+    </p>
+    <ul>
+      <li>Multithreading</li>
+      <li>Fetch, install and keep up to date collections from the web</li>
+      <li><i><q>seamless updates? possible with Android or already there?</q></i></li>
+      <li>Directory watching to keep up to date on added collections</li>
+      <li>A list view to display all quizzes</li>
+      <li>Allow templates to also generate directly the view using buttons, images, etc.</li>
+      <li>Security managers on templates</li>
+    </ul>
   </section>
 
 </main>
@@ -218,7 +217,6 @@
   </div>
 
 </footer>
-
 
 <script src="js/main.js"></script>
 

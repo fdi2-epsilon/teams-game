@@ -83,6 +83,7 @@ main {
     /* IE: do not use background-color to make footer visible */
     z-index: 1; /* IE: To make footer hidden behind */
     position: relative; /* IE: To let z-index work... */
+    box-shadow: 0 0 15px black;
 }
 
 section {
@@ -188,6 +189,33 @@ section p {
 
 #s-templating p {
     margin: 45pt 0;
+}
+
+@keyframes starsScroll {
+    from { background-position:     0 0; }
+    to   { background-position: 100vw 0; }
+}
+
+#s-next {
+    color: white;
+    background-image: url(../img/stars.png);
+    animation: starsScroll 30s linear infinite;
+}
+
+#s-next ul {
+    margin-top: 30pt;
+    padding: 0;
+    list-style: none;
+}
+
+#s-next li {
+    margin: 5pt 0;
+}
+
+#s-next li:before {
+    font: normal normal normal 16px/1 octicons;
+    content: '\f03a';
+    margin-right: 5px;
 }
 
 #phone {
