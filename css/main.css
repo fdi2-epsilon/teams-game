@@ -78,9 +78,9 @@ header a:hover {
 
 main {
     width: 100%; /* for IE */
-    position: absolute;
+    margin-bottom: 550px; /* footer size + padding */
+    display: block; /* To allow margin to work in IE */
     /* IE: do not use background-color to make footer visible */
-    z-index: 100;
 }
 
 section {
@@ -310,7 +310,6 @@ section p {
 
 #s-compile {
     background-color: white; /* IE: also remove bg from main */
-    margin-bottom: 550px; /* footer size + padding, put here instead of main for IE */
 }
 
 #s-compile p {
@@ -342,6 +341,7 @@ footer {
     padding: 100px 0;
     text-align: center;
     background: #ddd;
+    z-index: -1;
 }
 
 footer h2 {
