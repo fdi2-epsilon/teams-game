@@ -81,6 +81,8 @@ main {
     margin-bottom: 550px; /* footer size + padding */
     display: block; /* To allow margin to work in IE */
     /* IE: do not use background-color to make footer visible */
+    z-index: 1; /* IE: To make footer hidden behind */
+    position: relative; /* IE: To let z-index work... */
 }
 
 section {
@@ -341,7 +343,6 @@ footer {
     padding: 100px 0;
     text-align: center;
     background: #ddd;
-    z-index: -1;
 }
 
 footer h2 {
