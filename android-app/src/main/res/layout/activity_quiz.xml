@@ -15,14 +15,37 @@
             a:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
             app:popupTheme="@style/Base.ThemeOverlay.AppCompat.Light" />
 
-    <com.google.samples.apps.iosched.ui.widget.SlidingTabLayout
-            a:id="@+id/sliding_tabs"
+    <android.support.v4.widget.DrawerLayout
+            a:id="@+id/drawer_layout"
             a:layout_width="match_parent"
-            a:layout_height="wrap_content"
-            a:background="@color/alphaColorPrimary"
-            a:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
-            a:foreground="?android:windowContentOverlay" />
+            a:layout_height="match_parent">
 
-    <include layout="@layout/include_quiz_viewpager" />
+        <LinearLayout
+                a:layout_width="match_parent"
+                a:layout_height="match_parent"
+                a:orientation="vertical">
+
+            <com.google.samples.apps.iosched.ui.widget.SlidingTabLayout
+                a:id="@+id/sliding_tabs"
+                a:layout_width="match_parent"
+                a:layout_height="wrap_content"
+                a:background="@color/alphaColorPrimary"
+                a:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+                a:foreground="?android:windowContentOverlay" />
+
+            <include layout="@layout/include_quiz_viewpager" />
+
+        </LinearLayout>
+
+        <!-- The navigation drawer -->
+        <android.support.v7.widget.RecyclerView
+                a:id="@+id/left_drawer"
+                a:layout_width="@dimen/navigation_drawer_width"
+                a:layout_height="match_parent"
+                a:layout_gravity="start"
+                a:scrollbars="vertical"
+                a:background="@android:color/background_light" />
+
+    </android.support.v4.widget.DrawerLayout>
 
 </LinearLayout>

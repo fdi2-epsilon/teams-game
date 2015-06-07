@@ -21,4 +21,7 @@
     <dimen name="headline_font_size">24sp</dimen> <!-- or larger -->
     <!--   Flat buttons: Roboto Medium, 14sp, 10sp tracking -->
 
+    <!-- QuizActivity drawer -->
+    <dimen name="navigation_drawer_width">320dp</dimen> <!-- Def: 240dp Max: 320dp -->
+
 </resources>
