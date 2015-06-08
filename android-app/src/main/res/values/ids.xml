@@ -8,4 +8,9 @@
     <item type="id" name="card_progressbar"/>
     <item type="id" name="card_description"/>
 
+    <!-- Quiz activity drawer list element fields -->
+    <item type="id" name="item_image" />
+    <item type="id" name="item_name" />
+    <item type="id" name="item_description" />
+
 </resources>

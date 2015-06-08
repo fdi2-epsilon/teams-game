@@ -39,12 +39,12 @@
 
         <!-- The navigation drawer -->
         <android.support.v7.widget.RecyclerView
-                a:id="@+id/left_drawer"
+                a:id="@+id/drawer_recycler"
                 a:layout_width="@dimen/navigation_drawer_width"
                 a:layout_height="match_parent"
                 a:layout_gravity="start"
                 a:scrollbars="vertical"
-                a:background="@android:color/background_light" />
+                a:background="@color/windowBackground" />
 
     </android.support.v4.widget.DrawerLayout>
 
