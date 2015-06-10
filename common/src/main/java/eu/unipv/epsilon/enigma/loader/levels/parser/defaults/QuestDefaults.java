@@ -21,7 +21,13 @@ public class QuestDefaults implements FieldProvider {
             case KEY_QUEST_DESCRIPTION:         return "";
             case KEY_QUEST_PATH_MAINDOCUMENT:   return String.format("quests/%02d/", nameIndex); // Using redirection
             case KEY_QUEST_PATH_INFODOCUMENT:   return String.format("quests/%02d/story.html", nameIndex);
-            case KEY_QUEST_PATH_ICON:           return String.format("quests/%02d/icon.png", nameIndex);
+            case KEY_QUEST_PATH_ICON:
+                String iconPathNoExt = String.format("quests/%02d/icon", nameIndex);
+                if (context.containsEntry(iconPathNoExt + ".png"))
+                    return iconPathNoExt + ".png";
+                if (context.containsEntry(iconPathNoExt + ".jpg"))
+                    return iconPathNoExt + ".jpg";
+                return "";
             default:
                 throw new NoSuchElementException("No default property value for \"" + property + '"');
         }

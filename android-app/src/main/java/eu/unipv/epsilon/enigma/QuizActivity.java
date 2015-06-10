@@ -2,7 +2,11 @@ package eu.unipv.epsilon.enigma;
 
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
+import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.DefaultItemAnimator;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -11,7 +15,9 @@ import eu.unipv.epsilon.enigma.quest.QuestCollection;
 import eu.unipv.epsilon.enigma.status.QuestCollectionStatus;
 import eu.unipv.epsilon.enigma.ui.quiz.QuizFragmentPageAdapter;
 import eu.unipv.epsilon.enigma.ui.quiz.QuizStatusTabColorizer;
+import eu.unipv.epsilon.enigma.ui.quiz.drawer.QuizListAdapter;
 import eu.unipv.epsilon.enigma.ui.util.CollectionDataBundle;
+import eu.unipv.epsilon.enigma.ui.widget.recycler.DividerItemDecoration;
 
 /** Shows the quiz that is currently played in a fragment and allows navigation between quizzes using tabs. */
 public class QuizActivity extends AppCompatActivity {
@@ -32,7 +38,9 @@ public class QuizActivity extends AppCompatActivity {
         CollectionDataBundle bundle = getCollectionArgument();
 
         setTitle(bundle.getCollection().getTitle());
+
         setupTabs(bundle.getCollection(), bundle.getCollectionStatus());
+        setupDrawer(bundle.getCollection());
     }
 
     @Override
@@ -77,6 +85,16 @@ public class QuizActivity extends AppCompatActivity {
         viewPager.setAdapter(new QuizFragmentPageAdapter(getSupportFragmentManager(), collection));
         slidingTabs.setViewPager(viewPager);
         slidingTabs.setCustomTabColorizer(new QuizStatusTabColorizer(collectionStatus));
+    }
+
+    private void setupDrawer(QuestCollection collection) {
+        RecyclerView v = (RecyclerView) findViewById(R.id.drawer_recycler);
+        v.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL_LIST));
+        v.setHasFixedSize(true);
+        v.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
+        v.setItemAnimator(new DefaultItemAnimator());
+        v.setAdapter(new QuizListAdapter(collection,
+                (DrawerLayout) findViewById(R.id.drawer_layout), (ViewPager) findViewById(R.id.viewpager)));
     }
 
 }

@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout
+        xmlns:a="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        a:layout_width="match_parent"
+        a:layout_height="wrap_content"
+        a:background="@android:color/white">
+
+    <RelativeLayout
+            a:layout_width="match_parent"
+            a:layout_height="wrap_content"
+            a:paddingTop="4dp"
+            a:paddingBottom="4dp"
+            a:focusable="true"
+            a:clickable="true"
+            a:background="?android:selectableItemBackground">
+
+    <eu.unipv.epsilon.enigma.ui.widget.CircularImageView
+            a:id="@id/item_image"
+            tools:src="@drawable/test"
+            a:layout_width="50dp"
+            a:layout_height="50dp"
+            a:scaleType="centerCrop"
+            a:layout_margin="12dp" />
+
+    <TextView
+            a:id="@id/item_name"
+            tools:text="Chicken disco isn't nice even if we are talking about fried chicken"
+            a:layout_width="wrap_content"
+            a:layout_height="wrap_content"
+            a:textAppearance="?android:attr/textAppearanceMedium"
+            a:maxLines="1"
+            a:ellipsize="end"
+            a:textStyle="bold"
+            a:layout_marginTop="4dp"
+            a:layout_marginStart="4dp"
+            a:layout_marginEnd="24dp"
+            a:layout_alignTop="@id/item_image"
+            a:layout_toEndOf="@id/item_image"/>
+
+    <TextView
+            a:id="@id/item_description"
+            tools:text="A very long description, just in case that I bla blabla with a blabla."
+            a:layout_width="wrap_content"
+            a:layout_height="wrap_content"
+            a:textAppearance="?android:attr/textAppearanceSmall"
+            a:maxLines="1"
+            a:ellipsize="end"
+            a:layout_marginStart="8dp"
+            a:layout_marginEnd="12dp"
+            a:layout_below="@id/item_name"
+            a:layout_toEndOf="@id/item_image" />
+
+    </RelativeLayout>
+
+</FrameLayout>
